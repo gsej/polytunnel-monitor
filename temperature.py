@@ -26,7 +26,6 @@ def read_temp():
       return temp_c
 
 while True:
-   currentUtcTime = datetime.datetime.utcnow().isoformat()
-#   print(currentUtcTime, ",", read_temp())                                      # Print temperature    
-   print(currentUtcTime )                                      # Print temperature    
+   line = currentUtcTime = datetime.datetime.utcnow().isoformat() + "," + read_temp()
+   print(line)                                      # Print temperature    
    time.sleep(10)
