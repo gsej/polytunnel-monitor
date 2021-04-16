@@ -1,6 +1,8 @@
 import os                                                  # import os module
 import glob                                                # import glob module
 import time                                                # import time module
+import datetime
+
 os.system('modprobe w1-gpio')                              # load one wire communication device kernel modules
 os.system('modprobe w1-therm')                                                 
 base_dir = '/sys/bus/w1/devices/'                          # point to the address
@@ -24,5 +26,6 @@ def read_temp():
       return temp_c
 
 while True:
-   print(read_temp())                                      # Print temperature    
-   time.sleep(1)
+   currentUtcTime = datetime.datetime.utcnow().isoformat()
+   print(currentUtcTime, ",", read_temp())                                      # Print temperature    
+   time.sleep(10)
