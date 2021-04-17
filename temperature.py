@@ -28,4 +28,4 @@ def read_temp():
 while True:
    line = currentUtcTime = datetime.datetime.utcnow().isoformat() + "," + str(read_temp())
    print(line, flush=True)                                      # Print temperature    
-   time.sleep(10)
+   time.sleep(30)
