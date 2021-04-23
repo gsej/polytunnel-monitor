@@ -5,11 +5,7 @@ import datetime
 os.system('modprobe w1-gpio')                              # load one wire communication device kernel modules
 os.system('modprobe w1-therm')                                                 
 
-# use fixed list of devices, so we can always be sure of the order of the output
-# the devices are:
-# Outdoors: /sys/bus/w1/devices/28-3c01d075ef09
-# Indoors: /sys/bus/w1/devices/28-3c01d075334f
-
+# use fixed list device filenames,  so we can always be sure of the order of the output
 outsideProbe = '/sys/bus/w1/devices/28-3c01d075ef09'
 insideProbe = '/sys/bus/w1/devices/28-3c01d075334f'
 

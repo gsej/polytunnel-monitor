@@ -1,0 +1,33 @@
+{% extends "_base.html" %}
+
+{% block title %}Raspbery Pi {% endblock %}
+
+{% block body %}
+<h1>Raspberry Pi</h1>
+<div class="stats">
+    <p class="title">running for</p><br>
+    <div class="stat">
+        <a class="uptime"><a class="higlight">{{stats["uptime"]["days"]}}</a> days</a><br>
+        <a class="uptime"><a class="higlight">{{stats["uptime"]["hours"]}}</a> hours</a><br>
+        <a class="uptime"><a class="higlight">{{stats["uptime"]["minutes"]}}</a> minutes</a><br>
+        <a class="uptime"><a class="higlight">{{stats["uptime"]["seconds"]}}</a> seconds</a>
+    </div>
+    <br>
+    <p class="title">OS info</p><br>
+     <div class="stat">
+        <a class="highlight">{{stats["memory"]}}</a> <a>of memory used</a><br>
+        <a class="highlight">{{stats["cpu"]}}</a> <a>of CPU used</a><br>
+        <a>running on <a class="highlight">{{stats["system"]}}</a></a><br>
+        <a>node <a class="highlight">{{stats["node"]}}</a><br>
+            <a>with machine <a class="highlight">{{stats["machine"]}}</a></a><br>
+            <a>on <a class="highlight">{{stats["architecture"]}}</a></a><br>
+            <a>temperature at <a class="highlight">{{stats["temperature"] | safe}}</a></a><br>
+    </div><br> 
+    <p class="title">disk space</p><br>
+    <div class="stat">
+        <a class="highlight">{{stats["disk"]["total"]}}</a> <a>total</a><br>
+        <a class="highlight">{{stats["disk"]["used"]}}</a> <a>used</a><br>
+        <a class="highlight">{{stats["disk"]["available"]}}</a> <a>available</a><br>
+    </div>
+</div>
+{% endblock %}

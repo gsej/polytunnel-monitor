@@ -1,25 +1,19 @@
 from flask import Flask, render_template
-import os
-import glob
+import csv
+#import os
+#import glob
+
+import dateutil.parser
 
 from temperatures import readInsideTemperature, readOutsideTemperature
+
+from pistats import Stats
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return """<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polytunnel PI</title>
-</head>
-<body>
-    hello from pi4
-</body>
-</html>"""
+    return render_template('index.html')
 
 @app.route('/hello')
 def sayHello():
@@ -27,28 +21,56 @@ def sayHello():
 
 @app.route('/current')
 def current():
-    insideTemperature = readInsideTemperature()
-    outsideTemperature = readOutsideTemperature()
+    insideTemperature = "%.1f" % readInsideTemperature()
+    outsideTemperature = "%.1f" % readOutsideTemperature()
     return render_template('current.html', insideTemperature=insideTemperature, outsideTemperature=outsideTemperature)
 
+@app.route('/pi')
+def pi():
+    stats = Stats()
+    rasp_info = stats.get_stats()
+    return render_template('pi.html', stats = rasp_info)
 
-def read_temp_raw():
-   f = open(device_file, 'r')
-   lines = f.readlines()                                   # read the device details
-   f.close()
-   return lines
+@app.route('/temperatures')
+def temperatures():
 
-def read_temp():
-   lines = read_temp_raw()
-   while lines[0].strip()[-3:] != 'YES':                   # ignore first line
-      time.sleep(0.2)
-      lines = read_temp_raw()
-   equals_pos = lines[1].find('t=')                        # find temperature in the details
-   if equals_pos != -1:
-      temp_string = lines[1][equals_pos+2:]
-      temp_c = float(temp_string) / 1000.0                 # convert to Celsius
-      return temp_c
+    labels = [];
+    outsideTemperatures = [];
+    insideTemperatures = [];
 
+    i = 0
+    with open('temperatures.csv') as csvDataFile:
+        csvReader = csv.reader(csvDataFile)
+        for row in csvReader:
+            outsideTemperatures.append(float(row[1]))
+            insideTemperatures.append(float(row[2]))
+            date = dateutil.parser.parse(row[0])
+            print (date.minute)
+            #if (date.minute == 0.0):
+            label = str(date.hour) + ":" + str(date.minute)
+            labels.append(label)
+            #else:
+            #    labels.append("")
+            i = i + 1
+
+
+    # labels = [
+    #     'JAN', 'FEB', 'MAR', 'APR',
+    #     'MAY', 'JUN', 'JUL', 'AUG',
+    #     'SEP', 'OCT', 'NOV', 'DEC'
+    # ]
+
+    # values = [
+    #     967.67, 1190.89, 1079.75, 1349.19,
+    #     2328.91, 2504.28, 2873.83, 4764.87,
+    #     4349.29, 6458.30, 9907, 16297
+    # ]
+
+    maxValue = max(max(insideTemperatures), max(outsideTemperatures))
+
+    return render_template('temperatures.html', title='Temperatures', max=maxValue, labels=labels, outsideTemperatures=outsideTemperatures, insideTemperatures=insideTemperatures)
+
+    #return render_template('temperatures.html', temps=t)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

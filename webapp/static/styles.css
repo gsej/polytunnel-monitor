@@ -1,0 +1,32 @@
+
+:root {
+     --background-color: #2C3A47; 
+     --text-color: #F8EFBA; 
+}
+
+body {
+/*    background-image: url("images/wood.jpg");*/
+    text-align: center;
+    font-family: 'Fira Code', monospace;
+    background: var(--background-color);
+    color: var(--text-color);
+}
+
+a {
+    color: var(--text-color);
+}
+
+a:hover {
+    filter: saturate(150%);
+}
+
+/* for temperatures.html */
+.white {
+    background-color: white;
+}
+
+.container {
+    width: 800px;
+    height: 500px;
+    outline: 1px solid rebeccapurple;
+}
