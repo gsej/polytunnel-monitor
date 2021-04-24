@@ -10,12 +10,12 @@ while True:
    currentUtcTime = datetime.datetime.utcnow().isoformat()
    outsideTemperature = readOutsideTemperature()
    insideTemperature = readInsideTemperature()
-   line = currentUtcTime + "," + str(outsideTemperature) + "," + str(insideTemperature)
+   line = currentUtcTime + "," + str(outsideTemperature) + "," + str(insideTemperature) + "\n"
 
    filename = str(datetime.datetime.utcnow().date()) + ".csv"
 
    file = open("./temperature_files/" + filename, "a");
-   file.writelines([line])
+   file.write(line)
    file.close()
 
    print(line, flush=True)
