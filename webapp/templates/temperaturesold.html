@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="static/styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/chart.min.js" integrity="sha512-BqNYFBAzGfZDnIWSAEGZSD/QFKeVxms2dIBPfw11gZubWwKUjEgmFUtUls8vZ6xTRZN/jaXGHD/ZaxD9+fDo0A==" crossorigin="anonymous"></script>
+</head>
+
+<body class="white">
+  <center>
+    <h1>{{ title }}</h1>
+
+    <div class="container">
+      <canvas id="chart" width="600" height="400"></canvas>
+    </div>
+
+
+    <script>
+
+
+      const labels = [
+         {% for item in labels %}
+              "{{ item }}",
+            {% endfor %}          
+      ];
+      const data = {
+        labels: labels,
+        datasets: [{
+          label: 'Inside Temperatures',
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: [
+
+  {% for item in insideTemperatures %}
+              {{ item }},
+            {% endfor %}
+          
+          
+
+          ],
+        },
+
+
+{
+          label: 'Outside Temperatures',
+          backgroundColor: 'rgb(0, 99, 132)',
+          borderColor: 'rgb(0, 99, 0)',
+          data: [
+
+  {% for item in outsideTemperatures %}
+              {{ item }},
+            {% endfor %}
+          
+          
+
+          ]
+}
+
+      
+      
+      
+      ]
+      };
+      const config = {
+        type: 'line',
+        data,
+        options: {}
+      };
+
+      var myChart = new Chart(
+        document.getElementById('chart'),
+        config
+      );
+    </script>
+</body>
+
+</html>

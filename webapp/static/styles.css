@@ -19,14 +19,3 @@ a {
 a:hover {
     filter: saturate(150%);
 }
-
-/* for temperatures.html */
-.white {
-    background-color: white;
-}
-
-.container {
-    width: 800px;
-    height: 500px;
-    outline: 1px solid rebeccapurple;
-}

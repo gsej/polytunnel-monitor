@@ -3,7 +3,7 @@ import datetime, psutil, platform, os, json
 
 class Stats:
     def __init__(self):
-        self.launchtime = datetime.datetime.now()
+#        self.launchtime = datetime.datetime.now()
         #f = open("config.json", "r")
         #config = json.load(f)
         #f.close()
