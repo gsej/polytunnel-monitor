@@ -23,7 +23,8 @@ def getTemperatureData():
         for row in csvReader:
             outsideTemperatures.append(float(row[1]))
             insideTemperatures.append(float(row[2]))
-            date = dateutil.parser.parse(row[0])    
+#            date = dateutil.parser.parse(row[0])    
+            date = row[0]
             labels.append(date)
 
     data = TemperatureData()
