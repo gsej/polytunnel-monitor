@@ -9,7 +9,6 @@ os.system('modprobe w1-therm')
 outsideProbe = '/sys/bus/w1/devices/28-3c01d075ef09/w1_slave'
 insideProbe = '/sys/bus/w1/devices/28-3c01d075334f/w1_slave'
 
-
 def readInsideTemperature():
    if (device_present(insideProbe)):
       return read_temp(insideProbe)
