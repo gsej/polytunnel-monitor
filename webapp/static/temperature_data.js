@@ -6,7 +6,14 @@ document.addEventListener('DOMContentLoaded', function () {
             label: 'Inside Temperatures',
             data: [],
             fill: false,
-            borderColor: 'rgb(75, 192, 192)',
+            borderColor: 'rgb(255, 0, 0)',
+            tension: 0.1
+        },
+    {
+            label: 'Outside Temperatures',
+            data: [],
+            fill: false,
+            borderColor: 'rgb(0, 255, 0)',
             tension: 0.1
         }]
     };
@@ -28,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             data.labels = temperatureData.labels;
             data.datasets[0].data = temperatureData.insideTemperatures;
+            data.datasets[1].data = temperatureData.outsideTemperatures;
 
             chart.update();
 
