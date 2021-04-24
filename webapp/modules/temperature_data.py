@@ -18,6 +18,7 @@ def getTemperatureData():
     outsideTemperatures = []
     insideTemperatures = []
 
+# 
     with open('../temperature_files/temperatures.csv') as csvDataFile:
         csvReader = csv.reader(csvDataFile)
         for row in csvReader:

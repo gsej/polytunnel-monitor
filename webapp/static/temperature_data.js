@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 x: {
                     type: 'time',
                     time: {
-                        unit: 'hour',
                         displayFormats: {
                             hour: 'HH mm'
                         }
