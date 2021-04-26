@@ -14,11 +14,17 @@ class Stats:
     def uptime(self):
         "get raspberry uptime"
 
-        uptime = datetime.datetime.now() - self.launchtime
-        hours, x = divmod(int(uptime.total_seconds()), 3600)
-        minutes, seconds = divmod(x, 60)
-        days, hours = divmod(hours, 24)
+       # uptime = datetime.datetime.now() - self.launchtime
+       # hours, x = divmod(int(uptime.total_seconds()), 3600)
+       # minutes, seconds = divmod(x, 60)
+       # days, hours = divmod(hours, 24)
 
+
+        # temporary hack:
+        days = 0
+        hours = 0
+        minutes = 0
+        seconds = 0
         uptime = {
             "days": days,
             "hours": hours,
