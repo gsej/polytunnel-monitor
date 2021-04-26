@@ -6,7 +6,7 @@ from flask import Flask, render_template, jsonify
 
 from current_temperatures import readInsideTemperature, readOutsideTemperature
 from pistats import Stats
-from temperature_data import TemperatureData, getTemperatureData
+from temperature_data import getTemperatureData
 
 app = Flask(__name__)
 
@@ -37,8 +37,9 @@ def temperatures():
 @app.route('/api/temperatures')
 def temperatureData():
     # this is an api endpoint to return temperature data
+    
     data = getTemperatureData()
-    return jsonify(dict(data))
+    return jsonify([ dict(reading) for reading in data])
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

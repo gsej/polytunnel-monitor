@@ -1,35 +1,26 @@
+from collections import namedtuple
 import csv
 import dateutil.parser
 
-class TemperatureData:
-    def __init__(self):
-        self.labels = []
-        self.outsideTemperatures = []
-        self.insideTemperatures = []
-    
+
+class TemperatureReading:
+    def __init__(self, timestamp, outsideTemperature, insideTemperature):
+        self.timestamp = timestamp
+        self.outsideTemperature = outsideTemperature
+        self.insideTemperature = insideTemperature
+
     def __iter__(self):
-        yield ('labels', self.labels)
-        yield ('outsideTemperatures', self.outsideTemperatures)
-        yield ('insideTemperatures', self.insideTemperatures)
-    
+        yield ('timestamp', self.timestamp)
+        yield ('outsideTemperature', self.outsideTemperature)
+        yield ('insideTemperature', self.insideTemperature)
 
 def getTemperatureData():
-    labels = []
-    outsideTemperatures = []
-    insideTemperatures = []
-
+    readings = []
 # 
     with open('../temperature_files/temperatures.csv') as csvDataFile:
         csvReader = csv.reader(csvDataFile)
         for row in csvReader:
-            outsideTemperatures.append(float(row[1]))
-            insideTemperatures.append(float(row[2]))
-#            date = dateutil.parser.parse(row[0])    
-            date = row[0]
-            labels.append(date)
+            reading = TemperatureReading(row[0], float(row[1]), float(row[2]))
+            readings.append(reading)
 
-    data = TemperatureData()
-    data.labels = labels
-    data.outsideTemperatures = outsideTemperatures
-    data.insideTemperatures = insideTemperatures
-    return data
+    return readings
