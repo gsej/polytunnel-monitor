@@ -12,6 +12,10 @@
 {% block body %}
 <h1>Historic Temperatures</h1>
 
+<select id="dateRange">
+  <option value="today" selected>Today</option>
+  <option value="all">All</option>
+</select>
 <div class="container">
   <canvas id="chart" height=400 width=600 />
 </div>

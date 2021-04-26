@@ -1,3 +1,5 @@
-need to alter temperature_data so it reads all source files
+put settings (polling interval, folder name for data files etc) in file rather than hard coded
 
-alter data structure so pair temperatures with labels for easier sorting.
+second axis showing date 
+
+filter to allow range to be selected
