@@ -1,5 +1,6 @@
 from collections import namedtuple
 import csv
+import os
 import dateutil.parser
 
 
@@ -16,11 +17,15 @@ class TemperatureReading:
 
 def getTemperatureData():
     readings = []
-# 
-    with open('../temperature_files/temperatures.csv') as csvDataFile:
-        csvReader = csv.reader(csvDataFile)
-        for row in csvReader:
-            reading = TemperatureReading(row[0], float(row[1]), float(row[2]))
-            readings.append(reading)
+
+    files = os.listdir("../temperature_files")
+    files.sort()
+
+    for file in files:
+        with open("../temperature_files/" + file) as csvDataFile:
+            csvReader = csv.reader(csvDataFile)
+            for row in csvReader:
+                reading = TemperatureReading(row[0], float(row[1]), float(row[2]))
+                readings.append(reading)
 
     return readings
