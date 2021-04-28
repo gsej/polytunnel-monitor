@@ -29,4 +29,5 @@ def getTemperatureData():
                 reading = TemperatureReading(row[0], float(row[1]), float(row[2]))
                 readings.append(reading)
     
+    readings = readings[::5]
     return readings
