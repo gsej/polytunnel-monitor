@@ -1,6 +1,36 @@
-body {
-    background-color: white;
+
+:root {
+     --dark-color: #2C3A47; 
+     --light-color: #F8EFBA; 
 }
+
+body {
+    font-family: 'Fira Code', monospace;
+    background: var(--light-color);
+    color: var(--dark-color);
+}
+
+a {
+    color: var(--dark-color);
+}
+
+a:hover {
+    filter: saturate(150%);
+}
+
+section {
+    text-align: center;
+}
+
+.temperatures {
+    display: flex;
+    justify-content: center;
+}
+ 
+.temperatures > div+div {
+    margin-left: 2rem;
+}
+
 
 .container {
     display: flex;

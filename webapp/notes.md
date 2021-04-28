@@ -1,11 +1,6 @@
 put settings (polling interval, folder name for data files etc) in file rather than hard coded
 
-
 cleanup markup on pi page
-
-improve range selection
-
-remove excessive data from early files - one sample per 5 mins should be ok
 
 fix uptime measurements
 
@@ -15,8 +10,8 @@ when changing the viewing period also change the scale
 
 create endpoint for current temperatures and show them on the graph page too.
 
-
 don't record invalid rows to the date files
 
-
 figure out units for gap
+
+date range in title

@@ -1,5 +1,9 @@
 {% extends "_base.html" %}
 
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="static/temperatures.css" />
+{% endblock %}
+
 {% block scripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/chart.min.js"
   integrity="sha512-BqNYFBAzGfZDnIWSAEGZSD/QFKeVxms2dIBPfw11gZubWwKUjEgmFUtUls8vZ6xTRZN/jaXGHD/ZaxD9+fDo0A=="
@@ -7,22 +11,32 @@
 <script
   src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script src="static/temperature_data.js"></script>
-<link rel="stylesheet" type="text/css" href="static/temperatures.css" />
 {% endblock %}
-{% block title %}Historic Temperatures {% endblock %}
+{% block title %}Temperatures {% endblock %}
 {% block body %}
-<h1>Historic Temperatures</h1>
 
-<select id="dateRange">
-  <option value="last24">Last 24 hours</option>
-  <option value="today">Today</option>
-  <option value="all" selected>All</option>
-</select>
-
-
-<div class="container">
-  <div class="canvas-container">
-    <canvas id="chart" />
+<section>
+  <h1>Temperatures</h1>
+  <div class="temperatures">
+    <div>Current Temperature Inside: {{ insideTemperature }}&#176;C</div>
+    <div>Current Temperature Outside: {{ outsideTemperature }}&#176;C</div>
   </div>
-</div>
+
+
+  <select id="dateRange">
+    <option value="last24">Last 24 hours</option>
+    <option value="today">Today</option>
+    <option value="all" selected>All</option>
+  </select>
+
+
+  <div class="container">
+    <div class="canvas-container">
+      <canvas id="chart" />
+    </div>
+  </div>
+</section>
+
+
+
 {% endblock %}

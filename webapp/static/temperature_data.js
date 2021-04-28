@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     Chart.defaults.elements.point.radius = 0;
 
+    const heading = document.getElementsByTagName("h1")[0];
+
     let allTemperatures;
     let dateRange = "all";
 
@@ -13,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
             borderColor: 'rgb(255, 0, 0)',
             borderWidth: 2,
             tension: 0,
-            //spanGaps: 1000 * 60 * 10, // span gaps up to a max of 10 mins, I think
+         //   spanGaps: 1000 * 60 * 10, // span gaps up to a max of 10 mins, I think
             parsing: {
                 xAxisKey: 'timestamp',
                 yAxisKey: 'insideTemperature'
@@ -26,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
             borderColor: 'rgb(0, 255, 0)',
             borderWidth: 2,
             tension: 0,
-            //spanGaps: 1000 * 60 * 10, // so that if we don't have any points for 10 mins, a gap is shown
+           // spanGaps: 1000 * 60 * 10, // so that if we don't have any points for 10 mins, a gap is shown
             parsing: {
                 xAxisKey: 'timestamp',
                 yAxisKey: 'outsideTemperature'
@@ -41,6 +43,11 @@ document.addEventListener('DOMContentLoaded', function () {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: "bottom"
+                }
+            },
             scales: {
                 x: {
                     weight: 0,
@@ -87,6 +94,8 @@ document.addEventListener('DOMContentLoaded', function () {
             temperaturesToShow = allTemperatures.filter(t => t.timestamp >= dayAgo && t.timestamp <= now);
             let f = performance.now();
 
+            heading.innerText = "Last 24 Hours";
+
             console.log(`filtering took ${f - s}ms`)
         }
         else if (dateRange === "today") {
@@ -98,6 +107,8 @@ document.addEventListener('DOMContentLoaded', function () {
             let s = performance.now();
             temperaturesToShow = allTemperatures.filter(t => t.timestamp >= startOfDay && t.timestamp <= endOfDay);
             let f = performance.now();
+
+            heading.innerText = "Today";
 
             console.log(`filtering took ${f - s}ms`)
         }

@@ -1,0 +1,24 @@
+
+:root {
+     --dark-color: #2C3A47; 
+     --light-color: #F8EFBA; 
+}
+
+body {
+    font-family: 'Fira Code', monospace;
+    background: var(--dark-color);
+    color: var(--light-color);
+}
+
+section {
+    text-align: center;
+
+}
+
+a {
+    color: var(--light-color);
+}
+
+a:hover {
+    filter: saturate(150%);
+}

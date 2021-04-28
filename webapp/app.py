@@ -1,7 +1,7 @@
 import sys
 sys.path.append('modules')
 import json
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, redirect, url_for, jsonify
 
 
 from current_temperatures import readInsideTemperature, readOutsideTemperature
@@ -12,17 +12,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
-
-@app.route('/current')
-def current():
-    inside = readInsideTemperature();
-    insideTemperature = "Unavailable" if inside is None else "%.1f" % inside;
-
-    outside = readOutsideTemperature()
-    outsideTemperature = "Unavailable" if outside is None else "%.1f" % outside
-
-    return render_template('current.html', insideTemperature=insideTemperature, outsideTemperature=outsideTemperature)
+    return redirect(url_for('temperatures'))
 
 @app.route('/pi')
 def pi():
@@ -32,7 +22,12 @@ def pi():
 
 @app.route('/temperatures')
 def temperatures():
-    return render_template('temperatures.html')
+    inside = readInsideTemperature();
+    insideTemperature = "Unavailable" if inside is None else "%.1f" % inside;
+
+    outside = readOutsideTemperature()
+    outsideTemperature = "Unavailable" if outside is None else "%.1f" % outside
+    return render_template('temperatures.html', insideTemperature=insideTemperature, outsideTemperature=outsideTemperature)
 
 @app.route('/api/temperatures')
 def temperatureData():

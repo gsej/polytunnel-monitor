@@ -1,0 +1,17 @@
+:root {
+     --dark-color: #2C3A47; 
+     --light-color: #F8EFBA; 
+}
+
+body {
+    background: var(--dark-color);
+    color: var(--light-color);
+}
+
+a {
+    color: var(--list-color);
+}
+
+a:hover {
+    filter: saturate(150%);
+}
