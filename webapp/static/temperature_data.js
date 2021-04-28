@@ -36,8 +36,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const config = {
         type: 'line',
+
         data: data,
         options: {
+        responsive: true,
+        maintainAspectRatio: false,
             scales: {
                 x: {
                     weight: 0,
@@ -56,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     };
+
 
     const chart = new Chart(
         document.getElementById('chart'),
@@ -97,7 +101,14 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch('api/temperatures')
         .then(response => response.json())
         .then(temperatureData => {
-            allTemperatures = temperatureData;
+            allTemperatures = temperatureData
+                .map(td => {
+                    return {
+                        timestamp: new Date(td.timestamp),
+                        outsideTemperature: td.outsideTemperature,
+                        insideTemperature: td.insideTemperature
+                    }
+                });
             filterTemperatures();
         });
 

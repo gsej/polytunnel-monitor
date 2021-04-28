@@ -5,7 +5,6 @@
 }
 
 body {
-/*    background-image: url("images/wood.jpg");*/
     text-align: center;
     font-family: 'Fira Code', monospace;
     background: var(--background-color);

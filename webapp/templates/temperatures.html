@@ -1,12 +1,13 @@
-
-
 {% extends "_base.html" %}
 
 {% block scripts %}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/chart.min.js" integrity="sha512-BqNYFBAzGfZDnIWSAEGZSD/QFKeVxms2dIBPfw11gZubWwKUjEgmFUtUls8vZ6xTRZN/jaXGHD/ZaxD9+fDo0A==" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-  <script src="static/temperature_data.js"></script>
-  <link rel="stylesheet" type="text/css" href="static/temperatures.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/chart.min.js"
+  integrity="sha512-BqNYFBAzGfZDnIWSAEGZSD/QFKeVxms2dIBPfw11gZubWwKUjEgmFUtUls8vZ6xTRZN/jaXGHD/ZaxD9+fDo0A=="
+  crossorigin="anonymous"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="static/temperature_data.js"></script>
+<link rel="stylesheet" type="text/css" href="static/temperatures.css" />
 {% endblock %}
 {% block title %}Historic Temperatures {% endblock %}
 {% block body %}
@@ -17,7 +18,11 @@
   <option value="today">Today</option>
   <option value="all" selected>All</option>
 </select>
+
+
 <div class="container">
-  <canvas id="chart" height=400 width=600 />
+  <div class="canvas-container">
+    <canvas id="chart" />
+  </div>
 </div>
 {% endblock %}
