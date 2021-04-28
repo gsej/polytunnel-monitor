@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         data: data,
         options: {
-        responsive: true,
-        maintainAspectRatio: false,
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 x: {
                     weight: 0,
@@ -80,14 +80,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         else if (dateRange === "last24") {
             const now = new Date();
-            // TODO: switch the data structure to use dates instead of strings so that ranges can be better expressed.
-
-        }
-        else if (dateRange === "today") {
-            const today = new Date().toISOString().substr(0, 10);
+            const dayAgo = new Date();
+            dayAgo.setHours(dayAgo.getHours() - 24);
 
             let s = performance.now();
-            temperaturesToShow = allTemperatures.filter(t => t.timestamp.substr(0, 10) === today);
+            temperaturesToShow = allTemperatures.filter(t => t.timestamp >= dayAgo && t.timestamp <= now);
+            let f = performance.now();
+
+            console.log(`filtering took ${f - s}ms`)
+        }
+        else if (dateRange === "today") {
+            const today = new Date();
+
+            const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
+
+            let s = performance.now();
+            temperaturesToShow = allTemperatures.filter(t => t.timestamp >= startOfDay && t.timestamp <= endOfDay);
             let f = performance.now();
 
             console.log(`filtering took ${f - s}ms`)

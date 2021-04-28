@@ -1,8 +1,5 @@
 put settings (polling interval, folder name for data files etc) in file rather than hard coded
 
-responsive design
-
-cleanup css a bit (background color)
 
 cleanup markup on pi page
 
@@ -18,3 +15,8 @@ when changing the viewing period also change the scale
 
 create endpoint for current temperatures and show them on the graph page too.
 
+
+don't record invalid rows to the date files
+
+
+figure out units for gap
