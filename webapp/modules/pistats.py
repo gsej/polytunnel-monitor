@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 import datetime, psutil, platform, os, json
+import sys
 import smbus
 
 class Stats:
@@ -19,8 +20,8 @@ class Stats:
 
     def fanspeed(self):
         # reads speed of PiCoolFAN4
-        speed = i2c.read_word_data(0x60, 0x02)
-        return (format(speed, "04d"))
+        speed = self.i2c.read_word_data(0x60, 0x02)
+        return speed
 
     def disk(self):
         # assumes that we only care about the first partition
