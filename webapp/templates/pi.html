@@ -7,31 +7,30 @@
 {% endblock %}
 
 {% block body %}
-<section>
-    <h1>Raspberry Pi</h1>
-    <p class="title">running for</p><br>
-    <div class="stat">
-        <a class="uptime"><a class="higlight">{{stats["uptime"]["days"]}}</a> days</a><br>
-        <a class="uptime"><a class="higlight">{{stats["uptime"]["hours"]}}</a> hours</a><br>
-        <a class="uptime"><a class="higlight">{{stats["uptime"]["minutes"]}}</a> minutes</a><br>
-        <a class="uptime"><a class="higlight">{{stats["uptime"]["seconds"]}}</a> seconds</a>
+<main>
+    <div class="container">
+        <h1>Raspberry Pi ({{stats["node"]}})</h1>
+        <section>
+            <h2>uptime</h2>
+            <ul><li>{{stats["uptime"]}}</li></ul>
+        </section>
+        <section>
+            <h2>OS info</h2>
+            <ul>
+                <li>{{stats["memory"]}} of memory used</li>
+                <li>{{stats["cpu"]}} of CPU used</li>
+                <li>cpu temperature {{stats["temperature"] | safe}}</li>
+                <li>fan speed {{stats["fanspeed"]}}</li>
+            </ul>
+        </section>
+        <section>
+            <h2>disk space</h2>
+            <ul>
+                <li>{{stats["disk"]["total"]}} total</li>
+                <li>{{stats["disk"]["used"]}} used</li>
+                <li>{{stats["disk"]["available"]}} available</li>
+            </ul>
+        </section>
     </div>
-    <br>
-    <p class="title">OS info</p><br>
-    <div class="stat">
-        <a class="highlight">{{stats["memory"]}}</a> <a>of memory used</a><br>
-        <a class="highlight">{{stats["cpu"]}}</a> <a>of CPU used</a><br>
-        <a>running on <a class="highlight">{{stats["system"]}}</a></a><br>
-        <a>node <a class="highlight">{{stats["node"]}}</a><br>
-            <a>with machine <a class="highlight">{{stats["machine"]}}</a></a><br>
-            <a>on <a class="highlight">{{stats["architecture"]}}</a></a><br>
-            <a>temperature at <a class="highlight">{{stats["temperature"] | safe}}</a></a><br>
-    </div><br>
-    <p class="title">disk space</p><br>
-    <div class="stat">
-        <a class="highlight">{{stats["disk"]["total"]}}</a> <a>total</a><br>
-        <a class="highlight">{{stats["disk"]["used"]}}</a> <a>used</a><br>
-        <a class="highlight">{{stats["disk"]["available"]}}</a> <a>available</a><br>
-    </div>
-</section>
+</main>
 {% endblock %}

@@ -84,6 +84,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (dateRange === "all") {
             temperaturesToShow = allTemperatures;
+
+            config.options.scales.x.time.displayFormats.hour = 'dd MMM HH mm';
         }
         else if (dateRange === "last24") {
             const now = new Date();
@@ -95,6 +97,8 @@ document.addEventListener('DOMContentLoaded', function () {
             let f = performance.now();
 
             heading.innerText = "Last 24 Hours";
+
+            config.options.scales.x.time.displayFormats.hour = "HH mm"
 
             console.log(`filtering took ${f - s}ms`)
         }
@@ -109,6 +113,8 @@ document.addEventListener('DOMContentLoaded', function () {
             let f = performance.now();
 
             heading.innerText = "Today";
+
+            config.options.scales.x.time.displayFormats.hour = "HH:mm"
 
             console.log(`filtering took ${f - s}ms`)
         }

@@ -1,44 +1,29 @@
 from flask import Flask, render_template, request, redirect
 import datetime, psutil, platform, os, json
+import smbus
 
 class Stats:
+
     def __init__(self):
-#        self.launchtime = datetime.datetime.now()
-        #f = open("config.json", "r")
-        #config = json.load(f)
-        #f.close()
-        self.host = 'host here' #config["host"]
-        self.port = 'port here' #config["port"]
-        self.password = 'password here' #config["password"]
+        self.i2c = smbus.SMBus(1)
 
     def uptime(self):
         "get raspberry uptime"
 
-       # uptime = datetime.datetime.now() - self.launchtime
-       # hours, x = divmod(int(uptime.total_seconds()), 3600)
-       # minutes, seconds = divmod(x, 60)
-       # days, hours = divmod(hours, 24)
-
-
-        # temporary hack:
-        days = 0
-        hours = 0
-        minutes = 0
-        seconds = 0
-        uptime = {
-            "days": days,
-            "hours": hours,
-            "minutes": minutes,
-            "seconds": seconds
-        }
-
+        uptime = os.popen("uptime -p").readline()
         return uptime
 
     def temperature(self):
         temp = os.popen("vcgencmd measure_temp").readline()
         return (temp.replace("temp=","").replace("'", "&#176;"))
 
+    def fanspeed(self):
+        # reads speed of PiCoolFAN4
+        speed = i2c.read_word_data(0x60, 0x02)
+        return (format(speed, "04d"))
+
     def disk(self):
+        # assumes that we only care about the first partition
         diskspace = os.popen("df -h").read().splitlines()[1].split()
 
         disk_stats = {
@@ -58,10 +43,8 @@ class Stats:
             "memory": f"{psutil.virtual_memory()[2]}%",
             "cpu": f"{psutil.cpu_percent()}%",
             "node": platform.node(),
-            "system": platform.system(),
-            "machine": platform.machine(),
-            "architecture": f"{platform.architecture()[1]} {platform.architecture()[0]}",
             "temperature": self.temperature(),
+            "fanspeed": self.fanspeed(),
             "disk": self.disk()
         }      
         

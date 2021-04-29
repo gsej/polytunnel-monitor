@@ -10,9 +10,17 @@ body {
     color: var(--light-color);
 }
 
-section {
-    text-align: center;
+main {
+    display: flex;
+    justify-content: center;
+}
 
+section {
+    display: block;
+}
+
+li {
+    list-style-type: none;
 }
 
 a {
