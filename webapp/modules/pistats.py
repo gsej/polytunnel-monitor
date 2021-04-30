@@ -6,7 +6,11 @@ import smbus
 class Stats:
 
     def __init__(self):
-        self.i2c = smbus.SMBus(1)
+
+        try:
+            self.i2c = smbus.SMBus(1)
+        except FileNotFoundError:
+            self.i2c = None
 
     def uptime(self):
         "get raspberry uptime"
@@ -20,7 +24,12 @@ class Stats:
 
     def fanspeed(self):
         # reads speed of PiCoolFAN4
-        speed = self.i2c.read_word_data(0x60, 0x02)
+
+        if self.i2c != None:
+            speed = self.i2c.read_word_data(0x60, 0x02)
+        else:
+            speed = "No PiCoolFAN4 found"
+
         return speed
 
     def disk(self):

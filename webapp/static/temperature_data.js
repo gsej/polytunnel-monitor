@@ -92,15 +92,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const dayAgo = new Date();
             dayAgo.setHours(dayAgo.getHours() - 24);
 
-            let s = performance.now();
             temperaturesToShow = allTemperatures.filter(t => t.timestamp >= dayAgo && t.timestamp <= now);
-            let f = performance.now();
 
             heading.innerText = "Last 24 Hours";
 
             config.options.scales.x.time.displayFormats.hour = "HH mm"
-
-            console.log(`filtering took ${f - s}ms`)
         }
         else if (dateRange === "today") {
             const today = new Date();
@@ -108,19 +104,15 @@ document.addEventListener('DOMContentLoaded', function () {
             const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
             const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
 
-            let s = performance.now();
             temperaturesToShow = allTemperatures.filter(t => t.timestamp >= startOfDay && t.timestamp <= endOfDay);
-            let f = performance.now();
 
             heading.innerText = "Today";
 
-            config.options.scales.x.time.displayFormats.hour = "HH:mm"
-
-            console.log(`filtering took ${f - s}ms`)
+            config.options.scales.x.time.displayFormats.hour = "HH mm"
         }
+
         data.datasets[0].data = temperaturesToShow;
         data.datasets[1].data = temperaturesToShow;
-
         chart.update();
     }
 
