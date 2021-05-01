@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
             borderColor: 'rgb(255, 0, 0)',
             borderWidth: 2,
             tension: 0,
-         //   spanGaps: 1000 * 60 * 10, // span gaps up to a max of 10 mins, I think
+            spanGaps: false,
+            //   spanGaps: 1000 * 60 * 10, // span gaps up to a max of 10 mins, I think
             parsing: {
                 xAxisKey: 'timestamp',
                 yAxisKey: 'insideTemperature'
@@ -28,7 +29,8 @@ document.addEventListener('DOMContentLoaded', function () {
             borderColor: 'rgb(0, 255, 0)',
             borderWidth: 2,
             tension: 0,
-           // spanGaps: 1000 * 60 * 10, // so that if we don't have any points for 10 mins, a gap is shown
+            spanGaps: false,
+            // spanGaps: 1000 * 60 * 10, // so that if we don't have any points for 10 mins, a gap is shown
             parsing: {
                 xAxisKey: 'timestamp',
                 yAxisKey: 'outsideTemperature'
@@ -109,6 +111,17 @@ document.addEventListener('DOMContentLoaded', function () {
             heading.innerText = "Today";
 
             config.options.scales.x.time.displayFormats.hour = "HH mm"
+        }
+        else if (dateRange === "lastweek") {
+            const now = new Date();
+            const weekAgo = new Date();
+            weekAgo.setDate(weekAgo.getDate() - 7);
+
+            temperaturesToShow = allTemperatures.filter(t => t.timestamp >= weekAgo && t.timestamp <= now);
+
+            heading.innerText = "Last 7 days";
+
+            config.options.scales.x.time.displayFormats.hour = 'dd MMM HH mm';
         }
 
         data.datasets[0].data = temperaturesToShow;
