@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/chart.min.js" integrity="sha512-BqNYFBAzGfZDnIWSAEGZSD/QFKeVxms2dIBPfw11gZubWwKUjEgmFUtUls8vZ6xTRZN/jaXGHD/ZaxD9+fDo0A=="
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/chart.min.js"
+  integrity="sha512-BqNYFBAzGfZDnIWSAEGZSD/QFKeVxms2dIBPfw11gZubWwKUjEgmFUtUls8vZ6xTRZN/jaXGHD/ZaxD9+fDo0A=="
   crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
- <!-- <script src="static/luxon.min.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon"></script> -->
+<script
+  src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script src="static/temperature_data.js"></script>
 {% endblock %}
 {% block title %}Temperatures {% endblock %}
@@ -22,14 +22,8 @@
     <div>Current Temperature Outside: {{ outsideTemperature }}&#176;C</div>
   </div>
 
-
-  <select id="dateRange">
-    <option value="last24">Last 24 hours</option>
-    <option value="today">Today</option>
-    <option value="lastweek">Last Week</option>
-    <option value="all" selected>All</option>
-  </select>
-
+  <div id="tab-container">
+  </div>
 
   <div class="container">
     <div class="canvas-container">
