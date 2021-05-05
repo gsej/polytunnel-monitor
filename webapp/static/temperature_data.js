@@ -5,7 +5,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const heading = document.getElementsByTagName("h1")[0];
 
     let allTemperatures;
-    let dateRange = "all";
+
+    let defaultSelectedDateRange = "all";
+
+    getSelectedDateRange = () => {
+        let selectedDateRange = window.localStorage.getItem("selectedDateRange");
+
+        if (!selectedDateRange) {
+            setSelectedDateRange(defaultSelectedDateRange);
+            return defaultSelectedDateRange;
+        }
+
+        return selectedDateRange;
+    };
+
+    setSelectedDateRange = (value) => {
+        window.localStorage.setItem("selectedDateRange", value);
+    }
+
 
     const data = {
         datasets: [{
@@ -69,38 +86,65 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-
     const chart = new Chart(
         document.getElementById('chart'),
         config
     );
 
-    const select = document.getElementById('dateRange');
-    select.addEventListener('change', (event) => {
-        dateRange = event.target.value;
-        setTimeout(() => filterTemperatures(), 0);
-    });
+    const dateRanges = [
+        { key: "last24", label: "Last 24 hours" },
+        { key: "today", label: "Today" },
+        { key: "lastweek", label: "Last Week" },
+        { key: "all", label: "All" },
+    ];
+
+    const tabContainer = document.getElementById("tab-container");
+    for (let dateRange of dateRanges) {
+        let radioButton = document.createElement("input");
+        radioButton.setAttribute("type", "radio");
+        radioButton.setAttribute("name", "tab");
+        radioButton.setAttribute("value", dateRange.key);
+        radioButton.setAttribute("id", dateRange.key);
+
+        if (dateRange.key === getSelectedDateRange()) {
+            radioButton.setAttribute("checked", true);
+            radioButton.setAttribute("autofocus", true);
+        }
+
+         radioButton.addEventListener("change", (e) => {
+            setSelectedDateRange(e.target.value);
+            setTimeout(() => filterTemperatures(), 0);
+        });
+
+        tabContainer.appendChild(radioButton);
+
+        let label = document.createElement("label");
+        label.setAttribute("for", dateRange.key);
+        label.setAttribute("class", "tab-label");
+        label.innerHTML = dateRange.label;
+        tabContainer.appendChild(label);
+    }
 
     filterTemperatures = () => {
         let temperaturesToShow;
 
-        if (dateRange === "all") {
-            temperaturesToShow = allTemperatures;
+        dateRange = dateRanges.find(r => r.key === getSelectedDateRange());
+        heading.innerText = dateRange.label;
 
+        if (dateRange.key === "all") {
+            temperaturesToShow = allTemperatures;
             config.options.scales.x.time.displayFormats.hour = 'dd MMM HH mm';
         }
-        else if (dateRange === "last24") {
+        else if (dateRange.key === "last24") {
             const now = new Date();
             const dayAgo = new Date();
             dayAgo.setHours(dayAgo.getHours() - 24);
 
             temperaturesToShow = allTemperatures.filter(t => t.timestamp >= dayAgo && t.timestamp <= now);
 
-            heading.innerText = "Last 24 Hours";
-
             config.options.scales.x.time.displayFormats.hour = "HH mm"
         }
-        else if (dateRange === "today") {
+        else if (dateRange.key === "today") {
             const today = new Date();
 
             const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -108,18 +152,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
             temperaturesToShow = allTemperatures.filter(t => t.timestamp >= startOfDay && t.timestamp <= endOfDay);
 
-            heading.innerText = "Today";
-
             config.options.scales.x.time.displayFormats.hour = "HH mm"
         }
-        else if (dateRange === "lastweek") {
+        else if (dateRange.key === "lastweek") {
             const now = new Date();
             const weekAgo = new Date();
             weekAgo.setDate(weekAgo.getDate() - 7);
 
             temperaturesToShow = allTemperatures.filter(t => t.timestamp >= weekAgo && t.timestamp <= now);
-
-            heading.innerText = "Last 7 days";
 
             config.options.scales.x.time.displayFormats.hour = 'dd MMM HH mm';
         }
