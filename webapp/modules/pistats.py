@@ -27,6 +27,8 @@ class Stats:
 
         if self.i2c != None:
             speed = self.i2c.read_word_data(0x60, 0x02)
+            if (speed > 32768):
+                speed -= 32768 # sometimes the data comes back with one bit set high instead of low.
         else:
             speed = "No PiCoolFAN4 found"
 

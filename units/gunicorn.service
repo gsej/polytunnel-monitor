@@ -1,0 +1,16 @@
+[Unit]
+Description=gunicorn daemon for /var/www/html/myapp.py
+After=network.target
+
+[Service]
+User=pi
+Group=www-data
+RuntimeDirectory=gunicorn
+WorkingDirectory=/home/pi/repos/temperature-probe/webapp
+Environment=/home/pi/repos/temperature-probe/venv/bin
+ExecStart=/home/pi/repos/temperature-probe/venv/bin/gunicorn --bind=unix:/home/pi/repos/temperature-probe/tmp/gunicorn.sock --workers=4 app:app
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+
+[Install]
+WantedBy=multi-user.target
