@@ -2,6 +2,7 @@ import sys
 sys.path.append('modules')
 import json
 from flask import Flask, render_template, redirect, url_for, jsonify
+import os
 
 
 from current_temperatures import readInsideTemperature, readOutsideTemperature
@@ -28,6 +29,18 @@ def temperatures():
     outside = readOutsideTemperature()
     outsideTemperature = "Unavailable" if outside is None else "%.1f" % outside
     return render_template('temperatures.html', insideTemperature=insideTemperature, outsideTemperature=outsideTemperature)
+
+@app.route('/camera')
+def camera():
+
+    files = os.listdir("./static/photos/")
+    files.sort()
+
+    latestImageUrl = url_for("static", filename="photos/" + files[0])
+
+
+    return render_template('camera.html', latestImageUrl=latestImageUrl)
+
 
 @app.route('/api/temperatures')
 def temperatureData():

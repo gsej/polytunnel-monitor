@@ -1,0 +1,25 @@
+{% extends "_base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="static/camera.css" />
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block title %}Camera {% endblock %}
+{% block body %}
+
+<section>
+  <h1>Camera</h1>
+  <div class="camera">
+
+    <img alt="latest photo of polytunnel" src="{{ latestImageUrl }}" title="{{ latestImageUrl }}"
+  </div>
+
+
+</section>
+
+
+
+{% endblock %}
