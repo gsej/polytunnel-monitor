@@ -1,0 +1,10 @@
+[Unit]
+Description=Takes a picture when activated
+
+[Service]
+Type=simple
+ExecStart=python3 /home/pi/repos/temperature-probe/take-pictures.py
+Restart=on-failure
+User=pi
+WorkingDirectory=/home/pi/repos/temperature-probe
+
