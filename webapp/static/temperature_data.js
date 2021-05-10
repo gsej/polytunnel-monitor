@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let label = document.createElement("label");
         label.setAttribute("for", dateRange.key);
         label.setAttribute("class", "tab-label");
-        label.innerHTML = dateRange.label;
+        label.textContent = dateRange.label;
         tabContainer.appendChild(label);
     }
 
