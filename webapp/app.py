@@ -30,16 +30,16 @@ def temperatures():
     outsideTemperature = "Unavailable" if outside is None else "%.1f" % outside
     return render_template('temperatures.html', insideTemperature=insideTemperature, outsideTemperature=outsideTemperature)
 
-@app.route('/camera')
-def camera():
+@app.route('/tunnelcam')
+def tunnelcam():
 
     files = os.listdir("./static/photos/")
-    files.sort()
+    jpgs = list(filter(lambda x:x.endswith("jpg"), files))
+    jpgs.sort(reverse = True)
 
-    latestImageUrl = url_for("static", filename="photos/" + files[0])
+    latestImageUrl = url_for("static", filename="photos/" + jpgs[0])
 
-
-    return render_template('camera.html', latestImageUrl=latestImageUrl)
+    return render_template('tunnelcam.html', latestImageUrl=latestImageUrl)
 
 
 @app.route('/api/temperatures')

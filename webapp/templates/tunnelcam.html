@@ -1,17 +1,17 @@
 {% extends "_base.html" %}
 
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="static/camera.css" />
+<link rel="stylesheet" type="text/css" href="static/tunnelcam.css" />
 {% endblock %}
 
 {% block scripts %}
 {% endblock %}
 
-{% block title %}Camera {% endblock %}
+{% block title %}Tunnelcam{% endblock %}
 {% block body %}
 
 <section>
-  <h1>Camera</h1>
+  <h1>Tunnelcam - Latest Hourly Image</h1>
   <div class="camera">
     <img alt="latest photo of polytunnel" src="{{ latestImageUrl }}" title="{{ latestImageUrl }}"
   </div>
