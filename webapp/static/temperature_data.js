@@ -1,3 +1,13 @@
+
+class ChartManager {
+
+
+
+    constructor(element) {
+
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
 
     Chart.defaults.elements.point.radius = 0;
@@ -22,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
     setSelectedDateRange = (value) => {
         window.localStorage.setItem("selectedDateRange", value);
     }
-
 
     const data = {
         datasets: [{
