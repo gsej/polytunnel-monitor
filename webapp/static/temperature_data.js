@@ -78,9 +78,29 @@ class ChartManager {
     }
 }
 
-function setHeading(title) {
-    const heading = document.getElementsByTagName("h1")[0];
-    heading.textContent = title;
+const page = {
+
+    setHeading: (title) => {
+        const heading = document.getElementsByTagName("h1")[0];
+        heading.textContent = title;
+    },
+
+    getSelectedDateRange: () => {
+        let defaultSelectedDateRange = "all";
+        let selectedDateRange = window.localStorage.getItem("selectedDateRange");
+
+        if (!selectedDateRange) {
+            setSelectedDateRange(defaultSelectedDateRange);
+            return defaultSelectedDateRange;
+        }
+
+        return selectedDateRange;
+    },
+
+    setSelectedDateRange: (value) => {
+        window.localStorage.setItem("selectedDateRange", value);
+    }
+
 }
 
 function getDateRanges() {
@@ -127,32 +147,16 @@ function getDateRanges() {
     ];
 
     return dateRanges;
-
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
 
     let allTemperatures;
 
-    const getSelectedDateRange = () => {
-        let defaultSelectedDateRange = "all";
-        let selectedDateRange = window.localStorage.getItem("selectedDateRange");
-
-        if (!selectedDateRange) {
-            setSelectedDateRange(defaultSelectedDateRange);
-            return defaultSelectedDateRange;
-        }
-
-        return selectedDateRange;
-    };
-
-    const setSelectedDateRange = (value) => {
-        window.localStorage.setItem("selectedDateRange", value);
-    }
-
     const filterTemperatures = () => {
-        const dateRange = dateRanges.find(r => r.key === getSelectedDateRange());
-        setHeading(dateRange.label);
+        const dateRange = dateRanges.find(r => r.key === page.getSelectedDateRange());
+        page.setHeading(dateRange.label);
         chartManager.setDisplayFormat(dateRange.displayFormat);
         let temperaturesToShow = allTemperatures.filter(dateRange.temperatureFilter);
         chartManager.setData(temperaturesToShow);
@@ -169,13 +173,13 @@ document.addEventListener('DOMContentLoaded', function () {
         radioButton.setAttribute("value", dateRange.key);
         radioButton.setAttribute("id", dateRange.key);
 
-        if (dateRange.key === getSelectedDateRange()) {
+        if (dateRange.key === page.getSelectedDateRange()) {
             radioButton.setAttribute("checked", true);
             radioButton.setAttribute("autofocus", true);
         }
 
         radioButton.addEventListener("change", (e) => {
-            setSelectedDateRange(e.target.value);
+            page.setSelectedDateRange(e.target.value);
             setTimeout(() => filterTemperatures(), 0);
         });
 
