@@ -1,3 +1,4 @@
+"use strict";
 
 class ChartManager {
 
@@ -87,22 +88,41 @@ function getDateRanges() {
         {
             key: "last24",
             label: "Last 24 hours",
-            displayFormat: "HH mm"
+            displayFormat: "HH mm",
+            temperatureFilter: t => {
+                const now = new Date();
+                const dayAgo = new Date();
+                dayAgo.setHours(dayAgo.getHours() - 24);
+                return t.timestamp >= dayAgo && t.timestamp <= now;
+            }
         },
         {
             key: "today",
             label: "Today",
-            displayFormat: "HH mm"
+            displayFormat: "HH mm",
+            temperatureFilter: t => {
+                const today = new Date();
+                const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
+                return t.timestamp >= startOfDay && t.timestamp <= endOfDay;
+            }
         },
         {
             key: "lastweek",
             label: "Last Week",
-            displayFormat: "dd MMM HH mm"
+            displayFormat: "dd MMM HH mm",
+            temperatureFilter: t => {
+                const now = new Date();
+                const weekAgo = new Date();
+                weekAgo.setDate(weekAgo.getDate() - 7);
+                return t.timestamp >= weekAgo && t.timestamp <= now;
+            }
         },
         {
             key: "all",
             label: "All",
-            displayFormat: "dd MMM HH mm"
+            displayFormat: "dd MMM HH mm",
+            temperatureFilter: t => true
         },
     ];
 
@@ -114,10 +134,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let allTemperatures;
 
-    let defaultSelectedDateRange = "all";
-
-
-    getSelectedDateRange = () => {
+    const getSelectedDateRange = () => {
+        let defaultSelectedDateRange = "all";
         let selectedDateRange = window.localStorage.getItem("selectedDateRange");
 
         if (!selectedDateRange) {
@@ -128,12 +146,19 @@ document.addEventListener('DOMContentLoaded', function () {
         return selectedDateRange;
     };
 
-    setSelectedDateRange = (value) => {
+    const setSelectedDateRange = (value) => {
         window.localStorage.setItem("selectedDateRange", value);
     }
 
-    const chartManager = new ChartManager(document.getElementById('chart'));
+    const filterTemperatures = () => {
+        const dateRange = dateRanges.find(r => r.key === getSelectedDateRange());
+        setHeading(dateRange.label);
+        chartManager.setDisplayFormat(dateRange.displayFormat);
+        let temperaturesToShow = allTemperatures.filter(dateRange.temperatureFilter);
+        chartManager.setData(temperaturesToShow);
+    }
 
+    const chartManager = new ChartManager(document.getElementById('chart'));
     const dateRanges = getDateRanges();
 
     const tabContainer = document.getElementById("tab-container");
@@ -163,37 +188,6 @@ document.addEventListener('DOMContentLoaded', function () {
         tabContainer.appendChild(label);
     }
 
-    filterTemperatures = () => {
-        let temperaturesToShow;
-
-        dateRange = dateRanges.find(r => r.key === getSelectedDateRange());
-        setHeading(dateRange.label);
-        chartManager.setDisplayFormat(dateRange.displayFormat);
-
-        if (dateRange.key === "all") {
-            temperaturesToShow = allTemperatures;
-        }
-        else if (dateRange.key === "last24") {
-            const now = new Date();
-            const dayAgo = new Date();
-            dayAgo.setHours(dayAgo.getHours() - 24);
-            temperaturesToShow = allTemperatures.filter(t => t.timestamp >= dayAgo && t.timestamp <= now);
-        }
-        else if (dateRange.key === "today") {
-            const today = new Date();
-            const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-            const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
-            temperaturesToShow = allTemperatures.filter(t => t.timestamp >= startOfDay && t.timestamp <= endOfDay);
-        }
-        else if (dateRange.key === "lastweek") {
-            const now = new Date();
-            const weekAgo = new Date();
-            weekAgo.setDate(weekAgo.getDate() - 7);
-            temperaturesToShow = allTemperatures.filter(t => t.timestamp >= weekAgo && t.timestamp <= now);
-        }
-
-        chartManager.setData(temperaturesToShow);
-    }
 
     fetch('api/temperatures')
         .then(response => response.json())
