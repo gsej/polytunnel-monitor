@@ -154,8 +154,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let allTemperatures;
 
-    const filterTemperatures = () => {
-        const dateRange = dateRanges.find(r => r.key === page.getSelectedDateRange());
+    const filterTemperatures = (allTemperatures, selectedDateRange) => {
+        const dateRange = dateRanges.find(r => r.key === selectedDateRange);
         page.setHeading(dateRange.label);
         chartManager.setDisplayFormat(dateRange.displayFormat);
         let temperaturesToShow = allTemperatures.filter(dateRange.temperatureFilter);
@@ -164,6 +164,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const chartManager = new ChartManager(document.getElementById('chart'));
     const dateRanges = getDateRanges();
+
+
+    // add event listeners.
 
     const tabContainer = document.getElementById("tab-container");
     for (let dateRange of dateRanges) {
@@ -180,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         radioButton.addEventListener("change", (e) => {
             page.setSelectedDateRange(e.target.value);
-            setTimeout(() => filterTemperatures(), 0);
+            setTimeout(() => filterTemperatures(allTemperatures, page.getSelectedDateRange()), 0);
         });
 
         tabContainer.appendChild(radioButton);
@@ -192,19 +195,29 @@ document.addEventListener('DOMContentLoaded', function () {
         tabContainer.appendChild(label);
     }
 
+    function getTemperatures() {
+        fetch('api/temperatures')
+            .then(response => response.json())
+            .then(temperatureData => {
+                allTemperatures = temperatureData
+                    .map(td => {
+                        return {
+                            timestamp: new Date(td.timestamp),
+                            outsideTemperature: td.outsideTemperature,
+                            insideTemperature: td.insideTemperature
+                        }
+                    });
+                filterTemperatures(allTemperatures, page.getSelectedDateRange());
 
-    fetch('api/temperatures')
-        .then(response => response.json())
-        .then(temperatureData => {
-            allTemperatures = temperatureData
-                .map(td => {
-                    return {
-                        timestamp: new Date(td.timestamp),
-                        outsideTemperature: td.outsideTemperature,
-                        insideTemperature: td.insideTemperature
-                    }
-                });
-            filterTemperatures();
-        });
+                document.getElementById("time").textContent = new Date();
+            });
+    }
+
+    getTemperatures();
+
+    setInterval(() => {
+        getTemperatures();
+    }, 10000)
+
 
 }, false);
