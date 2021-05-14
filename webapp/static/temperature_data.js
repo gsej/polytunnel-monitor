@@ -80,6 +80,33 @@ class ChartManager {
 function setHeading(title) {
     const heading = document.getElementsByTagName("h1")[0];
     heading.textContent = title;
+}
+
+function getDateRanges() {
+    const dateRanges = [
+        {
+            key: "last24",
+            label: "Last 24 hours",
+            displayFormat: "HH mm"
+        },
+        {
+            key: "today",
+            label: "Today",
+            displayFormat: "HH mm"
+        },
+        {
+            key: "lastweek",
+            label: "Last Week",
+            displayFormat: "dd MMM HH mm"
+        },
+        {
+            key: "all",
+            label: "All",
+            displayFormat: "dd MMM HH mm"
+        },
+    ];
+
+    return dateRanges;
 
 }
 
@@ -107,12 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const chartManager = new ChartManager(document.getElementById('chart'));
 
-    const dateRanges = [
-        { key: "last24", label: "Last 24 hours" },
-        { key: "today", label: "Today" },
-        { key: "lastweek", label: "Last Week" },
-        { key: "all", label: "All" },
-    ];
+    const dateRanges = getDateRanges();
 
     const tabContainer = document.getElementById("tab-container");
     for (let dateRange of dateRanges) {
@@ -146,35 +168,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
         dateRange = dateRanges.find(r => r.key === getSelectedDateRange());
         setHeading(dateRange.label);
+        chartManager.setDisplayFormat(dateRange.displayFormat);
 
         if (dateRange.key === "all") {
             temperaturesToShow = allTemperatures;
-            chartManager.setDisplayFormat("dd MMM HH mm");
         }
         else if (dateRange.key === "last24") {
             const now = new Date();
             const dayAgo = new Date();
             dayAgo.setHours(dayAgo.getHours() - 24);
             temperaturesToShow = allTemperatures.filter(t => t.timestamp >= dayAgo && t.timestamp <= now);
-            chartManager.setDisplayFormat("HH mm");
         }
         else if (dateRange.key === "today") {
             const today = new Date();
             const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
             const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
             temperaturesToShow = allTemperatures.filter(t => t.timestamp >= startOfDay && t.timestamp <= endOfDay);
-            chartManager.setDisplayFormat("HH mm");
         }
         else if (dateRange.key === "lastweek") {
             const now = new Date();
             const weekAgo = new Date();
             weekAgo.setDate(weekAgo.getDate() - 7);
             temperaturesToShow = allTemperatures.filter(t => t.timestamp >= weekAgo && t.timestamp <= now);
-            chartManager.setDisplayFormat("dd MMM HH mm");
         }
 
         chartManager.setData(temperaturesToShow);
-
     }
 
     fetch('api/temperatures')
