@@ -10,7 +10,7 @@ class ChartManager {
                 label: 'Inside Temperatures',
                 data: [],
                 fill: false,
-                borderColor: 'rgb(255, 0, 0)',
+                borderColor: 'firebrick',
                 borderWidth: 2,
                 tension: 0,
                 spanGaps: 1000 * 60 * 35, // I don't know what this number represents.
@@ -23,7 +23,7 @@ class ChartManager {
                 label: 'Outside Temperatures',
                 data: [],
                 fill: false,
-                borderColor: 'rgb(0, 255, 0)',
+                borderColor: 'green',
                 borderWidth: 2,
                 tension: 0,
                 spanGaps: 1000 * 60 * 35,
