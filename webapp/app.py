@@ -25,7 +25,6 @@ def pi():
 def temperatures():
     inside = readInsideTemperature();
     insideTemperature = "Unavailable" if inside is None else "%.1f" % inside;
-
     outside = readOutsideTemperature()
     outsideTemperature = "Unavailable" if outside is None else "%.1f" % outside
     return render_template('temperatures.html', insideTemperature=insideTemperature, outsideTemperature=outsideTemperature)
@@ -40,6 +39,21 @@ def tunnelcam():
     latestImageUrl = url_for("static", filename="photos/" + jpgs[0])
 
     return render_template('tunnelcam.html', latestImageUrl=latestImageUrl)
+
+@app.route('/api/currenttemperatures')
+def currentTemperatures():
+    inside = readInsideTemperature();
+    insideTemperature = "Unavailable" if inside is None else "%.1f" % inside;
+
+    outside = readOutsideTemperature()
+    outsideTemperature = "Unavailable" if outside is None else "%.1f" % outside
+
+    result = { 
+        "insideTemperature": insideTemperature,
+        "outsideTemperature": outsideTemperature
+    }
+    return jsonify(result)
+
 
 
 @app.route('/api/temperatures')

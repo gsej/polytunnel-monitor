@@ -205,6 +205,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function getTemperatures() {
+        fetch('api/currenttemperatures')
+            .then(response => response.json())
+            .then(currentTemperatures => {
+                document.getElementById("insideTemperature").textContent = currentTemperatures.insideTemperature;
+                document.getElementById("outsideTemperature").textContent = currentTemperatures.outsideTemperature;
+            });
+
         fetch('api/temperatures')
             .then(response => response.json())
             .then(temperatureData => {
@@ -224,6 +231,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const seconds = padToTwoDigits(now.getSeconds());
                 document.getElementById("time").textContent = `${hours}:${minutes}:${seconds}`
             });
+
     }
 
     getTemperatures();
