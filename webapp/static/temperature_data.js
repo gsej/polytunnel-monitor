@@ -85,6 +85,10 @@ const page = {
         heading.textContent = title;
     },
 
+    setSelectedDateRange: (value) => {
+        window.localStorage.setItem("selectedDateRange", value);
+    },
+
     getSelectedDateRange: () => {
         let defaultSelectedDateRange = "all";
         let selectedDateRange = window.localStorage.getItem("selectedDateRange");
@@ -97,9 +101,6 @@ const page = {
         return selectedDateRange;
     },
 
-    setSelectedDateRange: (value) => {
-        window.localStorage.setItem("selectedDateRange", value);
-    }
 
 }
 
