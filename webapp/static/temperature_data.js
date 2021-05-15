@@ -149,6 +149,15 @@ function getDateRanges() {
     return dateRanges;
 }
 
+function padToTwoDigits(number) {
+    if (number > 9) {
+        return "" + number;
+    }
+    else {
+        return "0" + number;
+    }
+}
+
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -209,7 +218,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 filterTemperatures(allTemperatures, page.getSelectedDateRange());
 
-                document.getElementById("time").textContent = new Date();
+                const now = new Date();
+                const hours = padToTwoDigits(now.getUTCHours());
+                const minutes = padToTwoDigits(now.getMinutes());
+                const seconds = padToTwoDigits(now.getSeconds());
+                document.getElementById("time").textContent = `${hours}:${minutes}:${seconds}`
             });
     }
 

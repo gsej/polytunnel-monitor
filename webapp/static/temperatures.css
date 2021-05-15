@@ -49,8 +49,6 @@ input[type=radio] {
   border: 1px solid #999;
   background: #EEE;
   padding: 4px 12px;
-  /* position: relative; */
-  /* top: 1px; */
   display: inline-block;
 
   margin-right: 3px;
@@ -61,6 +59,6 @@ input[type=radio]:checked + label {     /* white background for selected tab */
 }
 .canvas-container {
     width: 80vw;
-    height: 80vh;
+    height: 75vh;
     position: relative;
 }
