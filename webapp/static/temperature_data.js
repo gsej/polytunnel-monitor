@@ -78,30 +78,27 @@ class ChartManager {
     }
 }
 
-const page = {
-
-    setHeading: (title) => {
+class Page {
+    setHeading(title) {
         const heading = document.getElementsByTagName("h1")[0];
         heading.textContent = title;
-    },
+    }
 
-    setSelectedDateRange: (value) => {
+    setSelectedDateRange(value) {
         window.localStorage.setItem("selectedDateRange", value);
-    },
+    }
 
-    getSelectedDateRange: () => {
+    getSelectedDateRange() {
         let defaultSelectedDateRange = "all";
         let selectedDateRange = window.localStorage.getItem("selectedDateRange");
 
         if (!selectedDateRange) {
-            setSelectedDateRange(defaultSelectedDateRange);
+            this.setSelectedDateRange(defaultSelectedDateRange);
             return defaultSelectedDateRange;
         }
 
         return selectedDateRange;
-    },
-
-
+    }
 }
 
 function getDateRanges() {
@@ -163,6 +160,8 @@ function padToTwoDigits(number) {
 document.addEventListener('DOMContentLoaded', function () {
 
     let allTemperatures;
+
+    const page = new Page();
 
     const filterTemperatures = (allTemperatures, selectedDateRange) => {
         const dateRange = dateRanges.find(r => r.key === selectedDateRange);
