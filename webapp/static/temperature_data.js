@@ -3,7 +3,7 @@
 class ChartManager {
 
     constructor(element) {
-        Chart.defaults.elements.point.radius = 0;
+        Chart.defaults.elements.point.radius = 1;
 
         this.data = {
             datasets: [{

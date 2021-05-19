@@ -19,4 +19,4 @@ while True:
    file.close()
 
    print(line, flush=True)
-   time.sleep(300)
+   time.sleep(60)
