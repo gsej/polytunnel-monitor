@@ -5,5 +5,3 @@ make progressive
 use react? 
 
 allow one line to be turned off
-
-remove cdn dependency
