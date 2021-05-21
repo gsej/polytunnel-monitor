@@ -1,4 +1,6 @@
-# temperature-probe
+# polytunnel-monitor
 
-Intended for use on a raspberry pi equipped with a 1-wire temperature probe. There's a python script to read the temperature from the probe and print it with a timestamp. 
-In development is a flask webserver to show the temperature, and possibly to show historic temperatures.
+Python scripts to record the temperatures in my polytunnel using a raspberry pi equipped with a couple of 1-wire temperature sensors.
+Also script to take photos on a regular basis with the raspberry pi camera.
+
+Flask application to show the current and historic temperatures, status of the pi itself, and the latest photo.

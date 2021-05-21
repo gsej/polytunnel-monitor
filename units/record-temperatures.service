@@ -3,10 +3,10 @@ Description=Reads temperatures from probes every minute and records to a file
 
 [Service]
 Type=simple
-ExecStart=python3 /home/pi/repos/temperature-probe/record-temperatures.py
+ExecStart=python3 /home/pi/repos/polytunnel-monitor/record-temperatures.py
 Restart=on-failure
 User=pi
-WorkingDirectory=/home/pi/repos/temperature-probe
+WorkingDirectory=/home/pi/repos/polytunnel-monitor
 
 [Install]
 WantedBy=multi-user.target

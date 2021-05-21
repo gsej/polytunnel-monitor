@@ -6,12 +6,12 @@ server {
 	ssl_certificate_key /etc/letsencrypt/live/polytunnel.gsej.co.uk/privkey.pem;
 	# if ($ssl_protocol = "") { rewrite     ^   https://$server_name$request_uri? permanent;}
 
-	root /home/pi/repos/temperature-probe/webapp;
+	root /home/pi/repos/polytunnel-monitor/webapp;
 
 	server_name polytunnel.gsej.co.uk;
 
 	location /static {
-	    alias /home/pi/repos/temperature-probe/webapp/static;
+	    alias /home/pi/repos/polytunnel-monitor/webapp/static;
 	}
 
 	location / {
@@ -19,7 +19,7 @@ server {
 	}
 
 	location @wsgi {
-	    proxy_pass http://unix:/home/pi/repos/temperature-probe/tmp/gunicorn.sock;
+	    proxy_pass http://unix:/home/pi/repos/polytunnel-monitor/tmp/gunicorn.sock;
 	    include proxy_params;
 	}
 
