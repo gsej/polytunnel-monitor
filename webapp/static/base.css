@@ -1,17 +1,11 @@
-:root {
-     --dark-color: #2C3A47; 
-     --light-color: #F8EFBA; 
+nav {
+    display: flex;
 }
 
-body {
-    background: var(--dark-color);
-    color: var(--light-color);
+a + a {
+    margin-left: 0.5em;
 }
 
-a {
-    color: var(--list-color);
-}
-
-a:hover {
-    filter: saturate(150%);
+.github {
+    margin-left: auto;
 }
