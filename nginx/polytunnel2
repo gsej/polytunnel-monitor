@@ -1,0 +1,31 @@
+server {
+
+	listen 443;
+	ssl on;
+	ssl_certificate /etc/letsencrypt/live/polytunnel.gsej.co.uk/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/polytunnel.gsej.co.uk/privkey.pem;
+	# if ($ssl_protocol = "") { rewrite     ^   https://$server_name$request_uri? permanent;}
+
+	root /home/pi/repos/polytunnel-monitor/webui/build;
+
+	server_name polytunnel2.gsej.co.uk;
+
+	location / {
+	    try_files $uri;
+	}
+
+
+	location ~* .(ogg|ogv|svg|svgz|eot|otf|woff|mp4|ttf|css|rss|atom|js|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|bmp|rtf)$ {
+	   # access_log off;
+	  #  log_not_found off;
+	  #  expires max;
+	}
+
+add_header Strict-Transport-Security "max-age=31449600; includeSubDomains" always;
+add_header Content-Security-Policy "object-src 'none'; script-src 'self' ; script-src-elem 'self' ; frame-ancestors 'none'; base-uri 'self'; require-trusted-types-for 'script';" always;
+add_header X-Frame-Options "DENY" always;	
+add_header X-Content-Type-Options "nosniff" always;
+add_header Referrer-Policy "strict-origin" always;
+add_header Feature-Policy "microphone 'none'; geolocation 'none'; camera 'none'" always;
+add_header Permissions-Policy "microphone=(), geolocation=(), camera=()" always;
+}
