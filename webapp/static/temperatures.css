@@ -50,15 +50,28 @@ input[type=radio] {
   background: #EEE;
   padding: 4px 12px;
   display: inline-block;
-
   margin-right: 3px;
 }
 
 input[type=radio]:checked + label {     /* white background for selected tab */
   background: #FFF;
 }
+
 .canvas-container {
     width: 80vw;
     height: 75vh;
     position: relative;
+}
+
+input[type=checkbox] {
+    opacity: 0;
+    position: absolute;
+}
+
+.checkbox-label {
+  border: 1px solid #999;
+  background: #EEE;
+  padding: 4px 12px;
+  display: inline-block;
+  margin-right: 3px;
 }
