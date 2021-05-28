@@ -52,7 +52,7 @@ def currentTemperatures():
     outside = readOutsideTemperature()
     outsideTemperature = "Unavailable" if outside is None else "%.1f" % outside
 
-    relativeHumidity = readRelativeHumidityTemperature()
+    relativeHumidity = readRelativeHumidity()
     relativeHumidity = "Unavailable" if relativeHumidity is None else "%.1f" % outside
 
     altInsideTemperature = readAltInsideTemperature()
