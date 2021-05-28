@@ -1,6 +1,6 @@
 import os                                                  # import os module
 import time                                                # import time module
-import datetime
+import smbus
 
 os.system('modprobe w1-gpio')                              # load one wire communication device kernel modules
 os.system('modprobe w1-therm')                                                 
@@ -21,6 +21,8 @@ def readOutsideTemperature():
    else:
       return None
 
+
+
 def read_temp_raw(device_file):
    f = open(device_file, 'r')
    lines = f.readlines()                                   # read the device details
@@ -40,3 +42,47 @@ def read_temp(device_file):
 
 def device_present(device_file):
    return os.path.isfile(device_file)
+
+def readAltInsideTemperature():
+   sht30Data = readFromSHT30()
+
+   if (sht30Data == None):
+      return None
+   
+   temperature = ((((sht30Data[0] * 256.0) + sht30Data[1]) * 175) / 65535.0) - 45
+   return temperature
+
+
+def readRelativeHumidity():
+   sht30Data = readFromSHT30()
+
+   if (sht30Data == None):
+      return None
+
+   humidity = 100 * (sht30Data[3] * 256 + sht30Data[4]) / 65535.0
+   return humidity
+
+def readFromSHT30():
+   # code taken from https://github.com/ControlEverythingCommunity/SHT30
+   # Get I2C bus
+   try:
+      bus = smbus.SMBus(1)
+   except FileNotFoundError:
+      bus = None
+
+   if bus == None:
+      return
+
+   # SHT30 address, 0x44(68)
+   # Send measurement command, 0x2C(44)
+   #		0x06(06)	High repeatability measurement
+   bus.write_i2c_block_data(0x44, 0x2C, [0x06])
+
+   time.sleep(0.5)
+
+   # SHT30 address, 0x44(68)
+   # Read data back from 0x00(00), 6 bytes
+   # cTemp MSB, cTemp LSB, cTemp CRC, Humididty MSB, Humidity LSB, Humidity CRC
+   data = bus.read_i2c_block_data(0x44, 0x00, 6)
+
+   return data
