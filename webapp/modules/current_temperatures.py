@@ -9,6 +9,8 @@ os.system('modprobe w1-therm')
 outsideProbe = '/sys/bus/w1/devices/28-3c01d075ef09/w1_slave'
 insideProbe = '/sys/bus/w1/devices/28-3c01d075334f/w1_slave'
 
+commandSent = False
+
 def readInsideTemperature():
    if (device_present(insideProbe)):
       return read_temp(insideProbe)
@@ -76,7 +78,9 @@ def readFromSHT30():
    # SHT30 address, 0x44(68)
    # Send measurement command, 0x2C(44)
    #		0x06(06)	High repeatability measurement
-   bus.write_i2c_block_data(0x44, 0x2C, [0x06])
+   if (commandSent == False):
+      bus.write_i2c_block_data(0x44, 0x2C, [0x06])
+      commandSent = True
 
    time.sleep(0.5)
 
