@@ -4,8 +4,7 @@ import json
 from flask import Flask, render_template, redirect, url_for, jsonify
 import os
 
-
-from current_temperatures import readInsideTemperature, readOutsideTemperature
+from current_temperatures import readInsideTemperature, readOutsideTemperature, readRelativeHumidity, readAltInsideTemperature
 from pistats import Stats
 from temperature_data import getTemperatureData
 
@@ -27,7 +26,12 @@ def temperatures():
     insideTemperature = "Unavailable" if inside is None else "%.1f" % inside;
     outside = readOutsideTemperature()
     outsideTemperature = "Unavailable" if outside is None else "%.1f" % outside
-    return render_template('temperatures.html', insideTemperature=insideTemperature, outsideTemperature=outsideTemperature)
+
+    relativeHumidity = readRelativeHumidity()
+    relativeHumidity = "Unavailable" if relativeHumidity is None else "%.1f" % outside
+    altInsideTemperature = readAltInsideTemperature()
+    altInsideTemperature = "Unavailable" if altInsideTemperature is None else "%.1f" % outside
+    return render_template('temperatures.html', insideTemperature=insideTemperature, outsideTemperature=outsideTemperature, relativeHumidity=relativeHumidity, altInsideTemperature=altInsideTemperature)
 
 @app.route('/tunnelcam')
 def tunnelcam():
@@ -48,9 +52,17 @@ def currentTemperatures():
     outside = readOutsideTemperature()
     outsideTemperature = "Unavailable" if outside is None else "%.1f" % outside
 
+    relativeHumidity = readRelativeHumidityTemperature()
+    relativeHumidity = "Unavailable" if relativeHumidity is None else "%.1f" % outside
+
+    altInsideTemperature = readAltInsideTemperature()
+    altInsideTemperature = "Unavailable" if altInsideTemperature is None else "%.1f" % outside
+
     result = { 
         "insideTemperature": insideTemperature,
-        "outsideTemperature": outsideTemperature
+        "outsideTemperature": outsideTemperature,
+        "relativeHumidity": relativeHumidity,
+        "altInsideTemperature": altInsideTemperature,
     }
     return jsonify(result)
 
