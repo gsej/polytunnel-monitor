@@ -10,11 +10,11 @@ server {
 
 	server_name polytunnel.gsej.co.uk;
 
-	location /api/static {
+	location /static {
 	    alias /home/pi/repos/polytunnel-monitor/webapi/static;
 	}
 
-	location /api {
+	location / {
 	    try_files $uri @wsgi;
 	}
 
