@@ -13,3 +13,7 @@ body {
 section {
   text-align: center;
 }
+
+.tab-container {
+  margin: 1em 0;
+}

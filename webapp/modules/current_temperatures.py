@@ -65,6 +65,7 @@ def readRelativeHumidity():
    return humidity
 
 def readFromSHT30():
+   return None
    # code taken from https://github.com/ControlEverythingCommunity/SHT30
    # Get I2C bus
    try:
@@ -73,7 +74,7 @@ def readFromSHT30():
       bus = None
 
    if bus == None:
-      return
+      return None
 
    # SHT30 address, 0x44(68)
    # Send measurement command, 0x2C(44)
