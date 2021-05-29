@@ -6,15 +6,15 @@ server {
 	ssl_certificate_key /etc/letsencrypt/live/polytunnel.gsej.co.uk/privkey.pem;
 	# if ($ssl_protocol = "") { rewrite     ^   https://$server_name$request_uri? permanent;}
 
-	root /home/pi/repos/polytunnel-monitor/webapp;
+	root /home/pi/repos/polytunnel-monitor/webapi;
 
 	server_name polytunnel.gsej.co.uk;
 
-	location /static {
-	    alias /home/pi/repos/polytunnel-monitor/webapp/static;
+	location /api/static {
+	    alias /home/pi/repos/polytunnel-monitor/webapi/static;
 	}
 
-	location / {
+	location /api {
 	    try_files $uri @wsgi;
 	}
 
