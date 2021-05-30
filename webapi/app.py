@@ -2,6 +2,7 @@ import sys
 sys.path.append('modules')
 import json
 from flask import Flask, render_template, redirect, url_for, jsonify
+from flask_cors import CORS, cross_origin
 import os
 
 from current_temperatures import readInsideTemperature, readOutsideTemperature, readRelativeHumidity, readAltInsideTemperature
@@ -9,6 +10,8 @@ from pistats import Stats
 from temperature_data import getTemperatureData
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
 def index():
@@ -45,6 +48,7 @@ def tunnelcam():
     return render_template('tunnelcam.html', latestImageUrl=latestImageUrl)
 
 @app.route('/api/currenttemperatures')
+@cross_origin()
 def currentTemperatures():
     inside = readInsideTemperature();
     insideTemperature = "Unavailable" if inside is None else "%.1f" % inside;

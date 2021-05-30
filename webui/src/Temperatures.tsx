@@ -56,7 +56,7 @@ this.getCurrentTemperatures();
   }
 
   getCurrentTemperatures() {
-    fetch('api/currenttemperatures')
+    fetch('http://api.polytunnel2.gsej.co.uk/api/currenttemperatures')
       .then(response => response.json())
       .then(currentTemperatures => {
         this.setState({
