@@ -25,6 +25,8 @@ class Stats:
     def fanspeed(self):
         # reads speed of PiCoolFAN4
 
+        return -1
+
         if self.i2c != None:
             speed = self.i2c.read_word_data(0x60, 0x02)
             if (speed > 32768):

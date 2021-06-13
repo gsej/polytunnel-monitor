@@ -4,10 +4,8 @@ import datetime
 
 currentUtcTime = datetime.datetime.utcnow().isoformat()
 
-filename = datetime.datetime.utcnow().isoformat() + ".jpg"
-
-print("taking picture " + filename)
-
-os.system("raspistill -o ./photos/" + filename)
+jpgFilename = datetime.datetime.utcnow().isoformat() + ".jpg"
+print("taking picture " + jpgFilename)
+os.system("raspistill -o ./photos/" + jpgFilename)
 
 print("completed")
