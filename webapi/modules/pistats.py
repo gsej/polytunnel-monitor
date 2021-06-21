@@ -25,6 +25,7 @@ class Stats:
     def fanspeed(self):
         # reads speed of PiCoolFAN4
 
+
         return -1
 
         if self.i2c != None:
