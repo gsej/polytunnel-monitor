@@ -51,6 +51,8 @@ export class Temperatures extends React.Component {
 
   componentDidMount() {
     this.setState(this.state);
+
+this.getCurrentTemperatures();
   }
 
   getCurrentTemperatures() {

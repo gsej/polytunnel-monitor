@@ -6,7 +6,7 @@ After=network.target
 User=pi
 Group=www-data
 RuntimeDirectory=gunicorn
-WorkingDirectory=/home/pi/repos/polytunnel-monitor/webapp
+WorkingDirectory=/home/pi/repos/polytunnel-monitor/webapi
 Environment=/home/pi/repos/polytunnel-monitor/venv/bin
 ExecStart=/home/pi/repos/polytunnel-monitor/venv/bin/gunicorn --bind=unix:/home/pi/repos/polytunnel-monitor/tmp/gunicorn.sock --workers=4 app:app
 ExecReload=/bin/kill -s HUP $MAINPID
