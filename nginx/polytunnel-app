@@ -10,6 +10,10 @@ server {
 
 	server_name polytunnel.gsej.co.uk;
 
+	location /nginx_status {
+		stub_status;
+	}
+
 	location /static {
 	    alias /home/pi/repos/polytunnel-monitor/webapi/static;
 	}
