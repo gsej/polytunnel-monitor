@@ -210,8 +210,8 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(currentTemperatures => {
                 document.getElementById("insideTemperature").textContent = currentTemperatures.insideTemperature;
                 document.getElementById("outsideTemperature").textContent = currentTemperatures.outsideTemperature;
-                document.getElementById("relativeHumidity").textContent = currentTemperatures.relativeHumidity;
-                document.getElementById("altInsideTemperature").textContent = currentTemperatures.altInsideTemperature;
+//                document.getElementById("relativeHumidity").textContent = currentTemperatures.relativeHumidity;
+ //               document.getElementById("altInsideTemperature").textContent = currentTemperatures.altInsideTemperature;
             });
 
         fetch('api/temperatures')
