@@ -19,12 +19,10 @@ import { Temperatures } from './Temperatures';
 
 */
 
-function App() {
+export const App = () => {
   return (
     <main>
       <Temperatures />
     </main>
-  );
-}
-
-export default App;
+  ); 
+};

@@ -7,33 +7,35 @@ import styles from './Temperatures.module.css';
 import { dateRanges } from './dateRanges';
 import { TemperatureChart } from './TemperatureChart';
 
-interface RawTemperatureData {
-  insideTemperature: number | null;
-  outsideTemperature: number | null;
-  timeStamp: string;
-}
+// interface RawTemperatureData {
+//   insideTemperature: number | null;
+//   outsideTemperature: number | null;
+//   timeStamp: string;
+// }
 
-interface TemperatureData {
+// interface TemperatureData {
+//   insideTemperature: number | null;
+//   outsideTemperature: number | null;
+//   timeStamp: Date | null;
+// }
+
+interface State {
+  dateRanges: DateRange[];
+  selectedDateRange: DateRange;
   insideTemperature: number | null;
   outsideTemperature: number | null;
   timeStamp: Date | null;
 }
 
-interface State {
-  dateRanges: DateRange[];
-  selectedDateRange: DateRange;
-  currentTemperatures: TemperatureData;
-}
-
-export class Temperatures extends React.Component {
-
-  state: State;
+export class Temperatures extends React.Component<{}, State> {
+  
   dateRanges = dateRanges;
 
-  allTemperatures = [];
-  currentTime = "current time goes here";
+  //allTemperatures = [];
   handleDateRangeChange = (dateRangeId: string) => {
-    const selectedDateRange = this.dateRanges.find(dateRange => dateRange.dateRangeId === dateRangeId);
+    const selectedDateRange = this.dateRanges
+      .find(dateRange => dateRange.dateRangeId === dateRangeId)
+      || this.dateRanges[0];
 
     this.setState({
       ...this.state,
@@ -47,86 +49,81 @@ export class Temperatures extends React.Component {
     this.state = {
       dateRanges: this.dateRanges,
       selectedDateRange: this.dateRanges[0],
-      currentTemperatures: {
-        insideTemperature: null,
-        outsideTemperature: null,
-        timeStamp: null
-      }
+      insideTemperature: null,
+      outsideTemperature: null,
+      timeStamp: null
     };
   }
 
   componentDidMount() {
     this.setState(this.state);
     this.getCurrentTemperatures();
-    this.getTemperatures();
+    //    this.getTemperatures();
   }
 
   getCurrentTemperatures() {
-    // TODO: move this to configuration somehow
+    // TODO: move this url to configuration somehow
     fetch('http://api.polytunnel2.gsej.co.uk/api/currenttemperatures')
       .then(response => response.json())
       .then(currentTemperatures => {
+
         this.setState({
           ...this.state,
-          currentTemperatures: {
-            insideTemperature: currentTemperatures.insideTemperature,
-            outsideTemperature: currentTemperatures.outsideTemperature,
-            timeStamp: new Date()
-          }
+          insideTemperature: currentTemperatures.insideTemperature,
+          outsideTemperature: currentTemperatures.outsideTemperature,
+          timeStamp: new Date(),
         });
       });
   }
 
-  getTemperatures() {
-    fetch('http://api.polytunnel2.gsej.co.uk/api/temperatures')
-      .then(response => response.json())
-      .then((temperatureData => {
-        // TODO: integrate into state?
-        this.allTemperatures = temperatureData
-          .map((td: RawTemperatureData) => {
-            return {
-              timestamp: new Date(td.timeStamp),
-              outsideTemperature: td.outsideTemperature,
-              insideTemperature: td.insideTemperature
-            }
-          });
-        //filterTemperatures(allTemperatures, page.getSelectedDateRange());
-        const now = new Date();
-        const hours = this.padToTwoDigits(now.getUTCHours());
-        const minutes = this.padToTwoDigits(now.getMinutes());
-        const seconds = this.padToTwoDigits(now.getSeconds());
-        this.currentTime = `${hours}:${minutes}:${seconds}`;
-        })); 
+  // getTemperatures() {
+  //   fetch('http://api.polytunnel2.gsej.co.uk/api/temperatures')
+  //     .then(response => response.json())
+  //     .then((temperatureData => {
+  //       // TODO: integrate into state?
+  //       this.allTemperatures = temperatureData
+  //         .map((td: RawTemperatureData) => {
+  //           return {
+  //             timestamp: new Date(td.timeStamp),
+  //             outsideTemperature: td.outsideTemperature,
+  //             insideTemperature: td.insideTemperature
+  //           }
+  //         });
+  //       //filterTemperatures(allTemperatures, page.getSelectedDateRange());
+  //       const now = new Date();
+  //       const hours = this.padToTwoDigits(now.getUTCHours());
+  //       const minutes = this.padToTwoDigits(now.getMinutes());
+  //       const seconds = this.padToTwoDigits(now.getSeconds());
+  //       this.currentTime = `${hours}:${minutes}:${seconds}`;
+  //       })); 
 
-  }
+  // }
 
   padToTwoDigits(number: number) {
     if (number > 9) { return "" + number; } else { return "0" + number; }
   }
 
-    render() {
-      return (
-        <section>
-          <h1>{this.state.selectedDateRange.label}</h1>
-          <CurrentTemperatures
-            insideTemperature={this.state.currentTemperatures.insideTemperature}
-            outsideTemperature={this.state.currentTemperatures.outsideTemperature}
-          />
-          <div className={styles["tab-container"]}>
-            <DateRangeSelectorList
-              dateRanges={this.state.dateRanges}
-              selectedDateRange={this.state.selectedDateRange}
-              onChange={this.handleDateRangeChange}
-            /></div>
-          <TimeStamp
-            timeStamp={this.state.currentTemperatures.timeStamp}
-          />
-          <TemperatureChart data={this.allTemperatures}>
+  render() {
+    return (
+      <section>
+        <h1>{this.state.selectedDateRange.label}</h1>
+        <CurrentTemperatures
+          insideTemperature={this.state.insideTemperature}
+          outsideTemperature={this.state.outsideTemperature}
+        />
+        <div className={styles["tab-container"]}>
+          <DateRangeSelectorList
+            dateRanges={this.state.dateRanges}
+            selectedDateRange={this.state.selectedDateRange}
+            onChange={this.handleDateRangeChange}
+          /></div>
+        <TimeStamp
+          timeStamp={this.state.timeStamp}
+        />
+        {/* <TemperatureChart data={this.allTemperatures}> </TemperatureChart> */}
 
-          </TemperatureChart>
-
-        </section>
-      );
-    }
-
+      </section>
+    );
   }
+
+}
