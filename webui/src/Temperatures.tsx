@@ -5,6 +5,7 @@ import { DateRangeSelectorList } from './DateRangeSelectorList';
 import { TimeStamp } from './TimeStamp';
 import styles from './Temperatures.module.css';
 import { dateRanges } from './dateRanges';
+import { TemperatureChart } from './TemperatureChart';
 
 interface CurrentReadings {
   insideTemperature: number | null;
@@ -19,11 +20,10 @@ interface State {
 }
 
 export class Temperatures extends React.Component {
-
+ 
+ 
   state: State;
-
   dateRanges = dateRanges;
-
 
   handleDateRangeChange = (dateRangeId: string) => {
     const selectedDateRange = this.dateRanges.find(dateRange => dateRange.dateRangeId === dateRangeId);
@@ -33,7 +33,6 @@ export class Temperatures extends React.Component {
       selectedDateRange
     })
   };
-
 
   constructor(props: any) {
     super(props);
@@ -51,11 +50,11 @@ export class Temperatures extends React.Component {
 
   componentDidMount() {
     this.setState(this.state);
-
-this.getCurrentTemperatures();
+    this.getCurrentTemperatures();
   }
 
   getCurrentTemperatures() {
+    // TODO: move this to configuration somehow
     fetch('http://api.polytunnel2.gsej.co.uk/api/currenttemperatures')
       .then(response => response.json())
       .then(currentTemperatures => {
@@ -89,6 +88,9 @@ this.getCurrentTemperatures();
         <TimeStamp
           timeStamp={this.state.currentTemperatures.timeStamp}
         />
+        <TemperatureChart>        
+          
+        </TemperatureChart>
 
       </section>
     );

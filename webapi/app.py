@@ -5,7 +5,7 @@ from flask import Flask, render_template, redirect, url_for, jsonify
 from flask_cors import CORS, cross_origin
 import os
 
-from current_temperatures import readInsideTemperature, readOutsideTemperature, readRelativeHumidity, readAltInsideTemperature
+from current_temperatures import readInsideTemperature, readOutsideTemperature
 from pistats import Stats
 from temperature_data import getTemperatureData
 
@@ -29,12 +29,7 @@ def temperatures():
     insideTemperature = "Unavailable" if inside is None else "%.1f" % inside;
     outside = readOutsideTemperature()
     outsideTemperature = "Unavailable" if outside is None else "%.1f" % outside
-
-    relativeHumidity = readRelativeHumidity()
-    relativeHumidity = "Unavailable" if relativeHumidity is None else "%.1f" % outside
-    altInsideTemperature = readAltInsideTemperature()
-    altInsideTemperature = "Unavailable" if altInsideTemperature is None else "%.1f" % outside
-    return render_template('temperatures.html', insideTemperature=insideTemperature, outsideTemperature=outsideTemperature, relativeHumidity=relativeHumidity, altInsideTemperature=altInsideTemperature)
+    return render_template('temperatures.html', insideTemperature=insideTemperature, outsideTemperature=outsideTemperature)
 
 @app.route('/tunnelcam')
 def tunnelcam():
@@ -56,17 +51,9 @@ def currentTemperatures():
     outside = readOutsideTemperature()
     outsideTemperature = "Unavailable" if outside is None else "%.1f" % outside
 
-    relativeHumidity = readRelativeHumidity()
-    relativeHumidity = "Unavailable" if relativeHumidity is None else "%.1f" % outside
-
-    altInsideTemperature = readAltInsideTemperature()
-    altInsideTemperature = "Unavailable" if altInsideTemperature is None else "%.1f" % outside
-
     result = { 
         "insideTemperature": insideTemperature,
-        "outsideTemperature": outsideTemperature,
-        "relativeHumidity": relativeHumidity,
-        "altInsideTemperature": altInsideTemperature,
+        "outsideTemperature": outsideTemperature,        
     }
     return jsonify(result)
 

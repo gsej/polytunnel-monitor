@@ -1,90 +1,96 @@
 import React from 'react';
+import { Line } from 'react-chartjs-2';
+import 'chartjs-adapter-date-fns';
+//import { Chart, registerables } from 'chart.js';
+import styles from './TemperatureChart.module.css';
 
-export class TemperatureChart extends React.Component {
+export function TemperatureChart(props: any) {
 
-  data: any;
-  config: any;
+  //Chart.register(...registerables);
+
+  //Chart.defaults.elem0ents.point.radius = 1;
+
+  const data = {
+    datasets: [{
+      label: 'Inside Temperatures',
+      data: [],
+      fill: false,
+      borderColor: 'firebrick',
+      borderWidth: 2,
+      tension: 0,
+      spanGaps: 1000 * 60 * 35, // I don't know what this number represents.
+      parsing: {
+        xAxisKey: 'timestamp',
+        yAxisKey: 'insideTemperature'
+      }
+    },
+    {
+      label: 'Outside Temperatures',
+      data: [],
+      fill: false,
+      borderColor: 'green',
+      borderWidth: 2,
+      tension: 0,
+      spanGaps: 1000 * 60 * 35,
+      parsing: {
+        xAxisKey: 'timestamp',
+        yAxisKey: 'outsideTemperature'
+      }
+    }],
+  }
 
 
-  constructor(props: any) {
-
-    super(props);
-
-    Chart.defaults.elements.point.radius = 1;
-
-    this.data = {
-        datasets: [{
-            label: 'Inside Temperatures',
-            data: [],
-            fill: false,
-            borderColor: 'firebrick',
-            borderWidth: 2,
-            tension: 0,
-            spanGaps: 1000 * 60 * 35, // I don't know what this number represents.
-            parsing: {
-                xAxisKey: 'timestamp',
-                yAxisKey: 'insideTemperature'
-            }
+  const options: any = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom'
+      }
+    },
+    scales: {
+      x: {
+        weight: 0,
+        type: 'time',
+        position: 'bottom',
+        time: {
+          displayFormats: {
+            hour: 'dd MMM HH mm',
+          }
         },
-        {
-            label: 'Outside Temperatures',
-            data: [],
-            fill: false,
-            borderColor: 'green',
-            borderWidth: 2,
-            tension: 0,
-            spanGaps: 1000 * 60 * 35,
-            parsing: {
-                xAxisKey: 'timestamp',
-                yAxisKey: 'outsideTemperature'
-            }
-        }],
-    }
-
-    this.config = {
-        type: 'line',
-
-        data: this.data,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: "bottom"
-                }
-            },
-            scales: {
-                x: {
-                    weight: 0,
-                    type: 'time',
-                    position: 'bottom',
-                    time: {
-                        displayFormats: {
-                            hour: 'dd MMM HH mm',
-                        }
-                    },
-                    ticks: {
-                        minRotation: 90,
-                        source: 'auto'
-                    }
-                },
-            }
+        ticks: {
+          minRotation: 90,
+          source: 'auto'
         }
-    };
-
-    this.chart = new Chart(element, this.config);
+      },
+    }
   }
 
-  render() {
+  // const config: any = {
+  //   type: 'line',
+  //   data: data,
+  //   options: options
+  // }
 
-    return (
-      <div>
-      <script src="static/vendor/chart.min.js"
-  integrity="sha512-BqNYFBAzGfZDnIWSAEGZSD/QFKeVxms2dIBPfw11gZubWwKUjEgmFUtUls8vZ6xTRZN/jaXGHD/ZaxD9+fDo0A=="
-  crossorigin="anonymous"></script>
-      <canvas id="chart" />
-      </div>
-    );
-  }
+  //let chart : Chart;
+
+  // setTimeout(() => {
+  //   console.log("creating chart");
+  //   const element = document.getElementById('chart');
+
+  //   if (!chart && element) {
+  //     chart = new Chart(element, config);
+  //   }
+  //   else {
+  //     //chart.update();
+  //   }
+  // }, 10);
+
+
+  return (
+    <div className={styles.chartContainer}>      
+      <Line data={data} options={options}></Line>
+    </div>
+  );
 
 }

@@ -38,6 +38,6 @@ export const dateRanges: DateRange[] = [
       dateRangeId: "all",
       label: "All",
       displayFormat: "dd MMM HH mm",
-      temperatureFilter: (t: any) => true
+      temperatureFilter: (_: any) => true
     },
   ];
