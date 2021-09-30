@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface Props {
-  timeStamp: Date | null
+  timestamp: Date | null
 }
 
 export class TimeStamp extends React.Component<Props> {
@@ -10,10 +10,10 @@ export class TimeStamp extends React.Component<Props> {
 
     let timestamp = "Unavailable"
 
-    if (this.props.timeStamp) {
-      const hours = this.padToTwoDigits(this.props.timeStamp.getUTCHours());
-      const minutes = this.padToTwoDigits(this.props.timeStamp.getMinutes());
-      const seconds = this.padToTwoDigits(this.props.timeStamp.getSeconds());
+    if (this.props.timestamp) {
+      const hours = this.padToTwoDigits(this.props.timestamp.getUTCHours());
+      const minutes = this.padToTwoDigits(this.props.timestamp.getMinutes());
+      const seconds = this.padToTwoDigits(this.props.timestamp.getSeconds());
       timestamp = `${hours}:${minutes}:${seconds}`
     }
 

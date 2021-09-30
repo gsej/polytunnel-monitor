@@ -6,32 +6,20 @@ import { TimeStamp } from './TimeStamp';
 import styles from './Temperatures.module.css';
 import { dateRanges } from './dateRanges';
 import { TemperatureChart } from './TemperatureChart';
+import { TemperatureEntry } from './TemperatureEntry';
 
-// interface RawTemperatureData {
-//   insideTemperature: number | null;
-//   outsideTemperature: number | null;
-//   timeStamp: string;
-// }
-
-// interface TemperatureData {
-//   insideTemperature: number | null;
-//   outsideTemperature: number | null;
-//   timeStamp: Date | null;
-// }
-
-interface State {
+interface TemperatureState {
   dateRanges: DateRange[];
   selectedDateRange: DateRange;
   insideTemperature: number | null;
   outsideTemperature: number | null;
-  timeStamp: Date | null;
+  timestamp: Date | null;
 }
 
-export class Temperatures extends React.Component<{}, State> {
-  
+export class Temperatures extends React.Component<{}, TemperatureState> {
+
   dateRanges = dateRanges;
 
-  //allTemperatures = [];
   handleDateRangeChange = (dateRangeId: string) => {
     const selectedDateRange = this.dateRanges
       .find(dateRange => dateRange.dateRangeId === dateRangeId)
@@ -51,14 +39,13 @@ export class Temperatures extends React.Component<{}, State> {
       selectedDateRange: this.dateRanges[0],
       insideTemperature: null,
       outsideTemperature: null,
-      timeStamp: null
+      timestamp: null,
     };
   }
 
   componentDidMount() {
     this.setState(this.state);
     this.getCurrentTemperatures();
-    //    this.getTemperatures();
   }
 
   getCurrentTemperatures() {
@@ -71,33 +58,12 @@ export class Temperatures extends React.Component<{}, State> {
           ...this.state,
           insideTemperature: currentTemperatures.insideTemperature,
           outsideTemperature: currentTemperatures.outsideTemperature,
-          timeStamp: new Date(),
+          timestamp: new Date(),
         });
       });
   }
 
-  // getTemperatures() {
-  //   fetch('http://api.polytunnel2.gsej.co.uk/api/temperatures')
-  //     .then(response => response.json())
-  //     .then((temperatureData => {
-  //       // TODO: integrate into state?
-  //       this.allTemperatures = temperatureData
-  //         .map((td: RawTemperatureData) => {
-  //           return {
-  //             timestamp: new Date(td.timeStamp),
-  //             outsideTemperature: td.outsideTemperature,
-  //             insideTemperature: td.insideTemperature
-  //           }
-  //         });
-  //       //filterTemperatures(allTemperatures, page.getSelectedDateRange());
-  //       const now = new Date();
-  //       const hours = this.padToTwoDigits(now.getUTCHours());
-  //       const minutes = this.padToTwoDigits(now.getMinutes());
-  //       const seconds = this.padToTwoDigits(now.getSeconds());
-  //       this.currentTime = `${hours}:${minutes}:${seconds}`;
-  //       })); 
-
-  // }
+  
 
   padToTwoDigits(number: number) {
     if (number > 9) { return "" + number; } else { return "0" + number; }
@@ -118,9 +84,9 @@ export class Temperatures extends React.Component<{}, State> {
             onChange={this.handleDateRangeChange}
           /></div>
         <TimeStamp
-          timeStamp={this.state.timeStamp}
+          timestamp={this.state.timestamp}
         />
-        {/* <TemperatureChart data={this.allTemperatures}> </TemperatureChart> */}
+        <TemperatureChart> </TemperatureChart>
 
       </section>
     );

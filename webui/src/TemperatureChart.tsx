@@ -1,46 +1,55 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-date-fns';
-//import { Chart, registerables } from 'chart.js';
 import styles from './TemperatureChart.module.css';
+import { TemperatureEntry } from './TemperatureEntry';
+import { RawTemperatureEntry } from './RawTemperatureEntry';
 
-export function TemperatureChart(props: any) {
+interface TemperatureChartState {
+  data: any;
+}
 
-  //Chart.register(...registerables);
+export class TemperatureChart extends React.Component<{}, TemperatureChartState> {
 
-  //Chart.defaults.elem0ents.point.radius = 1;
+  state: TemperatureChartState;
+  allTemperatures: TemperatureEntry[] = [];
 
-  const data = {
+  data = {
     datasets: [{
-      label: 'Inside Temperatures',
-      data: [],
-      fill: false,
-      borderColor: 'firebrick',
-      borderWidth: 2,
-      tension: 0,
-      spanGaps: 1000 * 60 * 35, // I don't know what this number represents.
-      parsing: {
-        xAxisKey: 'timestamp',
-        yAxisKey: 'insideTemperature'
-      }
-    },
-    {
-      label: 'Outside Temperatures',
-      data: [],
-      fill: false,
-      borderColor: 'green',
-      borderWidth: 2,
-      tension: 0,
-      spanGaps: 1000 * 60 * 35,
-      parsing: {
-        xAxisKey: 'timestamp',
-        yAxisKey: 'outsideTemperature'
-      }
-    }],
-  }
+       label: 'Inside Temperatures',
+       data:  [
+         { 
+           timestamp: '2021-01-01T10:00',
+           insideTemperature: 10,
+           outsideTemperature: 20
+         },
 
+         { 
+           timestamp: '2021-01-05T10:00',
+           insideTemperature: 10,
+           outsideTemperature: 20
+         },
+         { 
+           timestamp: '2021-01-07T10:00',
+           insideTemperature: 10,
+           outsideTemperature: 20
+         }
 
-  const options: any = {
+       ],
+       fill: false,
+       borderColor: 'firebrick',
+       borderWidth: 2,
+       tension: 0,
+       spanGaps: 1000 * 60 * 35, // I don't know what this number represents.
+       parsing: {
+         xAxisKey: 'timestamp',
+         yAxisKey: 'insideTemperature'
+       }    
+      },
+    ],
+  };
+  
+  options: any = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -66,31 +75,80 @@ export function TemperatureChart(props: any) {
     }
   }
 
-  // const config: any = {
-  //   type: 'line',
-  //   data: data,
-  //   options: options
-  // }
+  constructor(props: any) {
+    super(props);
 
-  //let chart : Chart;
+   // this.data.datasets[0].data = [];
+    //this.data.datasets[1].data = [];
 
-  // setTimeout(() => {
-  //   console.log("creating chart");
-  //   const element = document.getElementById('chart');
+    this.state = {
+      data: this.data
+    }
+    this.setState(this.state);
+  }
 
-  //   if (!chart && element) {
-  //     chart = new Chart(element, config);
-  //   }
-  //   else {
-  //     //chart.update();
-  //   }
-  // }, 10);
+  componentDidMount() {
+    this.setState(this.state);
+    this.getTemperatures();
+  }
+
+  getTemperatures() {
+    fetch('http://api.polytunnel2.gsej.co.uk/api/temperatures')
+      .then(response => response.json())
+      .then(((temperatureData: RawTemperatureEntry[]) => {
+        //       // TODO: integrate into state?
+        this.allTemperatures = temperatureData
+          .map((td: RawTemperatureEntry) => {
+            return {
+              timestamp: new Date(td.timestamp),
+              outsideTemperature: td.outsideTemperature,
+              insideTemperature: td.insideTemperature
+            }
+          });
+      //  this.filterTemperatures(this.allTemperatures );
+      }));
+
+  }
 
 
-  return (
-    <div className={styles.chartContainer}>      
-      <Line data={data} options={options}></Line>
-    </div>
-  );
+  filterTemperatures(allTemperatures: TemperatureEntry[]) {
+//    const dateRange = dateRanges.find(r => r.dateRangeId === this.state.selectedDateRange.dateRangeId);
+    //        page.setHeading(dateRange.label);
+    //chartManager.setDisplayFormat(dateRange.displayFormat);
 
+    let temperaturesToShow = [...allTemperatures];
+
+    if (allTemperatures.length > 200) {
+      temperaturesToShow = temperaturesToShow.slice(0, 180);
+
+    }
+//    temperaturesToShow = allTemperatures;//.filter(dateRange.temperatureFilter);
+
+    // const newState = {data: this.data};
+    // newState.data.datasets[0].data = temperaturesToShow;
+    // newState.data.datasets[1].data = temperaturesToShow;
+
+    // console.log(JSON.stringify(newState));
+    // this.setState({... newState});
+//    chartManager.setData(temperaturesToShow);
+
+
+}
+
+
+  render() {
+
+
+    // https://github.com/reactchartjs/react-chartjs-2/issues/675
+
+
+
+    return (
+
+      <div className={styles.chartContainer}>
+        <Line data={this.state.data} options={this.options}></Line>
+      </div>
+    );
+
+  }
 }
