@@ -1,3 +1,4 @@
+# this is for the all-in-one python site - python api and python templated front end
 server {
 
 	listen 443;
