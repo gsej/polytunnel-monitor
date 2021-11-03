@@ -16,39 +16,39 @@ export class TemperatureChart extends React.Component<{}, TemperatureChartState>
 
   data = {
     datasets: [{
-       label: 'Inside Temperatures',
-       data:  [
-         { 
-           timestamp: '2021-01-01T10:00',
-           insideTemperature: 10,
-           outsideTemperature: 20
-         },
+      label: 'Inside Temperatures',
+      data: [
+        {
+          timestamp: '2021-01-01T10:00',
+          insideTemperature: 10,
+          outsideTemperature: 20
+        },
 
-         { 
-           timestamp: '2021-01-05T10:00',
-           insideTemperature: 10,
-           outsideTemperature: 20
-         },
-         { 
-           timestamp: '2021-01-07T10:00',
-           insideTemperature: 10,
-           outsideTemperature: 20
-         }
+        {
+          timestamp: '2021-01-05T10:00',
+          insideTemperature: 10,
+          outsideTemperature: 20
+        },
+        {
+          timestamp: '2021-01-07T10:00',
+          insideTemperature: 10,
+          outsideTemperature: 20
+        }
 
-       ],
-       fill: false,
-       borderColor: 'firebrick',
-       borderWidth: 2,
-       tension: 0,
-       spanGaps: 1000 * 60 * 35, // I don't know what this number represents.
-       parsing: {
-         xAxisKey: 'timestamp',
-         yAxisKey: 'insideTemperature'
-       }    
-      },
+      ],
+      fill: false,
+      borderColor: 'firebrick',
+      borderWidth: 2,
+      tension: 0,
+      spanGaps: 1000 * 60 * 35, // I don't know what this number represents.
+      parsing: {
+        xAxisKey: 'timestamp',
+        yAxisKey: 'insideTemperature'
+      }
+    },
     ],
   };
-  
+
   options: any = {
     responsive: true,
     maintainAspectRatio: false,
@@ -78,13 +78,13 @@ export class TemperatureChart extends React.Component<{}, TemperatureChartState>
   constructor(props: any) {
     super(props);
 
-   // this.data.datasets[0].data = [];
+    // this.data.datasets[0].data = [];
     //this.data.datasets[1].data = [];
 
     this.state = {
       data: this.data
     }
-    this.setState(this.state);
+    //this.setState(this.state);
   }
 
   componentDidMount() {
@@ -105,35 +105,67 @@ export class TemperatureChart extends React.Component<{}, TemperatureChartState>
               insideTemperature: td.insideTemperature
             }
           });
-      //  this.filterTemperatures(this.allTemperatures );
+        this.filterTemperatures(this.allTemperatures);
       }));
 
   }
 
 
   filterTemperatures(allTemperatures: TemperatureEntry[]) {
-//    const dateRange = dateRanges.find(r => r.dateRangeId === this.state.selectedDateRange.dateRangeId);
+    //    const dateRange = dateRanges.find(r => r.dateRangeId === this.state.selectedDateRange.dateRangeId);
     //        page.setHeading(dateRange.label);
     //chartManager.setDisplayFormat(dateRange.displayFormat);
 
-    let temperaturesToShow = [...allTemperatures];
+    //    let temperaturesToShow = [...allTemperatures];
 
-    if (allTemperatures.length > 200) {
-      temperaturesToShow = temperaturesToShow.slice(0, 180);
+    //    if (allTemperatures.length > 200) {
+    //     temperaturesToShow = temperaturesToShow.slice(0, 180);
 
-    }
-//    temperaturesToShow = allTemperatures;//.filter(dateRange.temperatureFilter);
+    //    }
+    //    temperaturesToShow = allTemperatures;//.filter(dateRange.temperatureFilter);
 
-    // const newState = {data: this.data};
+    const newState = { 
+      data: {
+        datasets: Array<any>()
+      }
+    };
+
+    newState.data.datasets.push(this.state.data.datasets[0])
+    
+    newState.data.datasets[0].data = [
+      {
+        timestamp: '2021-01-01T10:00',
+        insideTemperature: 15,
+        outsideTemperature: 20
+      },
+
+      {
+        timestamp: '2021-01-05T10:00',
+        insideTemperature: 16,
+        outsideTemperature: 20
+      },
+      {
+        timestamp: '2021-01-07T10:00',
+        insideTemperature: 17,
+        outsideTemperature: 20
+      },
+      {
+        timestamp: '2021-01-08T10:00',
+        insideTemperature: 19,
+        outsideTemperature: 20
+      }];
+
+
     // newState.data.datasets[0].data = temperaturesToShow;
     // newState.data.datasets[1].data = temperaturesToShow;
 
     // console.log(JSON.stringify(newState));
-    // this.setState({... newState});
-//    chartManager.setData(temperaturesToShow);
+    this.setState(newState);
+
+    //    chartManager.setData(temperaturesToShow);
 
 
-}
+  }
 
 
   render() {
