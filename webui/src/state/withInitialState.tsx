@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { loadCurrentTemperatures } from "../api";
-import { CurrentTemperatures } from "./CurrentTemperatures";
+import { loadCurrentTemperatures, loadTemperatures } from "./api";
 import { AppState } from "./AppStateContext";
+import { RawTemperatureEntry } from "./RawTemperatureEntry";
 
 type InjectedProps = {
   initialState: AppState;
@@ -34,6 +34,24 @@ const basicInitialState: AppState = {
     outsideTemperature: null,
   },
   timestamp: new Date(),
+  allTemperatures: [
+    {
+      timestamp: new Date('2021-01-01T10:00'),
+      insideTemperature: 10,
+      outsideTemperature: 20
+    },
+
+    {
+      timestamp: new Date('2021-01-05T10:00'),
+      insideTemperature: 10,
+      outsideTemperature: 20
+    },
+    {
+      timestamp: new Date('2021-01-07T10:00'),
+      insideTemperature: 10,
+      outsideTemperature: 20
+    }
+  ]
 };
 
 export function withInitialState<TProps>(
@@ -50,10 +68,18 @@ export function withInitialState<TProps>(
     useEffect(() => {
       const fetchInitialState = async () => {
         try {
-          const currentTemperatures =
-            await loadCurrentTemperatures<CurrentTemperatures>();
+          const currentTemperatures = await loadCurrentTemperatures();
+          const allRawTemperatures = await loadTemperatures();
+          const allTemperatures = allRawTemperatures
+          .map((td: RawTemperatureEntry) => {
+                      return {
+                        timestamp: new Date(td.timestamp),
+                        outsideTemperature: td.outsideTemperature,
+                        insideTemperature: td.insideTemperature
+          }});
+          
 
-          const newState = { ...basicInitialState, currentTemperatures };
+          const newState = { ...basicInitialState, currentTemperatures, allTemperatures };
 
           setInitialState(newState);
         } catch (e: any) {

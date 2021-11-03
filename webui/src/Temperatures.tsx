@@ -12,6 +12,7 @@ export const Temperatures = () => {
     selectedDateRangeId,
     currentTemperatures,
     timestamp,
+    allTemperatures,
     dispatch,
   } = useAppState();
 
@@ -38,7 +39,8 @@ export const Temperatures = () => {
           onChange={handleDateRangeChange}
         ></DateRangeSelector>
       </div>
-      <TemperatureChart> </TemperatureChart>
+      <TemperatureChart
+      allTemperatures={allTemperatures}> </TemperatureChart>
       <TimeStamp timestamp={timestamp} />
     </section>
   );
