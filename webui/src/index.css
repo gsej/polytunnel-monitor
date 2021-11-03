@@ -1,13 +1,22 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --dark-color: #2C3A47; 
+  --light-color: #F8EFBA; 
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+ font-family: 'Fira Code', monospace;
+ background: var(--light-color);
+ color: var(--dark-color);
 }
+
+/* nav {
+  display: flex;
+}
+
+a + a {
+  margin-left: 0.5em;
+}
+
+.github {
+  margin-left: auto;
+} */
