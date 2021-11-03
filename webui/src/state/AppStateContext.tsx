@@ -1,25 +1,20 @@
 import { createContext, useContext, FC, useReducer, Dispatch } from "react";
 import { Action } from "./actions";
 import { appStateReducer } from "./appStateReducer";
+import { CurrentTemperatures } from "./CurrentTemperatures";
 import { DateRange } from "./DateRange";
 
 export type AppState = {
   dateRanges: DateRange[];
   selectedDateRangeId: string;
-  currentTemperatures: {
-    insideTemperature: number | null;
-    outsideTemperature: number | null;
-  };
+  currentTemperatures: CurrentTemperatures;
   timestamp: Date | null;
 };
 
 type AppStateContextProps = {
   dateRanges: DateRange[];
   selectedDateRangeId: string;
-  currentTemperatures: {
-    insideTemperature: number | null;
-    outsideTemperature: number | null;
-  };
+  currentTemperatures: CurrentTemperatures;
   timestamp: Date | null;
   dispatch: Dispatch<Action>;
 };
