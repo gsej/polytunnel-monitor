@@ -1,0 +1,10 @@
+
+
+.temperatures {
+  display: flex;
+  justify-content: center;
+}
+
+.temperatures > div+div {
+    margin-left: 2rem;
+}

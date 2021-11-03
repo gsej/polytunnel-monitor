@@ -6,11 +6,19 @@ import { DateRange } from "./DateRange"
 export type AppState = {
   dateRanges: DateRange[],
   selectedDateRangeId: string
+  currentTemperatures: {
+    insideTemperature: number | null,
+    outsideTemperature: number | null,
+  }
 }
 
 type AppStateContextProps = {
   dateRanges: DateRange[],
   selectedDateRangeId: string,
+  currentTemperatures: {
+    insideTemperature: number | null,
+    outsideTemperature: number | null,
+  },
   dispatch: Dispatch<Action>
 }
 
@@ -37,19 +45,23 @@ const appData: AppState = {
       label: "Who Knows",
     }
   ],
-  selectedDateRangeId: "today" 
+  selectedDateRangeId: "today",
+  currentTemperatures: {
+    insideTemperature: 12.4,
+    outsideTemperature: null
+  }
 };
 
 export const AppStateProvider: FC = ({ children }) => {
 const [state, dispatch] = useReducer(appStateReducer, appData)
-  const { dateRanges, selectedDateRangeId } = state;
+  const { dateRanges, selectedDateRangeId, currentTemperatures,  } = state;
 
   // const getTasksByListId = (id: string) => {
   //   return lists.find((list) => list.id === id)?.tasks || []
   // }
 
   return (
-    <AppStateContext.Provider value={{ dateRanges, selectedDateRangeId, dispatch }}>
+    <AppStateContext.Provider value={{ dateRanges, selectedDateRangeId, currentTemperatures, dispatch }}>
       {children}
     </AppStateContext.Provider>
   )
