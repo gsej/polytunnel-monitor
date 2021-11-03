@@ -1,5 +1,14 @@
     server {
-	listen 80;
+#	listen 80;
+
+   listen 443;
+
+        ssl on;
+
+        ssl_certificate /etc/letsencrypt/live/polytunnel.gsej.co.uk/fullchain.pem;
+
+        ssl_certificate_key /etc/letsencrypt/live/polytunnel.gsej.co.uk/privkey.pem;
+
 
 	root /home/pi/repos/polytunnel-monitor/webui/build;
 
