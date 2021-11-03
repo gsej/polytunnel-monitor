@@ -3,39 +3,42 @@ import { DateRangeSelector } from "./DateRangeSelector";
 import { selectDateRange } from "./state/actions";
 import { useAppState } from "./state/AppStateContext";
 import styles from "./Temperatures.module.css";
+import { TimeStamp } from "./TimeStamp";
 
 export const Temperatures = () => {
-  const { dateRanges, selectedDateRangeId, currentTemperatures, dispatch } = useAppState();
-  
+  const {
+    dateRanges,
+    selectedDateRangeId,
+    currentTemperatures,
+    timestamp,
+    dispatch,
+  } = useAppState();
+
   const handleDateRangeChange = (dateRangeId: string) => {
-	dispatch(selectDateRange(dateRangeId));
+    dispatch(selectDateRange(dateRangeId));
   };
 
-      const selectedDateRange = dateRanges.find(dr => dr.dateRangeId === selectedDateRangeId);
-      const title = selectedDateRange?.label || "Unknown";
+  const selectedDateRange = dateRanges.find(
+    (dr) => dr.dateRangeId === selectedDateRangeId
+  );
+  const title = selectedDateRange?.label || "Unknown";
 
   return (
-
-
-      <section>
-
-        <h1>{title}</h1>
-        <CurrentTemperatures
-          insideTemperature={currentTemperatures.insideTemperature}
-          outsideTemperature={currentTemperatures.outsideTemperature}
-        />
-        <div className={styles["tab-container"]}>
-        {/* <TimeStamp
-          timestamp={this.state.timestamp}
-        />
-        <TemperatureChart> </TemperatureChart> */}
-
-      <DateRangeSelector
-        dateRanges={dateRanges}
-        selectedDateRangeId={selectedDateRangeId}
-	onChange={handleDateRangeChange}
-      ></DateRangeSelector>
+    <section>
+      <h1>{title}</h1>
+      <CurrentTemperatures
+        insideTemperature={currentTemperatures.insideTemperature}
+        outsideTemperature={currentTemperatures.outsideTemperature}
+      />
+      <div className={styles["tab-container"]}>
+        <DateRangeSelector
+          dateRanges={dateRanges}
+          selectedDateRangeId={selectedDateRangeId}
+          onChange={handleDateRangeChange}
+        ></DateRangeSelector>
       </div>
-	</section>
+        {/* <TemperatureChart> </TemperatureChart>  */}
+      <TimeStamp timestamp={timestamp} />
+    </section>
   );
 };

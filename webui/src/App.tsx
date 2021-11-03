@@ -4,7 +4,7 @@ import { Temperatures } from './Temperatures';
 
 export const App = () => {
   return (
-    <main>    app component
+    <main>
       <Temperatures />
     </main>
   );

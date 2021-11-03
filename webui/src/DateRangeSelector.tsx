@@ -15,18 +15,21 @@ export class DateRangeSelector extends React.Component<Props> {
 
   render() {
     return this.props.dateRanges.map((dateRange) => (
-      <span>
-        <input
-          type="radio"
-          name="tab"
-          value={dateRange.dateRangeId}
-          id={dateRange.dateRangeId}
-          checked={dateRange.dateRangeId === this.props.selectedDateRangeId}
-          autoFocus={dateRange.dateRangeId === this.props.selectedDateRangeId}
-          onChange={this.handleChange}
-        />
-        <label htmlFor={dateRange.dateRangeId}>{dateRange.label}</label>
-      </span>
+          <span>
+            <input
+              type="radio"
+              name="tab"
+              key={dateRange.dateRangeId}
+              value={dateRange.dateRangeId}
+              id={dateRange.dateRangeId}
+              checked={dateRange.dateRangeId === this.props.selectedDateRangeId}
+              autoFocus={
+                dateRange.dateRangeId === this.props.selectedDateRangeId
+              }
+              onChange={this.handleChange}
+            />
+            <label htmlFor={dateRange.dateRangeId}>{dateRange.label}</label>
+          </span>
     ));
   }
 }
