@@ -3,6 +3,7 @@ import { Action } from "./actions";
 import { appStateReducer } from "./appStateReducer";
 import { CurrentTemperatures } from "./CurrentTemperatures";
 import { DateRange } from "./DateRange";
+import { withInitialState } from "./withInitialState";
 
 export type AppState = {
   dateRanges: DateRange[];
@@ -50,28 +51,32 @@ const appData: AppState = {
   timestamp: new Date(),
 };
 
-export const AppStateProvider: FC = ({ children }) => {
-  const [state, dispatch] = useReducer(appStateReducer, appData);
-  const { dateRanges, selectedDateRangeId, currentTemperatures, timestamp} = state;
-
-  // const getTasksByListId = (id: string) => {
-  //   return lists.find((list) => list.id === id)?.tasks || []
-  // }
-
-  return (
-    <AppStateContext.Provider
-      value={{
-        dateRanges,
-        selectedDateRangeId,
-        currentTemperatures,
-        timestamp,
-        dispatch,
-      }}
-    >
-      {children}
-    </AppStateContext.Provider>
-  );
+type AppStateProviderProps = {
+  children: React.ReactNode;
+  initialState: AppState;
 };
+
+export const AppStateProvider = withInitialState<AppStateProviderProps>(
+  ({ children, initialState }) => {
+    const [state, dispatch] = useReducer(appStateReducer, initialState);
+    const { dateRanges, selectedDateRangeId, currentTemperatures, timestamp } =
+      state;
+
+    return (
+      <AppStateContext.Provider
+        value={{
+          dateRanges,
+          selectedDateRangeId,
+          currentTemperatures,
+          timestamp,
+          dispatch,
+        }}
+      >
+        {children}
+      </AppStateContext.Provider>
+    );
+  }
+);
 
 export const useAppState = () => {
   return useContext(AppStateContext);
