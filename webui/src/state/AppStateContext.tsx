@@ -12,6 +12,7 @@ export type AppState = {
   currentTemperatures: CurrentTemperatures;
   timestamp: Date | null;
   allTemperatures: TemperatureEntry[];
+  filteredTemperatures: TemperatureEntry[];
 };
 
 type AppStateContextProps = {
@@ -20,6 +21,7 @@ type AppStateContextProps = {
   currentTemperatures: CurrentTemperatures;
   timestamp: Date | null;
   allTemperatures: TemperatureEntry[];
+  filteredTemperatures: TemperatureEntry[];
   dispatch: Dispatch<Action>;
 };
 
@@ -35,7 +37,7 @@ type AppStateProviderProps = {
 export const AppStateProvider = withInitialState<AppStateProviderProps>(
   ({ children, initialState }) => {
     const [state, dispatch] = useReducer(appStateReducer, initialState);
-    const { dateRanges, selectedDateRangeId, currentTemperatures, timestamp, allTemperatures} =
+    const { dateRanges, selectedDateRangeId, currentTemperatures, timestamp, allTemperatures, filteredTemperatures} =
       state;
 
     return (
@@ -46,6 +48,7 @@ export const AppStateProvider = withInitialState<AppStateProviderProps>(
           currentTemperatures,
           timestamp,
           allTemperatures,
+          filteredTemperatures,
           dispatch,
         }}
       >

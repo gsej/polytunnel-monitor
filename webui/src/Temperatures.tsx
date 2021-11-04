@@ -12,7 +12,7 @@ export const Temperatures = () => {
     selectedDateRangeId,
     currentTemperatures,
     timestamp,
-    allTemperatures,
+    filteredTemperatures,
     dispatch,
   } = useAppState();
 
@@ -40,7 +40,9 @@ export const Temperatures = () => {
         ></DateRangeSelector>
       </div>
       <TemperatureChart
-      allTemperatures={allTemperatures}> </TemperatureChart>
+        filteredTemperatures={filteredTemperatures}
+        key={selectedDateRangeId}
+      ></TemperatureChart>
       <TimeStamp timestamp={timestamp} />
     </section>
   );

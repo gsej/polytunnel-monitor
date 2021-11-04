@@ -5,7 +5,8 @@ import styles from "./TemperatureChart.module.css";
 import { TemperatureEntry } from "./state/TemperatureEntry";
 
 interface Props {
-  allTemperatures: TemperatureEntry[];
+  filteredTemperatures: TemperatureEntry[];
+  key: string;
 }
 
 export class TemperatureChart extends React.Component<Props> {
@@ -44,7 +45,7 @@ export class TemperatureChart extends React.Component<Props> {
       datasets: [
         {
           label: "Inside Temperatures",
-          data: props.allTemperatures,
+          data: props.filteredTemperatures,
           fill: false,
           borderColor: "firebrick",
           borderWidth: 2,
@@ -58,7 +59,7 @@ export class TemperatureChart extends React.Component<Props> {
         },
         {
           label: "Outside Temperatures",
-          data: props.allTemperatures,
+          data: props.filteredTemperatures,
           fill: false,
           borderColor: "green",
           borderWidth: 2,
