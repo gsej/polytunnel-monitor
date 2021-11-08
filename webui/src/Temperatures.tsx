@@ -41,7 +41,6 @@ export const Temperatures = () => {
       </div>
       <TemperatureChart
         filteredTemperatures={filteredTemperatures}
-        key={selectedDateRangeId}
       ></TemperatureChart>
       <TimeStamp timestamp={timestamp} />
     </section>

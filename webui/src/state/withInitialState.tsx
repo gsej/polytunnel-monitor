@@ -87,8 +87,7 @@ export function withInitialState<TProps>(
   >
 ) {
   return (props: PropsWithoutInjected<TProps>) => {
-    const [initialState, setInitialState] =
-      useState<AppState>(basicInitialState);
+    const [initialState, setInitialState] = useState<AppState>(basicInitialState);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | undefined>();
 
@@ -98,6 +97,7 @@ export function withInitialState<TProps>(
           const currentTemperatures = await loadCurrentTemperatures();
           const allRawTemperatures = await loadTemperatures();
           const allTemperatures = allRawTemperatures.map(
+            // TODO: can this mapping be avoided?
             (td: RawTemperatureEntry) => {
               return {
                 timestamp: new Date(td.timestamp),
