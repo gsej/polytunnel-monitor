@@ -2,6 +2,7 @@ import { CurrentTemperatures } from "./CurrentTemperatures";
 import { DateRangeSelector } from "./DateRangeSelector";
 import { selectDateRange } from "./state/actions";
 import { useAppState } from "./state/AppStateContext";
+import { TemperatureChart } from "./TemperatureChart";
 import styles from "./Temperatures.module.css";
 import { TimeStamp } from "./TimeStamp";
 
@@ -11,6 +12,7 @@ export const Temperatures = () => {
     selectedDateRangeId,
     currentTemperatures,
     timestamp,
+    filteredTemperatures,
     dispatch,
   } = useAppState();
 
@@ -37,7 +39,9 @@ export const Temperatures = () => {
           onChange={handleDateRangeChange}
         ></DateRangeSelector>
       </div>
-        {/* <TemperatureChart> </TemperatureChart>  */}
+      <TemperatureChart
+        filteredTemperatures={filteredTemperatures}
+      ></TemperatureChart>
       <TimeStamp timestamp={timestamp} />
     </section>
   );

@@ -15,11 +15,12 @@ export class DateRangeSelector extends React.Component<Props> {
 
   render() {
     return this.props.dateRanges.map((dateRange) => (
-          <span>
+          <span
+              key={dateRange.dateRangeId}
+          >
             <input
               type="radio"
               name="tab"
-              key={dateRange.dateRangeId}
               value={dateRange.dateRangeId}
               id={dateRange.dateRangeId}
               checked={dateRange.dateRangeId === this.props.selectedDateRangeId}

@@ -1,4 +1,5 @@
-import { createContext, useContext, FC, useReducer, Dispatch } from "react";
+import { createContext, useContext, useReducer, Dispatch } from "react";
+import { TemperatureEntry } from "./TemperatureEntry";
 import { Action } from "./actions";
 import { appStateReducer } from "./appStateReducer";
 import { CurrentTemperatures } from "./CurrentTemperatures";
@@ -10,6 +11,8 @@ export type AppState = {
   selectedDateRangeId: string;
   currentTemperatures: CurrentTemperatures;
   timestamp: Date | null;
+  allTemperatures: TemperatureEntry[];
+  filteredTemperatures: TemperatureEntry[];
 };
 
 type AppStateContextProps = {
@@ -17,39 +20,14 @@ type AppStateContextProps = {
   selectedDateRangeId: string;
   currentTemperatures: CurrentTemperatures;
   timestamp: Date | null;
+  allTemperatures: TemperatureEntry[];
+  filteredTemperatures: TemperatureEntry[];
   dispatch: Dispatch<Action>;
 };
 
 const AppStateContext = createContext<AppStateContextProps>(
   {} as AppStateContextProps
 );
-
-const appData: AppState = {
-  dateRanges: [
-    {
-      dateRangeId: "today",
-      label: "Today",
-    },
-    {
-      dateRangeId: "last24hours",
-      label: "Last 24 Hours",
-    },
-    {
-      dateRangeId: "lastweek",
-      label: "Last Week",
-    },
-    {
-      dateRangeId: "whoknows",
-      label: "Who Knows",
-    },
-  ],
-  selectedDateRangeId: "today",
-  currentTemperatures: {
-    insideTemperature: 12.4,
-    outsideTemperature: null,
-  },
-  timestamp: new Date(),
-};
 
 type AppStateProviderProps = {
   children: React.ReactNode;
@@ -59,7 +37,7 @@ type AppStateProviderProps = {
 export const AppStateProvider = withInitialState<AppStateProviderProps>(
   ({ children, initialState }) => {
     const [state, dispatch] = useReducer(appStateReducer, initialState);
-    const { dateRanges, selectedDateRangeId, currentTemperatures, timestamp } =
+    const { dateRanges, selectedDateRangeId, currentTemperatures, timestamp, allTemperatures, filteredTemperatures} =
       state;
 
     return (
@@ -69,6 +47,8 @@ export const AppStateProvider = withInitialState<AppStateProviderProps>(
           selectedDateRangeId,
           currentTemperatures,
           timestamp,
+          allTemperatures,
+          filteredTemperatures,
           dispatch,
         }}
       >
