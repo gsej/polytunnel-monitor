@@ -1,6 +1,6 @@
-import { ChangeEvent, FC, SyntheticEvent } from "react";
+import { ChangeEvent, FC } from "react";
 import { DateRange } from "./state/DateRange";
-import "./DateRangeSelector.module.css";
+import styles from "./DateRangeSelector.module.css";
 
 interface Props {
   dateRanges: DateRange[];
@@ -26,7 +26,7 @@ export const DateRangeSelector: FC<Props> = ({ dateRanges, selectedDateRangeId, 
             autoFocus={dateRange.dateRangeId === selectedDateRangeId}
             onChange={handleChange}
           />
-          <label htmlFor={dateRange.dateRangeId}>{dateRange.label}</label>
+          <label className={styles.label} htmlFor={dateRange.dateRangeId}>{dateRange.label}</label>
         </span>
       ))}
     </div>

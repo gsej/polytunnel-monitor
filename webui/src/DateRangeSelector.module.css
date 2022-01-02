@@ -3,7 +3,7 @@ input[type="radio"] {
   position: absolute;
 }
 
-label {
+.label {
   border: 1px solid #999;
   background: #eee;
   padding: 4px 12px;
