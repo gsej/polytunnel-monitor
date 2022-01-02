@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, SyntheticEvent } from "react";
+import { ChangeEvent, FC } from "react";
 import { DateRange } from "./state/DateRange";
 import "./DateRangeSelector.module.css";
 
