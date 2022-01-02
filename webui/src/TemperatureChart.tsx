@@ -1,14 +1,16 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-date-fns";
 import styles from "./TemperatureChart.module.css";
 import { TemperatureEntry } from "./state/TemperatureEntry";
 
 interface Props {
+  showInside: boolean;
+  showOutside: boolean;
   filteredTemperatures: TemperatureEntry[];
 }
 
-export const TemperatureChart: FC<Props> = ({ filteredTemperatures }) => {
+export const TemperatureChart: FC<Props> = ({ showInside, showOutside, filteredTemperatures }) => {
   const options: any = {
     responsive: true,
     maintainAspectRatio: false,
@@ -36,7 +38,6 @@ export const TemperatureChart: FC<Props> = ({ filteredTemperatures }) => {
   };
 
   const dataTemplate = {
-    allData: [],
     datasets: [
       {
         label: "Inside Temperatures",
@@ -69,47 +70,16 @@ export const TemperatureChart: FC<Props> = ({ filteredTemperatures }) => {
     ],
   };
 
-  const initialState = {
-    showInside: true,
-    showOutside: true,
-    data: dataTemplate,
-  };
-
-  const [state, setState] = useState(initialState);
-
-  if (state.data.allData !== filteredTemperatures) {
-    const newData = JSON.parse(JSON.stringify(dataTemplate));
-    newData.allData = filteredTemperatures;
-     newData.datasets[0].data = state.showInside ? filteredTemperatures : [];
-     newData.datasets[1].data = state.showOutside ? filteredTemperatures : [];
-
-    setState({ ...state, data: newData });
-  }
-
-  function handleInsideChange(show: boolean): void {
-     const newData = JSON.parse(JSON.stringify(state.data));
-     newData.datasets[0].data = show ? filteredTemperatures : [];
-     setState({ ...state, data: newData, showInside: show });
-  }
-
-  function handleOutsideChange(show: boolean): void {
-     const newData = JSON.parse(JSON.stringify(state.data));
-     newData.datasets[1].data = show ? filteredTemperatures : [];
-     setState({ ...state, data: newData, showOutside: show });
-  }
+  const data = JSON.parse(JSON.stringify(dataTemplate));
+  data.datasets[0].data = showInside ? filteredTemperatures : [];
+  data.datasets[1].data = showOutside ? filteredTemperatures : [];
 
   return (
     <div>
       <div className={styles.container}>
         <div className={styles.chartContainer}>
-          <Line data={state.data} options={options}></Line>
+          <Line data={data} options={options}></Line>
         </div>
-      </div>
-      <div className={styles.checkboxContainer}>
-        <label htmlFor="inside">Inside</label>
-        <input type="checkbox" id="inside" name="inside" value="inside" checked={state.showInside} onChange={(event) => handleInsideChange(event.target.checked)} />
-        <label htmlFor="outside">Outside</label>
-        <input type="checkbox" id="outside" name="outside" value="outside" checked={state.showOutside} onChange={(event) => handleOutsideChange(event.target.checked)} />
       </div>
     </div>
   );

@@ -10,6 +10,8 @@ type InjectedProps = {
 type PropsWithoutInjected<TBaseProps> = Omit<TBaseProps, keyof InjectedProps>;
 
 const basicInitialState: AppState = {
+  showInside: true,
+  showOutside: true,
   dateRanges: [
     {
       dateRangeId: "last24",
