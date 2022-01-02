@@ -77,25 +77,25 @@ export const TemperatureChart: FC<Props> = ({ filteredTemperatures }) => {
 
   const [state, setState] = useState(initialState);
 
-  if (state.data.datasets[0].data !== filteredTemperatures) {
+  if (state.data.allData !== filteredTemperatures) {
     const newData = JSON.parse(JSON.stringify(dataTemplate));
     newData.allData = filteredTemperatures;
-    newData.datasets[0].data = filteredTemperatures;
-    newData.datasets[1].data = filteredTemperatures;
+     newData.datasets[0].data = state.showInside ? filteredTemperatures : [];
+     newData.datasets[1].data = state.showOutside ? filteredTemperatures : [];
 
     setState({ ...state, data: newData });
   }
 
   function handleInsideChange(show: boolean): void {
-    // const newData = JSON.parse(JSON.stringify(state.data));
-    // newData.datasets[0].data = show ? filteredTemperatures : [];
-    // setState({ ...state, data: newData, showInside: show });
+     const newData = JSON.parse(JSON.stringify(state.data));
+     newData.datasets[0].data = show ? filteredTemperatures : [];
+     setState({ ...state, data: newData, showInside: show });
   }
 
   function handleOutsideChange(show: boolean): void {
-    // const newData = JSON.parse(JSON.stringify(state.data));
-    // newData.datasets[1].data = show ? filteredTemperatures : [];
-    // setState({ ...state, data: newData, showOutside: show });
+     const newData = JSON.parse(JSON.stringify(state.data));
+     newData.datasets[1].data = show ? filteredTemperatures : [];
+     setState({ ...state, data: newData, showOutside: show });
   }
 
   return (
