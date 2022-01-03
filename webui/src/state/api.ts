@@ -1,5 +1,5 @@
-import { CurrentTemperatures } from "./CurrentTemperatures";
-import { RawTemperatureEntry } from "./RawTemperatureEntry";
+import { CurrentTemperatures } from "./temperatures/CurrentTemperatures";
+import { RawTemperatureEntry } from "./temperatures/RawTemperatureEntry";
 
 export const loadCurrentTemperatures = () => {
   return fetch("https://polytunnel.gsej.co.uk/api/currenttemperatures").then((response) => {

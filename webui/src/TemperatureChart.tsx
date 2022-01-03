@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-date-fns";
 import styles from "./TemperatureChart.module.css";
-import { TemperatureEntry } from "./state/TemperatureEntry";
+import { TemperatureEntry } from "./state/temperatures/TemperatureEntry";
 
 interface Props {
   showInside: boolean;

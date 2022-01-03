@@ -1,5 +1,5 @@
 import { ChangeEvent, FC } from "react";
-import { DateRange } from "./state/DateRange";
+import { DateRange } from "./state/temperatures/DateRange";
 import styles from "./DateRangeSelector.module.css";
 
 interface Props {

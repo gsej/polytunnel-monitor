@@ -1,7 +1,7 @@
-import { Action } from "./actions";
-import { AppState } from "./AppStateContext";
+import { TemperatureAction } from "./temperatureActions";
+import { TemperatureState } from "./TemperatureStateContext";
 
-export const appStateReducer = (state: AppState, action: Action): AppState => {
+export const temperatureStateReducer = (state: TemperatureState, action: TemperatureAction): TemperatureState => {
   switch (action.type) {
     case "SELECT_DATERANGE": {
       const selectedDateRange = state.dateRanges.find((dateRange) => dateRange.dateRangeId === action.payload);
