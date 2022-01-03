@@ -1,16 +1,18 @@
+import { Link} from "react-router-dom";
 import styles from "./Navigation.module.css";
 
-export const Navigation  = () => {
-
+export const Navigation = () => {
   return (
-    <nav>
-        <a href="/temperatures">temperatures</a>
-        <a href="/tunnelcam">tunnelcam</a>
-        <a href="/pi">pi</a>
-        <a href="/nginx_status">nginx</a>
+      <nav>
+        <Link to="/temperatures">temperatures</Link>
+        <Link to="/tunnelcam">tunnelcam</Link>
+        <Link to="/pi">pi</Link>
+        <Link to="/nginx_status">nginx</Link>
         <div className={styles.github}>
-            <a href="https://github.com/gsej/polytunnel-monitor"><img alt="github icon" src="GitHub-Mark-32px.png" /></a>
+          <a href="https://github.com/gsej/polytunnel-monitor">
+            <img alt="github icon" src="GitHub-Mark-32px.png" />
+          </a>
         </div>
-    </nav>
+      </nav>
   );
 };
