@@ -1,0 +1,15 @@
+nav {
+  display: flex;
+}
+
+a {
+    color: var(--dark-color);
+}
+
+a + a {
+  margin-left: 0.5em;
+}
+
+.github {
+  margin-left: auto;
+}

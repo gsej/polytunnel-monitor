@@ -1,11 +1,12 @@
-import './App.css';
-import { Temperatures } from './Temperatures';
-
+import "./App.css";
+import { Navigation } from "./Navigation";
+import { Temperatures } from "./Temperatures";
 
 export const App = () => {
   return (
     <main>
+      <Navigation />
       <Temperatures />
     </main>
   );
-}
+};
