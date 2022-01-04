@@ -13,35 +13,6 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-@app.route('/')
-def index():
-    return redirect(url_for('temperatures'))
-
-@app.route('/pi')
-def pi():
-    stats = Stats()
-    rasp_info = stats.get_stats()
-    return render_template('pi.html', stats = rasp_info)
-
-@app.route('/temperatures')
-def temperatures():
-    inside = readInsideTemperature();
-    insideTemperature = "Unavailable" if inside is None else "%.1f" % inside;
-    outside = readOutsideTemperature()
-    outsideTemperature = "Unavailable" if outside is None else "%.1f" % outside
-    return render_template('temperatures.html', insideTemperature=insideTemperature, outsideTemperature=outsideTemperature)
-
-@app.route('/tunnelcam')
-def tunnelcam():
-
-    files = os.listdir("./static/photos/")
-    jpgs = list(filter(lambda x:x.endswith("jpg"), files))
-    jpgs.sort(reverse = True)
-
-    latestImageUrl = url_for("static", filename="photos/" + jpgs[0])
-
-    return render_template('tunnelcam.html', latestImageUrl=latestImageUrl)
-
 @app.route('/api/currenttemperatures')
 @cross_origin() 
 def currentTemperatures():
@@ -83,6 +54,6 @@ def tunnelcamurl():
         "url": latestImageUrl
     }
     return jsonify(result)
-    
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
