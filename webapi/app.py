@@ -70,5 +70,19 @@ def pistatus():
     rasp_info = stats.get_stats()
     return jsonify(rasp_info)
 
+@app.route('/api/tunnelcam')
+def tunnelcamurl():
+
+    files = os.listdir("./static/photos/")
+    jpgs = list(filter(lambda x:x.endswith("jpg"), files))
+    jpgs.sort(reverse = True)
+
+    latestImageUrl = url_for("static", filename="photos/" + jpgs[0])
+
+    result = {
+        "url": latestImageUrl
+    }
+    return jsonify(result)
+    
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
