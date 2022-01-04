@@ -4,7 +4,7 @@ import { RawTemperatureEntry } from "./temperatures/RawTemperatureEntry";
 import { TunnelCamImage } from "./tunnelcam/TunnelCamImage";
 
 export const loadCurrentTemperatures = () => {
-  return fetch("https://polytunnel.gsej.co.uk/api/currenttemperatures").then((response) => {
+  return fetch("https://api.polytunnel.gsej.co.uk/api/currenttemperatures").then((response) => {
     if (response.ok) {
       return response.json() as Promise<CurrentTemperatures>;
     } else {
@@ -14,7 +14,7 @@ export const loadCurrentTemperatures = () => {
 };
 
 export const loadTemperatures= () => {
-  return fetch("https://polytunnel.gsej.co.uk/api/temperatures").then((response) => {
+  return fetch("api.https://polytunnel.gsej.co.uk/api/temperatures").then((response) => {
     if (response.ok) {
       return response.json() as Promise<RawTemperatureEntry[]>; // TODO: map this before returning???
     } else {
@@ -24,7 +24,7 @@ export const loadTemperatures= () => {
 };
 
 export const loadPiStatus = () => {
-  return fetch("https://polytunnel.gsej.co.uk/api/pistatus").then((response) => {
+  return fetch("https://api.polytunnel.gsej.co.uk/api/pistatus").then((response) => {
     if (response.ok) {
       return response.json() as Promise<PiState>; 
     } else {
@@ -34,7 +34,7 @@ export const loadPiStatus = () => {
 };
 
 export const loadTunnelCam = () => {
-  return fetch("https://polytunnel.gsej.co.uk/api/tunnelcam").then((response) => {
+  return fetch("https://api.polytunnel.gsej.co.uk/api/tunnelcam").then((response) => {
     if (response.ok) {
       return response.json() as Promise<TunnelCamImage>; 
     } else {
