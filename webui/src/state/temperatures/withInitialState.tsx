@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
-import { loadCurrentTemperatures, loadTemperatures } from "./api";
-import { AppState } from "./AppStateContext";
+import { loadCurrentTemperatures, loadTemperatures } from "../api";
+import { TemperatureState } from "./TemperatureStateContext";
 import { RawTemperatureEntry } from "./RawTemperatureEntry";
 
 type InjectedProps = {
-  initialState: AppState;
+  initialState: TemperatureState;
 };
 
 type PropsWithoutInjected<TBaseProps> = Omit<TBaseProps, keyof InjectedProps>;
 
-const basicInitialState: AppState = {
+const basicInitialState: TemperatureState = {
+  showInside: true,
+  showOutside: true,
   dateRanges: [
     {
       dateRangeId: "last24",
@@ -87,7 +89,7 @@ export function withInitialState<TProps>(
   >
 ) {
   return (props: PropsWithoutInjected<TProps>) => {
-    const [initialState, setInitialState] = useState<AppState>(basicInitialState);
+    const [initialState, setInitialState] = useState<TemperatureState>(basicInitialState);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | undefined>();
 

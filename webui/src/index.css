@@ -8,15 +8,3 @@ body {
  background: var(--light-color);
  color: var(--dark-color);
 }
-
-/* nav {
-  display: flex;
-}
-
-a + a {
-  margin-left: 0.5em;
-}
-
-.github {
-  margin-left: auto;
-} */
