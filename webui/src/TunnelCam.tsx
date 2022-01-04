@@ -6,7 +6,7 @@ export const TunnelCam = () => {
       <section>
         <h1>Tunnelcam - Latest Hourly Image</h1>
         <div className="camera">
-          <img alt="latest photo of polytunnel" src="{{ latestImageUrl }}" title="{{ latestImageUrl }}" />
+          <img alt="latest view of polytunnel" src="{{ latestImageUrl }}" title="{{ latestImageUrl }}" />
         </div>
       </section>
     </div>
