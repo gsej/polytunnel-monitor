@@ -48,7 +48,8 @@ def tunnelcamurl():
     jpgs = list(filter(lambda x:x.endswith("jpg"), files))
     jpgs.sort(reverse = True)
 
-    latestImageUrl = url_for("static", filename="photos/" + jpgs[0])
+    # TODO: need to fix this hack....
+    latestImageUrl = "https://api.polytunnel.gsej.co.uk/static/photos" + jpgs[0];
 
     result = {
         "url": latestImageUrl
