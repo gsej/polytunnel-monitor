@@ -1,11 +1,6 @@
-import { createContext, useContext, useReducer, Dispatch } from "react";
-import { PiAction } from "./piActions";
+import { createContext, useContext, useState } from "react";
 import { PiState } from "./PiState";
-import { piStateReducer } from "./piStateReducer";
 import { withInitialState } from "./withInitialState";
-
-//TODO: should this actually be about PiProps rather than state? 
-
 
 type PiStateContextProps = {
   node: string;
@@ -19,7 +14,6 @@ type PiStateContextProps = {
     used: string;
     available: string;
   };
-  dispatch: Dispatch<PiAction>;
 };
 
 const PiStateContext = createContext<PiStateContextProps>(
@@ -33,7 +27,8 @@ type PiStateProviderProps = {
 
 export const PiStateProvider = withInitialState<PiStateProviderProps>(
   ({ children, initialState }) => {
-    const [state, dispatch] = useReducer(piStateReducer, initialState);
+    //const [state] = useReducer(piStateReducer, initialState);
+    const [state] = useState(initialState);
 
     return (
       <PiStateContext.Provider
@@ -45,7 +40,6 @@ export const PiStateProvider = withInitialState<PiStateProviderProps>(
           memory: state.memory,
           temperature: state.temperature,
           disk: state.disk,
-          dispatch
         }}
       >
         {children}
