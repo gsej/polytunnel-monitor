@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { loadPiState } from "../api";
+import { loadPiStatus } from "../api";
 import { PiState } from "./PiState";
 
 type InjectedProps = {
@@ -35,7 +35,7 @@ export function withInitialState<TProps>(
     useEffect(() => {
       const fetchInitialState = async () => {
         try {
-          const piState = await loadPiState();
+          const piState = await loadPiStatus();
         setInitialState(piState);
         } catch (e: any) {
           setError(e);

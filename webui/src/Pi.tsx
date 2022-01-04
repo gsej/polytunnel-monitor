@@ -22,7 +22,7 @@ export const Pi: FC = () => {
           <ul>
             <li>{memory} of memory used</li>
             <li>{cpu} of CPU used</li>
-            <li>cpu temperature {temperature}</li>
+            <li>cpu temperature <span dangerouslySetInnerHTML={{ __html: temperature }}></span></li>
             <li>fan speed {fanspeed}</li>
           </ul>
         </section>
