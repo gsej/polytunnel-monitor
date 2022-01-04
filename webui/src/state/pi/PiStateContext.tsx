@@ -27,7 +27,6 @@ type PiStateProviderProps = {
 
 export const PiStateProvider = withInitialState<PiStateProviderProps>(
   ({ children, initialState }) => {
-    //const [state] = useReducer(piStateReducer, initialState);
     const [state] = useState(initialState);
 
     return (
