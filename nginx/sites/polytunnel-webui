@@ -12,7 +12,7 @@
 
 	root /home/pi/repos/polytunnel-monitor/webui/build;
 
-	server_name polytunnel2.gsej.co.uk;
+	server_name polytunnel.gsej.co.uk;
 		
         server_tokens off;		
 

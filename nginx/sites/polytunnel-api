@@ -1,4 +1,4 @@
-# this is for the all-in-one python site - python api and python templated front end
+# this is for the python api
 server {
 
 	listen 443;
@@ -9,7 +9,7 @@ server {
 
 	root /home/pi/repos/polytunnel-monitor/webapi;
 
-	server_name polytunnel.gsej.co.uk;
+	server_name api.polytunnel.gsej.co.uk;
 
 	location /nginx_status {
 		stub_status;
