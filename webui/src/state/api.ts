@@ -22,8 +22,8 @@ export const loadTemperatures= () => {
   });
 };
 
-export const loadPiState = () => {
-  return fetch("https://polytunnel.gsej.co.uk/api/pistate").then((response) => {
+export const loadPiStatus = () => {
+  return fetch("https://polytunnel.gsej.co.uk/api/pistatus").then((response) => {
     if (response.ok) {
       return response.json() as Promise<PiState>; 
     } else {
