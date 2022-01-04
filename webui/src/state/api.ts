@@ -14,7 +14,7 @@ export const loadCurrentTemperatures = () => {
 };
 
 export const loadTemperatures= () => {
-  return fetch("api.https://polytunnel.gsej.co.uk/api/temperatures").then((response) => {
+  return fetch("https://api.polytunnel.gsej.co.uk/api/temperatures").then((response) => {
     if (response.ok) {
       return response.json() as Promise<RawTemperatureEntry[]>; // TODO: map this before returning???
     } else {
