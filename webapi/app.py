@@ -64,8 +64,8 @@ def temperatureData():
     data = getTemperatureData()
     return jsonify([ dict(reading) for reading in data])
 
-@app.route('/api/pistate')
-def pistate():
+@app.route('/api/pistatus')
+def pistatus():
     stats = Stats()
     rasp_info = stats.get_stats()
     return jsonify(rasp_info)
