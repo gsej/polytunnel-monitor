@@ -1,4 +1,4 @@
-import { TemperatureAction } from "./temperatureActions";
+import { TemperatureAction } from "./temperatureAction";
 import { TemperatureState } from "./TemperatureStateContext";
 
 export const temperatureStateReducer = (state: TemperatureState, action: TemperatureAction): TemperatureState => {

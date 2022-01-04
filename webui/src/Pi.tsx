@@ -13,7 +13,6 @@ interface State {
     used: string;
     available: string;
   };
-  //  onChange: (dateRangeId: string) => void;
 }
 
 // TODO: figure out how to change the colour for the whole page within a child component.......

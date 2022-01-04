@@ -43,7 +43,7 @@ def tunnelcam():
     return render_template('tunnelcam.html', latestImageUrl=latestImageUrl)
 
 @app.route('/api/currenttemperatures')
-@cross_origin()
+@cross_origin() 
 def currentTemperatures():
     inside = readInsideTemperature();
     insideTemperature = "Unavailable" if inside is None else "%.1f" % inside;
@@ -57,14 +57,18 @@ def currentTemperatures():
     }
     return jsonify(result)
 
-
-
 @app.route('/api/temperatures')
 def temperatureData():
     # this is an api endpoint to return temperature data
     
     data = getTemperatureData()
     return jsonify([ dict(reading) for reading in data])
+
+@app.route('/api/pistate')
+def pistate():
+    stats = Stats()
+    rasp_info = stats.get_stats()
+    return jsonify(rasp_info)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer, Dispatch } from "react";
 import { TemperatureEntry } from "./TemperatureEntry";
-import { TemperatureAction } from "./temperatureActions";
+import { TemperatureAction } from "./temperatureAction";
 import { temperatureStateReducer } from "./temperatureStateReducer";
 import { CurrentTemperatures } from "./CurrentTemperatures";
 import { DateRange } from "./DateRange";

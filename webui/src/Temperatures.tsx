@@ -1,7 +1,7 @@
 import { CurrentTemperatures } from "./CurrentTemperatures";
 import { DataSeriesSelector } from "./DataSeriesSelector";
 import { DateRangeSelector } from "./DateRangeSelector";
-import { selectDateRange, setShowInside, setShowOutside } from "./state/temperatures/temperatureActions";
+import { selectDateRange, setShowInside, setShowOutside } from "./state/temperatures/temperatureAction";
 import { useTemperatureState } from "./state/temperatures/TemperatureStateContext";
 import { TemperatureChart } from "./TemperatureChart";
 import styles from "./Temperatures.module.css";
