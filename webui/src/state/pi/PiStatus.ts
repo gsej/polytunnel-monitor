@@ -1,4 +1,4 @@
-export type PiState = {
+export type PiStatus = {
   node: string;
   uptime: string;
   memory: string;

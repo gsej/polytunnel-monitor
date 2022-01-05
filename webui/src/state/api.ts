@@ -1,4 +1,4 @@
-import { PiState } from "./pi/PiState";
+import { PiStatus } from "./pi/PiStatus";
 import { CurrentTemperatures } from "./temperatures/CurrentTemperatures";
 import { RawTemperatureEntry } from "./temperatures/RawTemperatureEntry";
 import { TunnelCamImage } from "./tunnelcam/TunnelCamImage";
@@ -26,7 +26,7 @@ export const loadTemperatures= () => {
 export const loadPiStatus = () => {
   return fetch("https://api.polytunnel.gsej.co.uk/api/pistatus").then((response) => {
     if (response.ok) {
-      return response.json() as Promise<PiState>; 
+      return response.json() as Promise<PiStatus>; 
     } else {
       throw new Error("Something went wrong.");
     }

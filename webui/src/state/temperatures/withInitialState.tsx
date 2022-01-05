@@ -21,10 +21,7 @@ const basicInitialState: TemperatureState = {
         const now = new Date();
         const dayAgo = new Date();
         dayAgo.setHours(dayAgo.getHours() - 24);
-        return (
-          temperatureEntry.timestamp >= dayAgo &&
-          temperatureEntry.timestamp <= now
-        );
+        return temperatureEntry.timestamp >= dayAgo && temperatureEntry.timestamp <= now;
       },
     },
     {
@@ -33,23 +30,9 @@ const basicInitialState: TemperatureState = {
       displayFormat: "HH mm",
       temperatureFilter: (temperatureEntry) => {
         const today = new Date();
-        const startOfDay = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          today.getDate()
-        );
-        const endOfDay = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          today.getDate(),
-          23,
-          59,
-          59
-        );
-        return (
-          temperatureEntry.timestamp >= startOfDay &&
-          temperatureEntry.timestamp <= endOfDay
-        );
+        const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
+        return temperatureEntry.timestamp >= startOfDay && temperatureEntry.timestamp <= endOfDay;
       },
     },
     {
@@ -60,10 +43,7 @@ const basicInitialState: TemperatureState = {
         const now = new Date();
         const weekAgo = new Date();
         weekAgo.setDate(weekAgo.getDate() - 7);
-        return (
-          temperatureEntry.timestamp >= weekAgo &&
-          temperatureEntry.timestamp <= now
-        );
+        return temperatureEntry.timestamp >= weekAgo && temperatureEntry.timestamp <= now;
       },
     },
     {
@@ -83,11 +63,7 @@ const basicInitialState: TemperatureState = {
   filteredTemperatures: [],
 };
 
-export function withInitialState<TProps>(
-  WrappedComponent: React.ComponentType<
-    PropsWithoutInjected<TProps> & InjectedProps
-  >
-) {
+export function withInitialState<TProps>(WrappedComponent: React.ComponentType<PropsWithoutInjected<TProps> & InjectedProps>) {
   return (props: PropsWithoutInjected<TProps>) => {
     const [initialState, setInitialState] = useState<TemperatureState>(basicInitialState);
     const [isLoading, setIsLoading] = useState(true);
@@ -109,19 +85,14 @@ export function withInitialState<TProps>(
             }
           );
 
-          const selectedDateRange = basicInitialState.dateRanges.find(
-            (dateRange) =>
-              dateRange.dateRangeId === basicInitialState.selectedDateRangeId
-          );
-          const filteredTemperatures = allTemperatures.filter(
-            selectedDateRange!.temperatureFilter
-          );
+          const selectedDateRange = basicInitialState.dateRanges.find((dateRange) => dateRange.dateRangeId === basicInitialState.selectedDateRangeId);
+          const filteredTemperatures = allTemperatures.filter(selectedDateRange!.temperatureFilter);
 
           const newState = {
             ...basicInitialState,
             currentTemperatures,
             allTemperatures,
-            filteredTemperatures
+            filteredTemperatures,
           };
 
           setInitialState(newState);

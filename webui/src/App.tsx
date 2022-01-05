@@ -6,7 +6,6 @@ import { TunnelCam } from "./TunnelCam";
 import { Pi } from "./Pi";
 import { Nginx } from "./Nginx";
 import { TemperatureStateProvider } from "./state/temperatures/TemperatureStateContext";
-import { PiStateProvider } from "./state/pi/PiStateContext";
 import { TunnelCamProvider } from "./state/tunnelcam/TunnelCamContext";
 export const App = () => {
   return (
@@ -16,7 +15,7 @@ export const App = () => {
         <Routes>
           <Route path="/temperatures" element={<TemperatureStateProvider><Temperatures /></TemperatureStateProvider>}></Route>
           <Route path="/tunnelcam" element={<TunnelCamProvider><TunnelCam /></TunnelCamProvider>}></Route>
-          <Route path="/pi" element={<PiStateProvider><Pi /></PiStateProvider>}></Route>
+          <Route path="/pi" element={<Pi />}></Route>
           <Route path="/nginx" element={<Nginx />}></Route>
           <Route path="*" element={<Navigate to="/temperatures" />} />
         </Routes>
