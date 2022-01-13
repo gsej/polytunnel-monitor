@@ -7,10 +7,10 @@ import { TemperatureEntry } from "./state/temperatures/TemperatureEntry";
 interface Props {
   showInside: boolean;
   showOutside: boolean;
-  filteredTemperatures: TemperatureEntry[];
+  temperatures: TemperatureEntry[];
 }
 
-export const TemperatureChart: FC<Props> = ({ showInside, showOutside, filteredTemperatures }) => {
+export const TemperatureChart: FC<Props> = ({ showInside, showOutside, temperatures }) => {
   const options: any = {
     responsive: true,
     maintainAspectRatio: false,
@@ -71,8 +71,8 @@ export const TemperatureChart: FC<Props> = ({ showInside, showOutside, filteredT
   };
 
   const data = JSON.parse(JSON.stringify(dataTemplate));
-  data.datasets[0].data = showInside ? filteredTemperatures : [];
-  data.datasets[1].data = showOutside ? filteredTemperatures : [];
+  data.datasets[0].data = showInside ? temperatures : [];
+  data.datasets[1].data = showOutside ? temperatures : [];
 
   return (
     <div>

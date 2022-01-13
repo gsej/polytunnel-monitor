@@ -8,8 +8,7 @@ export type TemperatureState = {
   selectedDateRangeId: string;
   currentTemperatures: CurrentTemperatures;
   timestamp: Date | null;
-  allTemperatures: TemperatureEntry[];
-  filteredTemperatures: TemperatureEntry[];
+  temperatures: TemperatureEntry[];
   showInside: boolean;
   showOutside: boolean;
-};
+}

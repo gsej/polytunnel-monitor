@@ -1,6 +1,6 @@
 import { PiStatus } from "./pi/PiStatus";
 import { CurrentTemperatures } from "./temperatures/CurrentTemperatures";
-import { RawTemperatureEntry } from "./temperatures/RawTemperatureEntry";
+import { TemperatureEntry } from "./temperatures/TemperatureEntry";
 import { TunnelCamImage } from "./tunnelcam/TunnelCamImage";
 
 export const loadCurrentTemperatures = () => {
@@ -16,7 +16,7 @@ export const loadCurrentTemperatures = () => {
 export const loadTemperatureRange = (startDate: string, endDate: string) => {
   return fetch("https://api.polytunnel.gsej.co.uk/api/temperaturerange/" + startDate + "/" + endDate).then((response) => {
     if (response.ok) {
-      return response.json() as Promise<RawTemperatureEntry[]>; // TODO: map this before returning???
+      return response.json() as Promise<TemperatureEntry[]>;
     } else {
       throw new Error("Something went wrong.");
     }

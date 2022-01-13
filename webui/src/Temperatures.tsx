@@ -4,7 +4,6 @@ import { DataSeriesSelector } from "./DataSeriesSelector";
 import { DateRangeSelector } from "./DateRangeSelector";
 import { loadCurrentTemperatures, loadTemperatureRange } from "./state/api";
 import { DateRange } from "./state/temperatures/DateRange";
-import { RawTemperatureEntry } from "./state/temperatures/RawTemperatureEntry";
 import { TemperatureState } from "./state/temperatures/TemperatureState";
 import { TemperatureChart } from "./TemperatureChart";
 import styles from "./Temperatures.module.css";
@@ -59,8 +58,7 @@ export const Temperatures = () => {
       outsideTemperature: null,
     },
     timestamp: new Date(),
-    allTemperatures: [],
-    filteredTemperatures: [],
+    temperatures: [],
   };
   const selectedDateRange = initialState.dateRanges.find((dr) => dr.dateRangeId === initialState.selectedDateRangeId) as DateRange;
   initialState.title = selectedDateRange.label;
@@ -72,28 +70,12 @@ export const Temperatures = () => {
       const currentTemperatures = await loadCurrentTemperatures();
 
       const selectedDateRange = state.dateRanges.find((dr) => dr.dateRangeId === state.selectedDateRangeId) as DateRange;
-      const allRawTemperatures = await loadTemperatureRange(selectedDateRange.startDate, selectedDateRange.endDate);
+      const temperatures = await loadTemperatureRange(selectedDateRange.startDate, selectedDateRange.endDate);
 
-      const t0 = performance.now();
-      const allTemperatures = allRawTemperatures.map(
-        // TODO: can this mapping be avoided?
-        (td: RawTemperatureEntry) => {
-          return {
-            timestamp: new Date(td.timestamp),
-            outsideTemperature: td.outsideTemperature,
-            insideTemperature: td.insideTemperature,
-          };
-        }
-      );
-
-      const t1 = performance.now();
-      console.log("Call to map temperatures took " + (t1 - t0) + " milliseconds.");
-      const filteredTemperatures = allTemperatures;
-
-      setState({ ...state, currentTemperatures, allTemperatures, filteredTemperatures, title: selectedDateRange.label });
+      setState({ ...state, currentTemperatures, temperatures, title: selectedDateRange.label });
     };
     fetchTemperatures();
-  }, [state, state.selectedDateRangeId]);
+  }, [state.selectedDateRangeId]);
 
   const handleDateRangeChange = (selectedDateRangeId: string) => {
     setState({ ...state, selectedDateRangeId });
@@ -114,7 +96,7 @@ export const Temperatures = () => {
       <div className={styles["tab-container"]}>
         <DateRangeSelector dateRanges={state.dateRanges} selectedDateRangeId={state.selectedDateRangeId} onChange={handleDateRangeChange}></DateRangeSelector>
       </div>
-      <TemperatureChart showInside={state.showInside} showOutside={state.showOutside} filteredTemperatures={state.filteredTemperatures}></TemperatureChart>
+      <TemperatureChart showInside={state.showInside} showOutside={state.showOutside} temperatures={state.temperatures}></TemperatureChart>
       <TimeStamp timestamp={state.timestamp} />
       <div>
         <DataSeriesSelector onChangeInside={handleInsideChange} onChangeOutside={handleOutsideChange} showInside={state.showInside} showOutside={state.showOutside}></DataSeriesSelector>
