@@ -49,7 +49,7 @@ def tunnelcamurl():
     jpgs.sort(reverse = True)
 
     # TODO: need to fix this hack....
-    latestImageUrl = "https://api.polytunnel.gsej.co.uk/static/photos" + jpgs[0];
+    latestImageUrl = "https://api.polytunnel.gsej.co.uk/static/photos/" + jpgs[0];
 
     result = {
         "url": latestImageUrl
