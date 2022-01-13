@@ -1,37 +1,60 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import styles from "./Pi.module.css";
-import { usePiState } from "./state/pi/PiStateContext";
+import { loadPiStatus } from "./state/api";
+import { PiStatus } from "./state/pi/PiStatus";
 
 // TODO: figure out how to change the colour for the whole page within a child component.......
 
-export const Pi: FC = () => {
+export const Pi = () => {
 
-  const { node, uptime, memory, cpu, temperature, fanspeed, disk } = usePiState();
+  const initialState: PiStatus = {
+    node: "Unknown",
+    uptime: "Unknown",
+    memory: "Unknown",
+    cpu: "Unknown",
+    temperature: "Unknown",
+    fanspeed: "Unknown",
+    disk: {
+      total: "Unknown",
+      used: "Unknown",
+      available: "Unknown",
+    },
+  };
+
+const [state, setState] = useState(initialState);
+
+useEffect(() => {
+  const fetchInitialState = async () => {
+      const piState = await loadPiStatus();
+      setState(piState);
+  };
+  fetchInitialState();
+}, []);
 
   return (
       <div className={styles["pi-container"]}>
-        <h1>Raspberry Pi ({node})</h1>
+        <h1>Raspberry Pi ({state.node})</h1>
         <section>
           <h2>uptime</h2>
           <ul>
-            <li>{uptime}</li>
+            <li>{state.uptime}</li>
           </ul>
         </section>
         <section>
           <h2>OS info</h2>
           <ul>
-            <li>{memory} of memory used</li>
-            <li>{cpu} of CPU used</li>
-            <li>cpu temperature <span dangerouslySetInnerHTML={{ __html: temperature }}></span></li>
-            <li>fan speed {fanspeed}</li>
+            <li>{state.memory} of memory used</li>
+            <li>{state.cpu} of CPU used</li>
+            <li>cpu temperature <span dangerouslySetInnerHTML={{ __html: state.temperature }}></span></li>
+            <li>fan speed {state.fanspeed}</li>
           </ul>
         </section>
         <section>
           <h2>disk space</h2>
           <ul>
-            <li>{disk.total} total</li>
-            <li>{disk.used} used</li>
-            <li>{disk.available} available</li>
+            <li>{state.disk.total} total</li>
+            <li>{state.disk.used} used</li>
+            <li>{state.disk.available} available</li>
           </ul>
         </section>
       </div>
