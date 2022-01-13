@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Pi.module.css";
 import { loadPiStatus } from "./state/api";
 import { PiStatus } from "./state/pi/PiStatus";
@@ -33,7 +33,13 @@ useEffect(() => {
 
   return (
       <div className={styles["pi-container"]}>
-        <h1>Raspberry Pi ({state.node})</h1>
+        <h1>Raspberry Pi</h1>
+        <section>
+          <h2>host</h2>
+          <ul>
+            <li>{state.node}</li>
+          </ul>
+        </section>
         <section>
           <h2>uptime</h2>
           <ul>
