@@ -1,8 +1,7 @@
-import { TemperatureEntry } from "./TemperatureEntry";
-
 export type DateRange = {
-	dateRangeId: string,
-	label: string,
-	displayFormat: string,
-	temperatureFilter: (temperatureEntry: TemperatureEntry) => boolean
-    }
+  dateRangeId: string;
+  label: string;
+  displayFormat: string;
+  startDate: string;
+  endDate: string;
+};

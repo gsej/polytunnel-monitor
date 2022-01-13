@@ -13,8 +13,8 @@ export const loadCurrentTemperatures = () => {
   });
 };
 
-export const loadTemperatures= () => {
-  return fetch("https://api.polytunnel.gsej.co.uk/api/temperatures").then((response) => {
+export const loadTemperatureRange = (startDate: string, endDate: string) => {
+  return fetch("https://api.polytunnel.gsej.co.uk/api/temperaturerange/" + startDate + "/" + endDate).then((response) => {
     if (response.ok) {
       return response.json() as Promise<RawTemperatureEntry[]>; // TODO: map this before returning???
     } else {
@@ -26,7 +26,7 @@ export const loadTemperatures= () => {
 export const loadPiStatus = () => {
   return fetch("https://api.polytunnel.gsej.co.uk/api/pistatus").then((response) => {
     if (response.ok) {
-      return response.json() as Promise<PiStatus>; 
+      return response.json() as Promise<PiStatus>;
     } else {
       throw new Error("Something went wrong.");
     }
@@ -36,7 +36,7 @@ export const loadPiStatus = () => {
 export const loadTunnelCam = () => {
   return fetch("https://api.polytunnel.gsej.co.uk/api/tunnelcam").then((response) => {
     if (response.ok) {
-      return response.json() as Promise<TunnelCamImage>; 
+      return response.json() as Promise<TunnelCamImage>;
     } else {
       throw new Error("Something went wrong.");
     }
