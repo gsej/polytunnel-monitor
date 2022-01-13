@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { TunnelCam } from "./TunnelCam";
 import { Pi } from "./Pi";
 import { Nginx } from "./Nginx";
-//import { TemperatureStateProvider } from "./state/temperatures/TemperatureStateContext";
 import { TunnelCamProvider } from "./state/tunnelcam/TunnelCamContext";
 export const App = () => {
   return (

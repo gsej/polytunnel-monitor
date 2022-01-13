@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { CurrentTemperatures } from "./CurrentTemperatures";
 import { DataSeriesSelector } from "./DataSeriesSelector";
 import { DateRangeSelector } from "./DateRangeSelector";
-import { loadCurrentTemperatures, loadTemperatureRange, loadTemperatures } from "./state/api";
+import { loadCurrentTemperatures, loadTemperatureRange } from "./state/api";
 import { DateRange } from "./state/temperatures/DateRange";
 import { RawTemperatureEntry } from "./state/temperatures/RawTemperatureEntry";
 import { TemperatureState } from "./state/temperatures/TemperatureState";
@@ -93,7 +93,7 @@ export const Temperatures = () => {
       setState({ ...state, currentTemperatures, allTemperatures, filteredTemperatures, title: selectedDateRange.label });
     };
     fetchTemperatures();
-  }, [state.selectedDateRangeId]);
+  }, [state, state.selectedDateRangeId]);
 
   const handleDateRangeChange = (selectedDateRangeId: string) => {
     setState({ ...state, selectedDateRangeId });
