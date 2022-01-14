@@ -1,14 +1,42 @@
+import { useState } from "react";
+import { CurrentTemperatureState } from "./CurrentTemperatureState";
 import { TemperatureEntry } from "./TemperatureEntry";
-import { CurrentTemperatures } from "./CurrentTemperatures";
-import { DateRange } from "./DateRange";
 
 export type TemperatureState = {
-  title: string;
-  dateRanges: DateRange[];
-  selectedDateRangeId: string;
-  currentTemperatures: CurrentTemperatures;
   timestamp: Date | null;
-  temperatures: TemperatureEntry[];
   showInside: boolean;
   showOutside: boolean;
+}
+
+const initialCurrentTemperatures: CurrentTemperatureState = {
+  insideTemperature: null, 
+  outsideTemperature: null 
+}
+
+export const useCurrentTemperaturesState = () => {
+  return useState(initialCurrentTemperatures);
+}
+
+export const useSelectedDateRangeId = () => {
+  return useState("today" );
+}
+
+const initialState: TemperatureState = {
+  showInside: true,
+  showOutside: true,
+  timestamp: new Date()
+};
+
+export const useInitialState = () => {
+  return useState(initialState);
+}
+
+const initialTemperatures: TemperatureEntry[] = [];
+
+export const useTemperatures = () => {
+  return useState(initialTemperatures);
+}
+
+export const useTitle = () => {
+  return useState("Today");
 }

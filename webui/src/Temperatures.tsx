@@ -1,84 +1,43 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { CurrentTemperatures } from "./CurrentTemperatures";
 import { DataSeriesSelector } from "./DataSeriesSelector";
 import { DateRangeSelector } from "./DateRangeSelector";
 import { loadCurrentTemperatures, loadTemperatureRange } from "./state/api";
 import { DateRange } from "./state/temperatures/DateRange";
-import { TemperatureState } from "./state/temperatures/TemperatureState";
+import { dateRanges } from "./state/temperatures/DateRanges";
+import { useCurrentTemperaturesState, useInitialState, useSelectedDateRangeId, useTemperatures, useTitle } from "./state/temperatures/TemperatureState";
 import { TemperatureChart } from "./TemperatureChart";
 import styles from "./Temperatures.module.css";
 import { TimeStamp } from "./TimeStamp";
 
 export const Temperatures = () => {
-  const today = new Date();
 
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
+  const [title, setTitle] = useTitle();
+  const [state, setState] = useInitialState();
+  const [currentTemperatures, setCurrentTemperatures] = useCurrentTemperaturesState();
+  const [temperatures, setTemperatures] = useTemperatures();
+  const [selectedDateRangeId, setSelectedDateRangeId] = useSelectedDateRangeId();
 
-  const weekAgo = new Date();
-  weekAgo.setDate(weekAgo.getDate() - 7);
-
-  const initialState: TemperatureState = {
-    title: "",
-    showInside: true,
-    showOutside: true,
-    dateRanges: [
-      {
-        dateRangeId: "today",
-        label: "Today",
-        displayFormat: "HH mm",
-        startDate: today.toISOString().substring(0, 10),
-        endDate: today.toISOString().substring(0, 10),
-      },
-      {
-        dateRangeId: "lastTwoDays",
-        label: "Last two days",
-        displayFormat: "HH mm",
-        startDate: yesterday.toISOString().substring(0, 10),
-        endDate: today.toISOString().substring(0, 10),
-      },
-      {
-        dateRangeId: "lastWeek",
-        label: "Last Week",
-        displayFormat: "HH mm",
-        startDate: weekAgo.toISOString().substring(0, 10),
-        endDate: today.toISOString().substring(0, 10),
-      },
-      {
-        dateRangeId: "all",
-        label: "All",
-        displayFormat: "dd MMM HH mm",
-        startDate: "2021-01-01",
-        endDate: "2025-01-01",
-      },
-    ],
-    selectedDateRangeId: "today",
-    currentTemperatures: {
-      insideTemperature: null,
-      outsideTemperature: null,
-    },
-    timestamp: new Date(),
-    temperatures: [],
-  };
-  const selectedDateRange = initialState.dateRanges.find((dr) => dr.dateRangeId === initialState.selectedDateRangeId) as DateRange;
-  initialState.title = selectedDateRange.label;
-
-  const [state, setState] = useState(initialState);
+  useEffect(() => {
+    const fetchCurrentTemperatures = async () => {
+      const currentTemperatures = await loadCurrentTemperatures();
+      setCurrentTemperatures(currentTemperatures);
+    };
+    fetchCurrentTemperatures();
+  }, [setCurrentTemperatures]);
 
   useEffect(() => {
     const fetchTemperatures = async () => {
-      const currentTemperatures = await loadCurrentTemperatures();
-
-      const selectedDateRange = state.dateRanges.find((dr) => dr.dateRangeId === state.selectedDateRangeId) as DateRange;
+      const selectedDateRange = dateRanges.find((dr) => dr.dateRangeId === selectedDateRangeId) as DateRange;
+      setTitle(selectedDateRange.label);
       const temperatures = await loadTemperatureRange(selectedDateRange.startDate, selectedDateRange.endDate);
-
-      setState({ ...state, currentTemperatures, temperatures, title: selectedDateRange.label });
+      setTemperatures(temperatures);
     };
     fetchTemperatures();
-  }, [state.selectedDateRangeId]);
+  }, [selectedDateRangeId, setTemperatures, setTitle]);
 
   const handleDateRangeChange = (selectedDateRangeId: string) => {
-    setState({ ...state, selectedDateRangeId });
+    setSelectedDateRangeId(selectedDateRangeId);
   };
 
   const handleInsideChange = (showInside: boolean) => {
@@ -90,13 +49,15 @@ export const Temperatures = () => {
   };
 
   return (
+
+
     <section>
-      <h1>{state.title}</h1>
-      <CurrentTemperatures insideTemperature={state.currentTemperatures.insideTemperature} outsideTemperature={state.currentTemperatures.outsideTemperature} />
+      <h1>{title}</h1>
+      <CurrentTemperatures insideTemperature={currentTemperatures.insideTemperature} outsideTemperature={currentTemperatures.outsideTemperature} />
       <div className={styles["tab-container"]}>
-        <DateRangeSelector dateRanges={state.dateRanges} selectedDateRangeId={state.selectedDateRangeId} onChange={handleDateRangeChange}></DateRangeSelector>
+        <DateRangeSelector dateRanges={dateRanges} selectedDateRangeId={selectedDateRangeId} onChange={handleDateRangeChange}></DateRangeSelector>
       </div>
-      <TemperatureChart showInside={state.showInside} showOutside={state.showOutside} temperatures={state.temperatures}></TemperatureChart>
+      <TemperatureChart showInside={state.showInside} showOutside={state.showOutside} temperatures={temperatures}></TemperatureChart>
       <TimeStamp timestamp={state.timestamp} />
       <div>
         <DataSeriesSelector onChangeInside={handleInsideChange} onChangeOutside={handleOutsideChange} showInside={state.showInside} showOutside={state.showOutside}></DataSeriesSelector>

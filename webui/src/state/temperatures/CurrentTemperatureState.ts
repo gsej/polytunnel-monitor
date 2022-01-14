@@ -1,4 +1,4 @@
-export type CurrentTemperatures = {
+export type CurrentTemperatureState = {
 	insideTemperature: number | null;
 	outsideTemperature:number | null;
 }
