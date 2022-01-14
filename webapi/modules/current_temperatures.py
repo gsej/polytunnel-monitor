@@ -23,8 +23,6 @@ def readOutsideTemperature():
    else:
       return None
 
-
-
 def read_temp_raw(device_file):
    f = open(device_file, 'r')
    lines = f.readlines()                                   # read the device details
