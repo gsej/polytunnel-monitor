@@ -14,7 +14,7 @@ export const loadCurrentTemperatures = () => {
 };
 
 export const loadTemperatureRange = (startDate: string, endDate: string) => {
-  return fetch("https://api.polytunnel.gsej.co.uk/api/temperaturerange/" + startDate + "/" + endDate).then((response) => {
+  return fetch("https://api.polytunnel.gsej.co.uk/api/temperaturerange/" + startDate + "/" + endDate + "/5").then((response) => {
     if (response.ok) {
       return response.json() as Promise<TemperatureEntry[]>;
     } else {

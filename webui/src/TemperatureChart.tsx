@@ -50,7 +50,7 @@ export const TemperatureChart: FC<Props> = ({ showInside, showOutside, temperatu
         spanGaps: 1000 * 60 * 35, // I don't know what this number represents.
         parsing: {
           xAxisKey: "timestamp",
-          yAxisKey: "insideTemperature",
+          yAxisKey: "inside",
         },
       },
       {
@@ -64,7 +64,7 @@ export const TemperatureChart: FC<Props> = ({ showInside, showOutside, temperatu
         spanGaps: 1000 * 60 * 35,
         parsing: {
           xAxisKey: "timestamp",
-          yAxisKey: "outsideTemperature",
+          yAxisKey: "outside",
         },
       },
     ],

@@ -1,5 +1,5 @@
 export interface TemperatureEntry {
-  insideTemperature: number | null;
-  outsideTemperature: number | null;
+  inside: number | null;
+  outside: number | null;
   timestamp: string;
 }
