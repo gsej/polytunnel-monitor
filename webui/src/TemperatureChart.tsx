@@ -45,7 +45,7 @@ export const TemperatureChart: FC<Props> = ({ showInside, showOutside, temperatu
         data: [],
         fill: false,
         borderColor: "firebrick",
-        borderWidth: 2,
+        borderWidth: 1,
         pointRadius: 1,
         tension: 0,
         spanGaps: 1000 * 60 * 35 * spanGapsMultiplier, // I don't know what this number represents.
@@ -59,7 +59,7 @@ export const TemperatureChart: FC<Props> = ({ showInside, showOutside, temperatu
         data: [],
         fill: false,
         borderColor: "green",
-        borderWidth: 2,
+        borderWidth: 1,
         pointRadius: 1,
         tension: 0,
         spanGaps: 1000 * 60 * 35 * spanGapsMultiplier,

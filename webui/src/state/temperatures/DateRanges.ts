@@ -5,7 +5,6 @@ yesterday.setDate(yesterday.getDate() - 1);
 
 const weekAgo = new Date();
 weekAgo.setDate(weekAgo.getDate() - 7);
-
 const monthAgo = new Date();
 monthAgo.setDate(monthAgo.getDate() - 30);
 
