@@ -1,7 +1,6 @@
 import csv
 import os
 import time
-import glob
 
 class TemperatureReading:
     def __init__(self, timestamp, outside, inside):
@@ -37,7 +36,9 @@ def getTemperatureDataRange(startDate, endDate, decimationFactor):
 
     start = time.time()
 
-    csvFiles = glob.glob(pathname="*.csv", root_dir="../temperature_files/")
+    files = os.listdir("../temperature_files")
+
+    csvFiles = list(filter(lambda filename: filename[-4::] == ".csv", files))
     csvFiles.sort()
 
     matchingFiles = list(filter(lambda filename: endDate >= filename[0:10] >= startDate, csvFiles))
