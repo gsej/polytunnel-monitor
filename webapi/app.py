@@ -1,9 +1,7 @@
 import sys
 sys.path.append('modules')
-import json
-from flask import Flask, render_template, redirect, url_for, jsonify
+from flask import Flask, jsonify
 from flask_cors import CORS, cross_origin
-import logging
 import os
 
 from current_temperatures import readInsideTemperature, readOutsideTemperature
@@ -32,21 +30,14 @@ def currentTemperatures():
 @app.route('/api/temperatures')
 def temperatureData():
     # this is an api endpoint to return temperature data
+    # thi is now obsolete: TODO: remove
     
     data = getTemperatureData()
     return jsonify([ dict(reading) for reading in data])
 
-@app.route('/api/temperaturerange/<startDate>/<endDate>')
-def temperatureDataRange(startDate, endDate):
-    # this is an api endpoint to return temperature data
-    # log = logging.getLogger("App")
-    # logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)s %(threadName)s %(name)s %(message)s")
-    # handler = logging.StreamHandler(sys.stdout)
-    # log.addHandler(handler)
-    # log.debug("start date: !" + startDate + "!")
-    # log.debug("end date: " + endDate)
-
-    data = getTemperatureDataRange(startDate, endDate)
+@app.route('/api/temperaturerange/<startDate>/<endDate>/<decimationFactor>')
+def temperatureDataRange(startDate, endDate, decimationFactor):
+    data = getTemperatureDataRange(startDate, endDate, int(decimationFactor))
     return jsonify([ dict(reading) for reading in data])
 
 @app.route('/api/pistatus')

@@ -1,18 +1,18 @@
 import csv
 import os
-import logging
-import sys
+import time
+import glob
 
 class TemperatureReading:
-    def __init__(self, timestamp, outsideTemperature, insideTemperature):
+    def __init__(self, timestamp, outside, inside):
         self.timestamp = timestamp
-        self.outsideTemperature = outsideTemperature
-        self.insideTemperature = insideTemperature
+        self.outside = outside
+        self.inside = inside
 
     def __iter__(self):
         yield ('timestamp', self.timestamp)
-        yield ('outsideTemperature', self.outsideTemperature)
-        yield ('insideTemperature', self.insideTemperature)
+        yield ('outside', self.outside)
+        yield ('inside', self.inside)
 
 def getTemperatureData():
     readings = []
@@ -32,39 +32,29 @@ def getTemperatureData():
     readings = readings[::5]
     return readings
     
-def getTemperatureDataRange(startDate, endDate):
-    readings = []
+def getTemperatureDataRange(startDate, endDate, decimationFactor):
+    readings = [] 
 
-    # log = logging.getLogger("TemperatureData")
-    # logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(threadName)s %(name)s %(message)s")
+    start = time.time()
 
-    # console = logging.StreamHandler()
-    # console.setLevel(logging.INFO)
-    # log.addHandler(console)
+    csvFiles = glob.glob(pathname="*.csv", root_dir="../temperature_files/")
+    csvFiles.sort()
 
-    # if log.handlers:
-    #     log.handlers.clear()
+    matchingFiles = list(filter(lambda filename: endDate >= filename[0:10] >= startDate, csvFiles))
 
-    files = os.listdir("../temperature_files")
-    # log.info("count of files: " + str(len(files)))
-    files.sort()
-
-    for file in files:
-        if file[-4::] != ".csv":
-            continue
-
-        dateComponent = file[0:10]
-
-        if dateComponent < startDate or dateComponent > endDate:
-            continue
-
-        # log.info("matching file: " + file)
-
+    for file in matchingFiles:
         with open("../temperature_files/" + file) as csvDataFile:
             csvReader = csv.reader(csvDataFile)
+            rowNumber = 0
             for row in csvReader:
+                rowNumber = rowNumber + 1
+                if rowNumber % decimationFactor  != 0:
+                    continue
                 reading = TemperatureReading(row[0], float(row[1]), float(row[2]))
                 readings.append(reading)
-    
-    readings = readings[::5]
+
+    end = time.time()
+
+    print("about to return readings. number of readings from files is ", len(readings), " time taken ", end-start)
+
     return readings
