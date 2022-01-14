@@ -36,7 +36,7 @@ def temperatureData():
     data = getTemperatureData()
     return jsonify([ dict(reading) for reading in data])
 
-@app.route('/api/temperaturesrange/<startDate>/<endDate>')
+@app.route('/api/temperaturerange/<startDate>/<endDate>')
 def temperatureDataRange(startDate, endDate):
     # this is an api endpoint to return temperature data
     # log = logging.getLogger("App")
