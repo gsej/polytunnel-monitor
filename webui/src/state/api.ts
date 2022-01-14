@@ -13,8 +13,8 @@ export const loadCurrentTemperatures = () => {
   });
 };
 
-export const loadTemperatureRange = (startDate: string, endDate: string) => {
-  return fetch("https://api.polytunnel.gsej.co.uk/api/temperaturerange/" + startDate + "/" + endDate + "/5").then((response) => {
+export const loadTemperatureRange = (startDate: string, endDate: string, decimationFactor: number) => {
+  return fetch(`https://api.polytunnel.gsej.co.uk/api/temperaturerange/${startDate}/${endDate}/${decimationFactor}`).then((response) => {
     if (response.ok) {
       return response.json() as Promise<TemperatureEntry[]>;
     } else {

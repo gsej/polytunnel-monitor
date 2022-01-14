@@ -4,4 +4,5 @@ export type DateRange = {
   displayFormat: string;
   startDate: string;
   endDate: string;
+  decimationFactor: number;
 };

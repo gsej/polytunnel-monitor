@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CurrentTemperatures } from "./CurrentTemperatures";
 import { DataSeriesSelector } from "./DataSeriesSelector";
 import { DateRangeSelector } from "./DateRangeSelector";
@@ -11,12 +11,13 @@ import styles from "./Temperatures.module.css";
 import { TimeStamp } from "./TimeStamp";
 
 export const Temperatures = () => {
-
   const [title, setTitle] = useTitle();
   const [state, setState] = useInitialState();
   const [currentTemperatures, setCurrentTemperatures] = useCurrentTemperaturesState();
   const [temperatures, setTemperatures] = useTemperatures();
   const [selectedDateRangeId, setSelectedDateRangeId] = useSelectedDateRangeId();
+
+  const [spanGapsMultiplier, setSpanGapsMultipler] = useState(5);
 
   useEffect(() => {
     const fetchCurrentTemperatures = async () => {
@@ -30,7 +31,8 @@ export const Temperatures = () => {
     const fetchTemperatures = async () => {
       const selectedDateRange = dateRanges.find((dr) => dr.dateRangeId === selectedDateRangeId) as DateRange;
       setTitle(selectedDateRange.label);
-      const temperatures = await loadTemperatureRange(selectedDateRange.startDate, selectedDateRange.endDate);
+      setSpanGapsMultipler(selectedDateRange.decimationFactor / 5);
+      const temperatures = await loadTemperatureRange(selectedDateRange.startDate, selectedDateRange.endDate, selectedDateRange.decimationFactor);
       setTemperatures(temperatures);
     };
     fetchTemperatures();
@@ -49,15 +51,13 @@ export const Temperatures = () => {
   };
 
   return (
-
-
     <section>
       <h1>{title}</h1>
       <CurrentTemperatures insideTemperature={currentTemperatures.insideTemperature} outsideTemperature={currentTemperatures.outsideTemperature} />
       <div className={styles["tab-container"]}>
         <DateRangeSelector dateRanges={dateRanges} selectedDateRangeId={selectedDateRangeId} onChange={handleDateRangeChange}></DateRangeSelector>
       </div>
-      <TemperatureChart showInside={state.showInside} showOutside={state.showOutside} temperatures={temperatures}></TemperatureChart>
+      <TemperatureChart spanGapsMultiplier={spanGapsMultiplier} showInside={state.showInside} showOutside={state.showOutside} temperatures={temperatures}></TemperatureChart>
       <TimeStamp timestamp={state.timestamp} />
       <div>
         <DataSeriesSelector onChangeInside={handleInsideChange} onChangeOutside={handleOutsideChange} showInside={state.showInside} showOutside={state.showOutside}></DataSeriesSelector>
