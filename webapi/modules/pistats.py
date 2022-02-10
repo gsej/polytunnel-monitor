@@ -1,4 +1,3 @@
-from flask import Flask, render_template, request, redirect
 import datetime, psutil, platform, os, json
 import sys
 import smbus
