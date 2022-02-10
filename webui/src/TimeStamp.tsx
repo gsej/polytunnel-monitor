@@ -1,36 +1,25 @@
-import React from 'react';
+import { FC } from "react";
 
 interface Props {
-  timestamp: Date | null
+  timestamp: Date | null;
 }
 
-export class TimeStamp extends React.Component<Props> {
-
-  render() {
-
-    let timestamp = "Unavailable"
-
-    if (this.props.timestamp) {
-      const hours = this.padToTwoDigits(this.props.timestamp.getUTCHours());
-      const minutes = this.padToTwoDigits(this.props.timestamp.getMinutes());
-      const seconds = this.padToTwoDigits(this.props.timestamp.getSeconds());
-      timestamp = `${hours}:${minutes}:${seconds}`
-    }
-
-    return (
-      <div>
-        {timestamp}
-      </div>
-    );
-  }
-
-  padToTwoDigits = (n: number) => {
+export const TimeStamp: FC<Props> = ({ timestamp }) => {
+  const padToTwoDigits = (n: number) => {
     if (n > 9) {
       return "" + n;
-    }
-    else {
+    } else {
       return "0" + n;
     }
+  };
 
+  let timestampToShow = "Unavailable";
+  if (timestamp) {
+    const hours = padToTwoDigits(timestamp.getUTCHours());
+    const minutes = padToTwoDigits(timestamp.getMinutes());
+    const seconds = padToTwoDigits(timestamp.getSeconds());
+    timestampToShow = `${hours}:${minutes}:${seconds}`;
   }
-}
+
+  return <div>{timestampToShow}</div>;
+};

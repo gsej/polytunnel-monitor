@@ -7,7 +7,6 @@ export const Navigation = () => {
         <Link to="/temperatures">temperatures</Link>
         <Link to="/tunnelcam">tunnelcam</Link>
         <Link to="/pi">pi</Link>
-        <Link to="/nginx_status">nginx</Link>
         <div className={styles.github}>
           <a href="https://github.com/gsej/polytunnel-monitor">
             <img alt="github icon" src="GitHub-Mark-32px.png" />
