@@ -21,6 +21,11 @@ class Stats:
         temp = os.popen("vcgencmd measure_temp").readline()
         return (temp.replace("temp=","").replace("'", "&#176;"))
 
+    def fanspeed2(self):
+        # reads speed of FanShim
+        return -2
+
+
     def fanspeed(self):
         # reads speed of PiCoolFAN4
 
@@ -59,6 +64,7 @@ class Stats:
             "node": platform.node(),
             "temperature": self.temperature(),
             "fanspeed": self.fanspeed(),
+            "fanspeed2": self.fanspeed2(),
             "disk": self.disk()
         }      
         
