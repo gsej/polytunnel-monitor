@@ -25,7 +25,12 @@ def currentTemperatures():
         "insideTemperature": insideTemperature,
         "outsideTemperature": outsideTemperature,        
     }
-    return jsonify(result)
+
+    if result.insideTemperature = "Unavailable"
+        return jsonify(result), 500
+
+    return jsonify(result), 500
+
 
 @app.route('/api/temperaturerange/<startDate>/<endDate>/<decimationFactor>')
 def temperatureDataRange(startDate, endDate, decimationFactor):
