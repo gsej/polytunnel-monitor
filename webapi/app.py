@@ -26,10 +26,11 @@ def currentTemperatures():
         "outsideTemperature": outsideTemperature,        
     }
 
-    if result.insideTemperature = "Unavailable"
+    if inside is None:
         return jsonify(result), 500
 
-    return jsonify(result), 500
+
+    return jsonify(result), 200
 
 
 @app.route('/api/temperaturerange/<startDate>/<endDate>/<decimationFactor>')
