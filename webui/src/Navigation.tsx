@@ -5,6 +5,7 @@ export const Navigation = () => {
   return (
       <nav>
         <Link to="/temperatures">temperatures</Link>
+        <Link to="/averages">averages</Link>
         <Link to="/tunnelcam">tunnelcam</Link>
         <Link to="/pi">pi</Link>
         <div className={styles.github}>
