@@ -7,7 +7,6 @@ import os
 from current_temperatures import readInsideTemperature, readOutsideTemperature
 from pistats import Stats
 from temperature_data import getTemperatureDataRange
-from summary_temperatures import getSummaryTemperatures
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -37,11 +36,6 @@ def currentTemperatures():
 @app.route('/api/temperaturerange/<startDate>/<endDate>/<decimationFactor>')
 def temperatureDataRange(startDate, endDate, decimationFactor):
     data = getTemperatureDataRange(startDate, endDate, int(decimationFactor))
-    return jsonify([ dict(reading) for reading in data])
-
-@app.route('/api/summarytemperatures')
-def summaryTemperatures():
-    data = getSummaryTemperatures()
     return jsonify([ dict(reading) for reading in data])
 
 @app.route('/api/pistatus')
