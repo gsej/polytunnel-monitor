@@ -24,11 +24,8 @@ def getSummaryTemperatures():
 
     with open(file) as csvDataFile:
         csvReader = csv.reader(csvDataFile)
-        firstRow = True
+        next()
         for row in csvReader:
-            if firstRow == True:
-                firstRow = False
-                continue
             if len(row) < 5:
                 continue
             reading = TemperatureSummary(row[0], int(row[1]), float(row[2]), float(row[3]), float(row[4]))
