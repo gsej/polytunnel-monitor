@@ -3,8 +3,8 @@ server {
 
 	listen 443;
 	ssl on;
-	ssl_certificate /etc/letsencrypt/live/polytunnel.gsej.co.uk/fullchain.pem;
-	ssl_certificate_key /etc/letsencrypt/live/polytunnel.gsej.co.uk/privkey.pem;
+	ssl_certificate /etc/letsencrypt/live/api.polytunnel.gsej.co.uk/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/api.polytunnel.gsej.co.uk/privkey.pem;
 	# if ($ssl_protocol = "") { rewrite     ^   https://$server_name$request_uri? permanent;}
 
 	root /home/pi/repos/polytunnel-monitor/webapi;
