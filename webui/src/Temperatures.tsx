@@ -50,6 +50,9 @@ export const Temperatures = () => {
     setState({ ...state, showOutside });
   };
 
+  const handleDifferenceChange = (showDifference: boolean) => {
+    setState({ ...state, showDifference });
+  };
   return (
     <section>
       <h1>{title}</h1>
@@ -57,10 +60,10 @@ export const Temperatures = () => {
       <div className={styles["tab-container"]}>
         <DateRangeSelector dateRanges={dateRanges} selectedDateRangeId={selectedDateRangeId} onChange={handleDateRangeChange}></DateRangeSelector>
       </div>
-      <TemperatureChart spanGapsMultiplier={spanGapsMultiplier} showInside={state.showInside} showOutside={state.showOutside} temperatures={temperatures}></TemperatureChart>
+      <TemperatureChart spanGapsMultiplier={spanGapsMultiplier} showInside={state.showInside} showOutside={state.showOutside} showDifference={state.showDifference} temperatures={temperatures}></TemperatureChart>
       <TimeStamp timestamp={state.timestamp} />
       <div>
-        <DataSeriesSelector onChangeInside={handleInsideChange} onChangeOutside={handleOutsideChange} showInside={state.showInside} showOutside={state.showOutside}></DataSeriesSelector>
+        <DataSeriesSelector onChangeInside={handleInsideChange} onChangeOutside={handleOutsideChange} onChangeDifference={handleDifferenceChange} showInside={state.showInside} showOutside={state.showOutside} showDifference={state.showDifference}></DataSeriesSelector>
       </div>
     </section>
   );

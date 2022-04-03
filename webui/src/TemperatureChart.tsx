@@ -7,11 +7,12 @@ import { TemperatureEntry } from "./state/temperatures/TemperatureEntry";
 interface Props {
   showInside: boolean;
   showOutside: boolean;
+  showDifference: boolean;
   spanGapsMultiplier: number;
   temperatures: TemperatureEntry[];
 }
 
-export const TemperatureChart: FC<Props> = ({ showInside, showOutside, temperatures, spanGapsMultiplier }) => {
+export const TemperatureChart: FC<Props> = ({ showInside, showOutside, showDifference, temperatures, spanGapsMultiplier }) => {
   const options: any = {
     responsive: true,
     maintainAspectRatio: false,
@@ -68,12 +69,27 @@ export const TemperatureChart: FC<Props> = ({ showInside, showOutside, temperatu
           yAxisKey: "outside",
         },
       },
+      {
+        label: "Difference",
+        data: [],
+        fill: false,
+        borderColor: "blue",
+        borderWidth: 1,
+        pointRadius: 1,
+        tension: 0,
+        spanGaps: 1000 * 60 * 35 * spanGapsMultiplier,
+        parsing: {
+          xAxisKey: "timestamp",
+          yAxisKey: "difference",
+        },
+      },
     ],
   };
 
   const data = JSON.parse(JSON.stringify(dataTemplate));
   data.datasets[0].data = showInside ? temperatures : [];
   data.datasets[1].data = showOutside ? temperatures : [];
+  data.datasets[2].data = showDifference ? temperatures : [];
 
   return (
     <div>

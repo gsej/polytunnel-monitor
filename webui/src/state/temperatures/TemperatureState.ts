@@ -6,6 +6,7 @@ export type TemperatureState = {
   timestamp: Date | null;
   showInside: boolean;
   showOutside: boolean;
+  showDifference: boolean;
 }
 
 const initialCurrentTemperatures: CurrentTemperatureState = {
@@ -24,6 +25,7 @@ export const useSelectedDateRangeId = () => {
 const initialState: TemperatureState = {
   showInside: true,
   showOutside: true,
+  showDifference: true,
   timestamp: new Date()
 };
 
