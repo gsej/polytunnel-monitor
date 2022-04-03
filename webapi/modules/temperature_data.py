@@ -7,11 +7,13 @@ class TemperatureReading:
         self.timestamp = timestamp
         self.outside = outside
         self.inside = inside
+        self.difference = inside - outside
 
     def __iter__(self):
         yield ('timestamp', self.timestamp)
         yield ('outside', self.outside)
         yield ('inside', self.inside)
+        yield ('difference', self.difference)
     
 def getTemperatureDataRange(startDate, endDate, decimationFactor):
     readings = [] 
@@ -33,7 +35,7 @@ def getTemperatureDataRange(startDate, endDate, decimationFactor):
                 rowNumber = rowNumber + 1
                 if rowNumber % decimationFactor  != 0:
                     continue
-                reading = TemperatureReading(row[0], float(row[1]), float(row[2]))
+                reading = TemperatureReading(row[0] + "Z", float(row[1]), float(row[2]))
                 readings.append(reading)
 
     end = time.time()
