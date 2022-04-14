@@ -25,13 +25,19 @@ export const DataSeriesSelector: FC<Props> = ({ showInside, showOutside, showDif
 
   return (
     <div>
-      <div className={styles.checkboxContainer}>
-        <label htmlFor="inside">Inside</label>
-        <input type="checkbox" id="inside" name="inside" value="inside" checked={showInside} onChange={(event) => handleChangeInside(event.target.checked)} />
-        <label htmlFor="outside">Outside</label>
-        <input type="checkbox" id="outside" name="outside" value="outside" checked={showOutside} onChange={(event) => handleChangeOutside(event.target.checked)} />
-        <label htmlFor="difference">Difference</label>
-        <input type="checkbox" id="difference" name="difference" value="difference" checked={showDifference} onChange={(event) => handleChangeDifference(event.target.checked)} />
+      <div className={styles["checkbox-container"]}>
+        <div>
+          <label htmlFor="inside">Inside</label>
+          <input type="checkbox" id="inside" name="inside" value="inside" checked={showInside} onChange={(event) => handleChangeInside(event.target.checked)} />
+        </div>
+        <div>
+          <label htmlFor="outside">Outside</label>
+          <input type="checkbox" id="outside" name="outside" value="outside" checked={showOutside} onChange={(event) => handleChangeOutside(event.target.checked)} />
+        </div>
+        <div>
+          <label htmlFor="difference">Difference</label>
+          <input type="checkbox" id="difference" name="difference" value="difference" checked={showDifference} onChange={(event) => handleChangeDifference(event.target.checked)} />
+        </div>
       </div>
     </div>
   );
