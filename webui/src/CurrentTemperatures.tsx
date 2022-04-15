@@ -15,6 +15,9 @@ export const CurrentTemperatures: FC<Props> = ({ insideTemperature, outsideTempe
       <div>
         Current Temperature Outside: <span>{outsideTemperature !== null ? outsideTemperature + "\u00B0C" : "Unavailable"}</span>
       </div>
+      <div>
+        Difference: <span>{insideTemperature !== null && outsideTemperature !== null ? insideTemperature - outsideTemperature + "\u00B0C" : "Unavailable"}</span>
+      </div>
     </div>
   );
 };
