@@ -3,6 +3,8 @@ sys.path.append('modules')
 from flask import Flask, jsonify
 from flask_cors import CORS, cross_origin
 import os
+import requests
+import json
 
 from current_temperatures import readInsideTemperature, readOutsideTemperature
 from pistats import Stats
@@ -43,6 +45,14 @@ def pistatus():
     stats = Stats()
     rasp_info = stats.get_stats()
     return jsonify(rasp_info)
+
+@app.route('/api/toggleplug')
+def toggleplug():
+    response = requests.get("http://192.168.1.76/cm?cmnd=Power%20TOGGLE")
+    json_response = json.loads(response.text)
+    
+    return json_response
+    
 
 @app.route('/api/tunnelcam')
 def tunnelcamurl():
