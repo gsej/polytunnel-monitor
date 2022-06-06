@@ -1,1 +1,1 @@
-raspivid -o - -t 9999999 -w 800 -h 600  --vflip --hflip | cvlc -vvv stream:///dev/stdin --sout '#standard{access=http,mux=ts,dst=:8080}' :demux=h264
+libcamera-vid -t 0 --width 1920 --height 1080 --codec h264 --hflip --vflip --inline --listen -o tcp://0.0.0.0:8888
