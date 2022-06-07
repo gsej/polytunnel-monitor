@@ -3,12 +3,31 @@ sys.path.append('modules')
 from flask import Flask, jsonify
 from flask_cors import CORS, cross_origin
 import os
+import requests
+import json
+from flask_swagger_ui import get_swaggerui_blueprint
+
 
 from current_temperatures import readInsideTemperature, readOutsideTemperature
 from pistats import Stats
 from temperature_data import getTemperatureDataRange
 
 app = Flask(__name__)
+
+### swagger specific ###
+SWAGGER_URL = '/swagger'
+API_URL = '/static/swagger.json'
+SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "Polytunnel Monitor"
+    }
+)
+app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
+    ### end swagger specific ###
+
+
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -43,6 +62,14 @@ def pistatus():
     stats = Stats()
     rasp_info = stats.get_stats()
     return jsonify(rasp_info)
+
+@app.route('/api/toggleplug')
+def toggleplug():
+    response = requests.get("http://192.168.1.76/cm?cmnd=Power%20TOGGLE")
+    json_response = json.loads(response.text)
+    
+    return json_response
+    
 
 @app.route('/api/tunnelcam')
 def tunnelcamurl():
