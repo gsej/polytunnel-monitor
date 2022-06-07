@@ -1,0 +1,73 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "polytunnel",
+    "version": "1.0.0",
+    "title": "Polytunnel WebApi",
+    "contact": {
+      "email": "gsej@erskinejones.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Temperatures",
+      "description": "Api for requesting temperature data"
+    }
+  ],
+  "paths": {
+    "/api/currenttemperatures": {
+      "get": {
+        "tags": ["Current Temperatures"],
+        "summary": "Returns current temperatures",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/temperaturerange/{startDate}/{endDate}/{decimationFactor}": { 
+	    "parameters": [
+          {
+            "name": "startDate",
+            "in": "path",
+            "required": true,
+            "description": "start date of the temperature range we want in the format yyyy-MM-dd",
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "path",
+            "required": true,
+            "description": "end date of the temperature range we want in the format yyyy-MM-dd",
+            "type": "string"
+          },
+          {
+            "name": "decimationFactor",
+            "in": "path",
+            "required": true,
+            "description": "what propotion of the recorded temperatures should be returned, i.e. 5 means only return every 5th reading",
+            "type": "integer"
+          }
+        ],
+	"get": {
+	  "tags": ["Temperature Range"],
+	  "summary": "Returns range of temperatures",
+	  "responses": {
+	    "200": {
+	      "description": "OK"
+	    }
+	  }
+	}
+      }
+  }
+}
