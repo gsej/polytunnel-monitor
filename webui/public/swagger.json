@@ -15,8 +15,11 @@
   "servers": [
     {
       "url": "/"
-    }
-  ],
+    },
+   {
+"url":	  "https://api.polytunnel.gsej.co.uk"
+  }]
+  ,
   "tags": [
     {
       "name": "Temperatures",
