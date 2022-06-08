@@ -1,16 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "description": "polytunnel",
     "version": "1.0.0",
-    "title": "Polytunnel WebApi",
-    "contact": {
-      "email": "gsej@erskinejones.com"
-    },
-    "license": {
-      "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
-    }
+    "title": "Polytunnel WebApi"
   },
   "servers": [
     {
@@ -29,10 +21,7 @@
   "paths": {
     "/api/currenttemperatures": {
       "get": {
-        "tags": [
-          "Current Temperatures"
-        ],
-        "summary": "Returns current temperatures",
+        "tags": ["Current Temperatures"],
         "responses": {
           "200": {
             "description": "OK"
@@ -65,10 +54,17 @@
         }
       ],
       "get": {
-        "tags": [
-          "Temperature Range"
-        ],
-        "summary": "Returns range of temperatures",
+        "tags": ["Temperature Range"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/toggleplug": {
+      "post": {
+        "tags": ["Toggle Plug"],
         "responses": {
           "200": {
             "description": "OK"
@@ -76,5 +72,5 @@
         }
       }
     }
-  }
+  } 
 }
