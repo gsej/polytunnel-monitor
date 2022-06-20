@@ -63,7 +63,7 @@ def tunnelcamurl():
     }
     return jsonify(result)
 
-@app.route('api/plug/<plugName>', methods = ['GET', 'POST'])
+@app.route('/api/plug/<plugName>', methods = ['GET', 'POST'])
 def plug(plugName):
 
     # here we need to get the ip address of the plug......
