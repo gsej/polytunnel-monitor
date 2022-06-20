@@ -5,10 +5,11 @@ import { PlugState } from "./state/plug/PlugState";
 
 interface Props {
   plugName: string;
+  description: string;
 }
 
 
-export const Plug : FC<Props> = ({ plugName }) => {
+export const Plug : FC<Props> = ({ plugName, description }) => {
 
   const initialState: PlugState = {
     power: "Unknown"
@@ -22,14 +23,14 @@ useEffect(() => {
       setState(plugState);
   };
   fetchInitialState();
-}, []);
+}, [plugName]);
 
   return (
       <div className={styles["plug-container"]}>
         <section>
-          <h2>{plugName}</h2>
-          <button>{state.power == "On" ? "On - Click to turn off" : "Off - Click to turn on"}</button>
-        </section>
+          <h2>{description}</h2>
+          <button>{state.power === "On" ? "On - Click to turn off" : "Off - Click to turn on"}</button>
+          </section>
       </div>
   );
 };

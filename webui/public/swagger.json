@@ -56,7 +56,15 @@
         }
       }
     },
-    "/api/plug": {
+    "/api/plug/{plugName}": {
+      "parameters": [
+        {
+          "name": "plugName",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
       "get": {
         "tags": ["Get Plug Status"],
         "responses": {
