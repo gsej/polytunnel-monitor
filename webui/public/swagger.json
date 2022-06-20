@@ -56,9 +56,17 @@
         }
       }
     },
-    "/api/toggleplug": {
+    "/api/plug": {
+      "get": {
+        "tags": ["Get Plug Status"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
       "post": {
-        "tags": ["Toggle Plug"],
+        "tags": ["Toggle Plug Status"],
         "responses": {
           "200": {
             "description": "OK"
@@ -66,5 +74,5 @@
         }
       }
     }
-  } 
+  }
 }

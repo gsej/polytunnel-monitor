@@ -1,6 +1,6 @@
 import sys
 sys.path.append('modules')
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 import os
 import requests
@@ -47,14 +47,6 @@ def pistatus():
     rasp_info = stats.get_stats()
     return jsonify(rasp_info)
 
-@app.route('/api/toggleplug')
-def toggleplug():
-    response = requests.get("http://192.168.1.76/cm?cmnd=Power%20TOGGLE")
-    json_response = json.loads(response.text)
-    
-    return json_response
-    
-
 @app.route('/api/tunnelcam')
 def tunnelcamurl():
 
@@ -69,6 +61,18 @@ def tunnelcamurl():
         "url": latestImageUrl
     }
     return jsonify(result)
+
+@app.route('api/plug', methods = ['GET', 'POST'])
+def plug():
+
+    if request.method == 'GET':
+        response = requests.get("http://192.168.2.6/cm?cmnd=Power")
+    else:
+        response = requests.get("http://192.168.2.6/cm?cmnd=Power%20TOGGLE")
+        
+    json_response = json.loads(response.text)
+    
+    return json_response
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
