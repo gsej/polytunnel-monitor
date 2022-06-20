@@ -8,8 +8,8 @@ export const plugs: Plug[] = [
 		plugName: "BigHeater",
 		description: "Big Heater"
 	},
-	{
-		plugName: "SmallHeater",
-		description: "Small Heater"
-	}
+	// {
+	// 	plugName: "SmallHeater",
+	// 	description: "Small Heater"
+	// }
 ]

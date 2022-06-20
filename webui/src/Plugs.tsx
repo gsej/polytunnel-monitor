@@ -7,7 +7,7 @@ export const Plugs: FC = () => {
 
   return (
     <div>
-      {plugs.map( plug => {return <Plug plugName={plug.plugName} description={plug.description}/>})}
+      {plugs.map( plug => {return <Plug key={plug.plugName} plugName={plug.plugName} description={plug.description}/>})}
       <section>
       </section>
     </div>
