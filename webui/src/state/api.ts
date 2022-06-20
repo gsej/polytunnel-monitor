@@ -44,8 +44,8 @@ export const loadTunnelCam = () => {
   });
 };
 
-export const loadPlugState = () => {
-  return fetch("https://api.polytunnel.gsej.co.uk/api/plug").then((response) => {
+export const loadPlugState = (plugName: string) => {
+  return fetch(`https://api.polytunnel.gsej.co.uk/api/${plugName}`).then((response) => {
     if (response.ok) {
       return response.json() as Promise<PlugState>;
     } else {
