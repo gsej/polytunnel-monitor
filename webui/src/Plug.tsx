@@ -8,7 +8,6 @@ interface Props {
   description: string;
 }
 
-
 export const Plug: FC<Props> = ({ plugName, description }) => {
 
   const initialState: PlugState = {
@@ -25,14 +24,11 @@ export const Plug: FC<Props> = ({ plugName, description }) => {
     fetchInitialState();
   }, [plugName]);
 
-//   const togglePlug = async(plugName: string) =>  {
-//     await togglePlugState(plugName);
-//   }
-
   const buttonHandler = async (event: React.MouseEvent<HTMLButtonElement>) =>{
 //    // event.stopPropagation();
 
     await togglePlugState(plugName);
+    setState({ powerOn: !state.powerOn })
   }
 
 

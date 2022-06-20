@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { TunnelCam } from "./TunnelCam";
 import { Pi } from "./Pi";
 import { Swagger } from "./Swagger";
-import { Plug } from "./Plug";
+import { Plugs } from "./Plugs";
 export const App = () => {
   return (
     <BrowserRouter>
@@ -16,7 +16,7 @@ export const App = () => {
           <Route path="/tunnelcam" element={<TunnelCam />}></Route>
           <Route path="/pi" element={<Pi />}></Route>
           <Route path="/swagger" element={<Swagger />}></Route>
-          <Route path="/plug" element={<Plug plugName={"BigHeater"} description={"Big Heater"}/>}></Route>
+          <Route path="/plugs" element={<Plugs />}></Route>
           <Route path="*" element={<Navigate to="/temperatures" />} />
         </Routes>
       </main>
