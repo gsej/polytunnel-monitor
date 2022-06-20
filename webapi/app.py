@@ -75,7 +75,7 @@ def plug(plugName):
     else:
         response = requests.get("http://192.168.2.6/cm?cmnd=Power%20TOGGLE")
         
-    if response.text == "{ \"POWER\": \"ON\" }":
+    if response.text.find("ON"):
         json_response = json.loads("{ \"power\": \"On\" }")
     else:
         json_response = json.loads("{ \"power\": \"Off\" }")

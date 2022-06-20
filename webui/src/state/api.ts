@@ -45,11 +45,28 @@ export const loadTunnelCam = () => {
 };
 
 export const loadPlugState = (plugName: string) => {
-  return fetch(`https://api.polytunnel.gsej.co.uk/api/${plugName}`).then((response) => {
+  return fetch(`https://api.polytunnel.gsej.co.uk/api/plug/${plugName}`).then((response) => {
     if (response.ok) {
       return response.json() as Promise<PlugState>;
     } else {
       throw new Error("Something went wrong.");
     }
   });
+};
+
+export const togglePlugState = (plugName: string) => {
+  return fetch(`https://api.polytunnel.gsej.co.uk/api/plug/${plugName}`,
+    {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      if (response.ok) {
+        return response.json() as Promise<PlugState>;
+      } else {
+        throw new Error("Something went wrong.");
+      }
+    });
 };
