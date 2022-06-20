@@ -74,6 +74,14 @@
         }
       },
       "post": {
+        "parameters": [
+        {
+          "name": "X-Api-Key",
+          "in": "header",
+          "required": true,
+          "type": "string"
+        }
+        ],
         "tags": ["Toggle Plug Status"],
         "responses": {
           "200": {

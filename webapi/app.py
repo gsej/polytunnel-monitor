@@ -6,6 +6,7 @@ from flask_cors import CORS, cross_origin
 import os
 import requests
 import json
+import read_secrets;
 from plugs import plugs
 
 from current_temperatures import readInsideTemperature, readOutsideTemperature
@@ -15,6 +16,8 @@ from temperature_data import getTemperatureDataRange
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+
+secrets = read_secrets()
 
 @app.route('/api/currenttemperatures')
 @cross_origin() 
@@ -73,6 +76,8 @@ def plug(plugName):
     if request.method == 'GET':
         response = requests.get(f"http://{ip_address}/cm?cmnd=Power")
     else:
+        if request.headers["X-Api-Key"] != secrets["API_KEY"]:
+           return "Unauthorised", 401 
         response = requests.get("http://192.168.2.6/cm?cmnd=Power%20TOGGLE")
         
     if response.text.find("ON"):
