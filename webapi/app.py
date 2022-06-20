@@ -62,7 +62,7 @@ def tunnelcamurl():
     }
     return jsonify(result)
 
-@app.route('api/plug', methods = ['GET', 'POST'])
+@app.route('/api/plug', methods = ['GET', 'POST'])
 def plug():
 
     if request.method == 'GET':
@@ -70,7 +70,12 @@ def plug():
     else:
         response = requests.get("http://192.168.2.6/cm?cmnd=Power%20TOGGLE")
         
-    json_response = json.loads(response.text)
+    if response.text == "{ \"POWER\": \"ON\" }":
+        json_response = json.loads("{ \"power\": \"On\" }")
+    else:
+        json_response = json.loads("{ \"power\": \"Off\" }")
+
+#       json_response = json.loads(response.text)
     
     return json_response
 
