@@ -12,7 +12,7 @@ interface Props {
 export const Plug: FC<Props> = ({ plugName, description }) => {
 
   const initialState: PlugState = {
-    power: "Unknown"
+    powerOn: null
   };
 
   const [state, setState] = useState(initialState);
@@ -40,7 +40,7 @@ export const Plug: FC<Props> = ({ plugName, description }) => {
     <div className={styles["plug-container"]}>
       <section>
         <h2>{description}</h2>
-        <button onClick={buttonHandler}>{state.power === "On" ? "On - Click to turn off" : "Off - Click to turn on"}</button>
+        <button onClick={buttonHandler}>{state.powerOn ? "On - Click to turn off" : "Off - Click to turn on"}</button>
       </section>
     </div>
   );

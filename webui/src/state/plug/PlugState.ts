@@ -1,3 +1,3 @@
 export type PlugState = {
-	power: string;
+	powerOn: boolean | null;
 }
