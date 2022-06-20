@@ -1,3 +1,4 @@
+from ipaddress import ip_address
 import sys
 sys.path.append('modules')
 from flask import Flask, jsonify, request
@@ -5,7 +6,7 @@ from flask_cors import CORS, cross_origin
 import os
 import requests
 import json
-
+from plugs import plugs
 
 from current_temperatures import readInsideTemperature, readOutsideTemperature
 from pistats import Stats
@@ -62,11 +63,14 @@ def tunnelcamurl():
     }
     return jsonify(result)
 
-@app.route('/api/plug', methods = ['GET', 'POST'])
-def plug():
+@app.route('api/plug/<plugName>', methods = ['GET', 'POST'])
+def plug(plugName):
+
+    # here we need to get the ip address of the plug......
+    ip_address = plugs[plugName]
 
     if request.method == 'GET':
-        response = requests.get("http://192.168.2.6/cm?cmnd=Power")
+        response = requests.get(f"http://{ip_address}/cm?cmnd=Power")
     else:
         response = requests.get("http://192.168.2.6/cm?cmnd=Power%20TOGGLE")
         
@@ -74,8 +78,6 @@ def plug():
         json_response = json.loads("{ \"power\": \"On\" }")
     else:
         json_response = json.loads("{ \"power\": \"Off\" }")
-
-#       json_response = json.loads(response.text)
     
     return json_response
 
