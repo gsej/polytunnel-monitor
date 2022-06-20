@@ -1,4 +1,5 @@
 import { PiStatus } from "./pi/PiStatus";
+import { PlugState } from "./plug/PlugState";
 import { CurrentTemperatureState } from "./temperatures/CurrentTemperatureState";
 import { TemperatureEntry } from "./temperatures/TemperatureEntry";
 import { TunnelCamImage } from "./tunnelcam/TunnelCamImage";
@@ -37,6 +38,16 @@ export const loadTunnelCam = () => {
   return fetch("https://api.polytunnel.gsej.co.uk/api/tunnelcam").then((response) => {
     if (response.ok) {
       return response.json() as Promise<TunnelCamImage>;
+    } else {
+      throw new Error("Something went wrong.");
+    }
+  });
+};
+
+export const loadPlugState = () => {
+  return fetch("https://api.polytunnel.gsej.co.uk/api/plug").then((response) => {
+    if (response.ok) {
+      return response.json() as Promise<PlugState>;
     } else {
       throw new Error("Something went wrong.");
     }
