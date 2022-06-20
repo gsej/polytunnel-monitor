@@ -70,8 +70,11 @@ def tunnelcamurl():
 def plug(plugName):
 
     # here we need to get the ip address of the plug......
-
-    ip_address = plugs[plugName]
+    
+    if plugName in plugs:
+        ip_address = plugs[plugName]
+    else:
+        return "NotFound", 404
 
     if request.method == 'GET':
         response = requests.get(f"http://{ip_address}/cm?cmnd=Power")
