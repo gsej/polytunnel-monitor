@@ -6,7 +6,7 @@ from flask_cors import CORS, cross_origin
 import os
 import requests
 import json
-import read_secrets;
+from read_secrets import read_secrets;
 from plugs import plugs
 
 from current_temperatures import readInsideTemperature, readOutsideTemperature
