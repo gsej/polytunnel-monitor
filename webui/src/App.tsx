@@ -16,7 +16,7 @@ export const App = () => {
           <Route path="/tunnelcam" element={<TunnelCam />}></Route>
           <Route path="/pi" element={<Pi />}></Route>
           <Route path="/swagger" element={<Swagger />}></Route>
-          <Route path="/plug" element={<Plug plugName={"BigHeater"} />}></Route>
+          <Route path="/plug" element={<Plug plugName={"BigHeater"} description={"Big Heater"}/>}></Route>
           <Route path="*" element={<Navigate to="/temperatures" />} />
         </Routes>
       </main>
