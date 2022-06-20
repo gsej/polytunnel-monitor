@@ -12,12 +12,6 @@
       "url": "https://api.polytunnel.gsej.co.uk"
     }
   ],
-  "tags": [
-    {
-      "name": "Temperatures",
-      "description": "Api for requesting temperature data"
-    }
-  ],
   "paths": {
     "/api/currenttemperatures": {
       "get": {

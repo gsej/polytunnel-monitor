@@ -54,7 +54,7 @@ export const Temperatures = () => {
     setState({ ...state, showDifference });
   };
   return (
-    <section>
+    <section className={styles["temperature-container"]}>
       <h1>{title}</h1>
       <CurrentTemperatures insideTemperature={currentTemperatures.insideTemperature} outsideTemperature={currentTemperatures.outsideTemperature} />
       <div className={styles["tab-container"]}>

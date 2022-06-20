@@ -4,7 +4,7 @@ import { Temperatures } from "./Temperatures";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { TunnelCam } from "./TunnelCam";
 import { Pi } from "./Pi";
-import { Swagger } from "./swagger";
+import { Swagger } from "./Swagger";
 export const App = () => {
   return (
     <BrowserRouter>
