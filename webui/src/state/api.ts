@@ -54,13 +54,14 @@ export const loadPlugState = (plugName: string) => {
   });
 };
 
-export const togglePlugState = (plugName: string) => {
+export const togglePlugState = (plugName: string, apiKey: string) => {
   return fetch(`https://api.polytunnel.gsej.co.uk/api/plug/${plugName}`,
     {
       method: "post",
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "X-Api-Key": apiKey
       }
     }).then((response) => {
       if (response.ok) {
