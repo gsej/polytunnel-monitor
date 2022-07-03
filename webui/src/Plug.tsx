@@ -6,15 +6,18 @@ import { PlugState } from "./state/plug/PlugState";
 interface Props {
   plugName: string;
   description: string;
+  apiKey: string;
 }
 
-export const Plug: FC<Props> = ({ plugName, description }) => {
+export const Plug: FC<Props> = ({ plugName, description, apiKey }) => {
 
   const initialState: PlugState = {
     powerOn: null
   };
 
   const [state, setState] = useState(initialState);
+
+  const [showError, setErrorState] = useState(false)
 
   useEffect(() => {
     const fetchInitialState = async () => {
@@ -24,20 +27,27 @@ export const Plug: FC<Props> = ({ plugName, description }) => {
     fetchInitialState();
   }, [plugName]);
 
-  const buttonHandler = async (event: React.MouseEvent<HTMLButtonElement>) =>{
-//    // event.stopPropagation();
+  const buttonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
 
-    await togglePlugState(plugName);
-    setState({ powerOn: !state.powerOn })
+    try {
+      setErrorState(false);
+      const newState = await togglePlugState(plugName, apiKey);
+      setState({ powerOn: newState.powerOn });
+    }
+    catch (e) {
+      setErrorState(true);
+    }
   }
 
-
+  // TODO: print error if the api key is missing.
   return (
     <div className={styles["plug-container"]}>
+      <span>{apiKey}</span>
+      {showError ? <span >this is an error</span> : ""}
       <section>
         <h2>{description}</h2>
-        <button onClick={buttonHandler}>{state.powerOn ? "On - Click to turn off" : "Off - Click to turn on"}</button>
+        <button disabled={!apiKey} onClick={buttonHandler}>{state.powerOn ? "On - Click to turn off" : "Off - Click to turn on"}</button>
       </section>
     </div>
   );
-};
+}
