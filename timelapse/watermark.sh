@@ -1,4 +1,4 @@
-for img in filtered_photos/*jpg; 
+for img in ../filtered-photos/*jpg; 
 do convert "$img" -gravity SouthEast -pointsize 100 \
-   -fill white -annotate +30+30  %[exif:DateTimeOriginal] "$img"; 
+   -fill white -annotate +30+30  %[exif:DateTime] "$img"; 
 done
