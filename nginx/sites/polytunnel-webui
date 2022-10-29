@@ -1,9 +1,7 @@
     server {
 #	listen 80;
 
-	listen 443;
-
-        ssl on;
+	listen 443 ssl;
 
         ssl_certificate /etc/letsencrypt/live/polytunnel.gsej.co.uk-0001/fullchain.pem;
 

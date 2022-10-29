@@ -1,8 +1,7 @@
 # this is for the python api
 server {
 
-	listen 443;
-	ssl on;
+	listen 443 ssl;
 	ssl_certificate /etc/letsencrypt/live/api.polytunnel.gsej.co.uk/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/api.polytunnel.gsej.co.uk/privkey.pem;
 	# if ($ssl_protocol = "") { rewrite     ^   https://$server_name$request_uri? permanent;}
