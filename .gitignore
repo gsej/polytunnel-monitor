@@ -32,6 +32,7 @@ bin/
 share/
 
 filtered-photos/
+timelapse/photos/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
