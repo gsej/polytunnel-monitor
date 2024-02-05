@@ -1,0 +1,1 @@
+libcamera-vid -t 0 --tuning-file /usr/share/libcamera/ipa/rpi/vc4/imx477_af.json autofocus-mode manual --lens-position 0.0 --inline -o - | cvlc -vvv stream:///dev/stdin --sout '#rtp{sdp=rtsp://:8000/}' :demux=h264
