@@ -56,6 +56,30 @@
         }
       }
     },
+    "/api/tunnelcam": {
+      "parameters": [
+      ],
+      "get": {
+        "tags": ["Get Url Of Latest Photo"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/focus-photo": {
+      "parameters": [
+      ],
+      "get": {
+        "tags": ["Get Url Of Latest Photo For Focussing"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/plug/{plugName}": {
       "parameters": [
         {

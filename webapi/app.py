@@ -66,6 +66,21 @@ def tunnelcamurl():
     }
     return jsonify(result)
 
+@app.route('/api/focus-photo')
+def focusphotourl():
+
+    files = os.listdir("./static/focus-photo/")
+    jpgs = list(filter(lambda x:x.endswith("jpg"), files))
+    jpgs.sort(reverse = True)
+
+    imageUrl = "https://api.polytunnel.gsej.co.uk/static/focus-photo/" + jpgs[0];
+
+    result = {
+        "name": jpgs[0],
+        "url": imageUrl
+    }
+    return jsonify(result)
+
 @app.route('/api/plug/<plugName>', methods = ['GET', 'POST'])
 def plug(plugName):
 
