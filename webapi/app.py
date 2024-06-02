@@ -81,6 +81,32 @@ def focusphotourl():
     }
     return jsonify(result)
 
+@app.route('/api/get-saved-time')
+def getsavedtime():
+
+    with open('./static/saved-time.txt') as f:
+        lines = f.readlines()
+
+    result = {
+        "time": lines[0],
+    }
+    return jsonify(result)
+
+@app.route('/api/save-time')
+def savetime():
+
+    files = os.listdir("./static/focus-photo/")
+    jpgs = list(filter(lambda x:x.endswith("jpg"), files))
+    jpgs.sort(reverse = True)
+
+    imageUrl = "https://api.polytunnel.gsej.co.uk/static/focus-photo/" + jpgs[0];
+
+    result = {
+        "name": jpgs[0],
+        "url": imageUrl
+    }
+    return jsonify(result)
+
 @app.route('/api/plug/<plugName>', methods = ['GET', 'POST'])
 def plug(plugName):
 

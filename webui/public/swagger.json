@@ -13,6 +13,17 @@
     }
   ],
   "paths": {
+    "/api/getsavedtime": {
+      "get": {
+        "tags": ["Get saved time"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+  "paths": {
     "/api/currenttemperatures": {
       "get": {
         "tags": ["Current Temperatures"],
