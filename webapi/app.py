@@ -6,6 +6,7 @@ from flask_cors import CORS, cross_origin
 import os
 import requests
 import json
+import datetime
 from read_secrets import read_secrets;
 from plugs import plugs
 
@@ -81,8 +82,10 @@ def focusphotourl():
     }
     return jsonify(result)
 
-@app.route('/api/get-saved-time')
+@app.route('/api/save-time')
 def getsavedtime():
+
+    now = datetime.datetime.now()
 
     with open('./static/saved-time.txt') as f:
         lines = f.readlines()
@@ -92,18 +95,14 @@ def getsavedtime():
     }
     return jsonify(result)
 
-@app.route('/api/save-time')
-def savetime():
+@app.route('/api/get-saved-time')
+def getsavedtime():
 
-    files = os.listdir("./static/focus-photo/")
-    jpgs = list(filter(lambda x:x.endswith("jpg"), files))
-    jpgs.sort(reverse = True)
-
-    imageUrl = "https://api.polytunnel.gsej.co.uk/static/focus-photo/" + jpgs[0];
+    with open('./static/saved-time.txt') as f:
+        lines = f.readlines()
 
     result = {
-        "name": jpgs[0],
-        "url": imageUrl
+        "time": lines[0],
     }
     return jsonify(result)
 
