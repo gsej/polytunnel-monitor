@@ -6,7 +6,7 @@ from flask_cors import CORS, cross_origin
 import os
 import requests
 import json
-import datetime
+from datetime import datetime
 from read_secrets import read_secrets;
 from plugs import plugs
 
@@ -87,7 +87,7 @@ def savetime():
 
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    with open('./static/save-time.txt', 'w') as f:
+    with open('./static/saved-time.txt', 'w') as f:
         f.write(current_time) 
 
     return "OK", 200
