@@ -83,26 +83,23 @@ def focusphotourl():
     return jsonify(result)
 
 @app.route('/api/save-time')
-def getsavedtime():
+def savetime():
 
-    now = datetime.datetime.now()
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    with open('./static/saved-time.txt') as f:
-        lines = f.readlines()
+    with open('./static/save-time.txt', 'w') as f:
+        f.write(current_time) 
 
-    result = {
-        "time": lines[0],
-    }
-    return jsonify(result)
+    return "OK", 200
 
 @app.route('/api/get-saved-time')
 def getsavedtime():
 
     with open('./static/saved-time.txt') as f:
-        lines = f.readlines()
+        content = f.read()
 
     result = {
-        "time": lines[0],
+        "time": content,
     }
     return jsonify(result)
 

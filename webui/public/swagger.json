@@ -13,6 +13,16 @@
     }
   ],
   "paths": {
+    "/api/save-time": {
+      "get": {
+        "tags": ["Save time"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/get-saved-time": {
       "get": {
         "tags": ["Get saved time"],
